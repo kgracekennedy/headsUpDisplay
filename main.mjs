@@ -4,7 +4,7 @@ import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
-const BUILD_VERSION = "20260702-193453833Z";
+const BUILD_VERSION = "20260702-193753521Z";
 const appElement = document.getElementById("app");
 const dom = {
   appTitle: null,
