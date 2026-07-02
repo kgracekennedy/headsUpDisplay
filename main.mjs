@@ -4,7 +4,7 @@ import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
-const BUILD_VERSION = "20260702-192641340Z";
+const BUILD_VERSION = "20260702-193210015Z";
 const appElement = document.getElementById("app");
 const dom = {
   appTitle: null,
@@ -254,6 +254,51 @@ function buildChecklistMarkup(slide) {
     .join("");
 }
 
+function renderCelebrationBackdrop() {
+  const fireworkMarkup = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six"
+  ]
+    .map(
+      (suffix) =>
+        `<span class="celebration-firework celebration-firework--${suffix}"></span>`
+    )
+    .join("");
+  const confettiMarkup = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve"
+  ]
+    .map(
+      (suffix) =>
+        `<span class="celebration-confetti celebration-confetti--${suffix}"></span>`
+    )
+    .join("");
+
+  return `
+    <div class="celebration-overlay" aria-hidden="true">
+      <span class="celebration-glow celebration-glow--left"></span>
+      <span class="celebration-glow celebration-glow--center"></span>
+      <span class="celebration-glow celebration-glow--right"></span>
+      ${fireworkMarkup}
+      ${confettiMarkup}
+    </div>
+  `;
+}
+
 function renderCelebrationPanel(slide) {
   const rewardMarkup = slide.rewardMessage
     ? `
@@ -263,17 +308,14 @@ function renderCelebrationPanel(slide) {
         </div>
       `
     : "";
+  const completionLabel = slide.rewardMessage ? "Reward unlocked" : "Checklist complete";
 
   return `
     <section class="completion-banner">
-      <div class="celebration-sky" aria-hidden="true">
-        <span class="celebration-firework celebration-firework--one"></span>
-        <span class="celebration-firework celebration-firework--two"></span>
-        <span class="celebration-firework celebration-firework--three"></span>
-      </div>
-      <p class="completion-label">Checklist complete</p>
+      <p class="completion-label">${completionLabel}</p>
       <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
       ${rewardMarkup}
+      <p class="completion-note">Tap any checked item to reopen the list.</p>
     </section>
   `;
 }
@@ -284,9 +326,11 @@ function renderChecklistSlide(slide, { animate = false } = {}) {
   const isComplete = isChecklistComplete(slide, state.progress);
   const transitionClass = animate ? " slide-card--transition" : "";
   const completionBanner = isComplete ? renderCelebrationPanel(slide) : "";
+  const celebrationBackdrop = isComplete ? renderCelebrationBackdrop() : "";
 
   return `
     <article class="slide-card slide-card--checklist${transitionClass}${isComplete ? " slide-card--completed" : ""}" style="${themeStyle(slide)}">
+      ${celebrationBackdrop}
       <div class="checklist-layout">
         <div class="checklist-summary">
           <div>
