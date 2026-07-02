@@ -212,7 +212,11 @@ finally {
     }
 
     if ($currentBranch) {
-        & git switch $currentBranch 2>$null | Out-Null
+        $activeBranch = Get-GitOutput branch --show-current
+
+        if ($activeBranch -ne $currentBranch) {
+            Invoke-Git switch $currentBranch
+        }
     }
 
     Pop-Location
