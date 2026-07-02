@@ -48,6 +48,46 @@ function Clear-DirectoryContents {
         Remove-Item -Recurse -Force
 }
 
+function Test-RegisteredWorktree {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $Path
+    )
+
+    $normalizedTarget = [System.IO.Path]::GetFullPath($Path)
+    $worktreeList = & git worktree list --porcelain
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "git worktree list --porcelain failed with exit code $LASTEXITCODE."
+    }
+
+    foreach ($line in $worktreeList) {
+        if (-not $line.StartsWith("worktree ")) {
+            continue
+        }
+
+        $registeredPath = $line.Substring(9).Trim()
+        $normalizedRegistered = [System.IO.Path]::GetFullPath($registeredPath)
+
+        if ($normalizedRegistered.Equals($normalizedTarget, [System.StringComparison]::OrdinalIgnoreCase)) {
+            return $true
+        }
+    }
+
+    return $false
+}
+
+function Remove-RegisteredWorktree {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $Path
+    )
+
+    if (Test-RegisteredWorktree -Path $Path) {
+        Invoke-Git worktree remove --force $Path
+    }
+}
+
 function Test-SafeWorktreePath {
     param(
         [Parameter(Mandatory = $true)]
@@ -103,7 +143,7 @@ try {
         throw "Build output directory not found at $distPath"
     }
 
-    & git worktree remove --force $resolvedWorktreePath 2>$null | Out-Null
+    Remove-RegisteredWorktree -Path $resolvedWorktreePath
     Invoke-Git worktree prune
 
     if (Test-Path -LiteralPath $resolvedWorktreePath) {
@@ -165,7 +205,7 @@ try {
     }
 }
 finally {
-    & git worktree remove --force $resolvedWorktreePath 2>$null | Out-Null
+    Remove-RegisteredWorktree -Path $resolvedWorktreePath
 
     if (Test-Path -LiteralPath $resolvedWorktreePath) {
         Remove-Item -LiteralPath $resolvedWorktreePath -Recurse -Force
