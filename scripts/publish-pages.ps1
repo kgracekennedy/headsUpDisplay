@@ -84,7 +84,7 @@ function Remove-RegisteredWorktree {
     )
 
     if (Test-RegisteredWorktree -Path $Path) {
-        Invoke-Git worktree remove --force $Path
+        Invoke-Git -Arguments @("worktree", "remove", "--force", $Path)
     }
 }
 
@@ -111,19 +111,19 @@ if (-not (Test-SafeWorktreePath -Path $resolvedWorktreePath)) {
 Push-Location $repoRoot
 
 try {
-    $status = Get-GitOutput status --porcelain
+    $status = Get-GitOutput -Arguments @("status", "--porcelain")
 
     if ($status) {
         throw "Working tree must be clean before publishing. Commit or stash changes first."
     }
 
-    $originUrl = Get-GitOutput remote get-url origin
+    $originUrl = Get-GitOutput -Arguments @("remote", "get-url", "origin")
 
     if (-not $originUrl) {
         throw "Remote 'origin' is not configured."
     }
 
-    $currentBranch = Get-GitOutput branch --show-current
+    $currentBranch = Get-GitOutput -Arguments @("branch", "--show-current")
 
     if (-not $SkipTests) {
         & (Join-Path $scriptDirectory "test.ps1")
@@ -144,30 +144,30 @@ try {
     }
 
     Remove-RegisteredWorktree -Path $resolvedWorktreePath
-    Invoke-Git worktree prune
+    Invoke-Git -Arguments @("worktree", "prune")
 
     if (Test-Path -LiteralPath $resolvedWorktreePath) {
         Remove-Item -LiteralPath $resolvedWorktreePath -Recurse -Force
     }
 
-    $remoteBranchExists = [bool](Get-GitOutput ls-remote --heads origin $Branch)
+    $remoteBranchExists = [bool](Get-GitOutput -Arguments @("ls-remote", "--heads", "origin", $Branch))
     & git show-ref --verify --quiet "refs/heads/$Branch"
     $localBranchExists = $LASTEXITCODE -eq 0
 
     if ($remoteBranchExists) {
-        Invoke-Git fetch origin $Branch
-        Invoke-Git worktree add --force -B $Branch $resolvedWorktreePath "origin/$Branch"
+        Invoke-Git -Arguments @("fetch", "origin", $Branch)
+        Invoke-Git -Arguments @("worktree", "add", "--force", "-B", $Branch, $resolvedWorktreePath, "origin/$Branch")
     }
     elseif ($localBranchExists) {
-        Invoke-Git worktree add --force $resolvedWorktreePath $Branch
+        Invoke-Git -Arguments @("worktree", "add", "--force", $resolvedWorktreePath, $Branch)
     }
     else {
-        Invoke-Git worktree add --force --detach $resolvedWorktreePath HEAD
+        Invoke-Git -Arguments @("worktree", "add", "--force", "--detach", $resolvedWorktreePath, "HEAD")
 
         Push-Location $resolvedWorktreePath
 
         try {
-            Invoke-Git checkout --orphan $Branch
+            Invoke-Git -Arguments @("checkout", "--orphan", $Branch)
             Clear-DirectoryContents -Path $resolvedWorktreePath
         }
         finally {
@@ -182,18 +182,18 @@ try {
         Copy-Item -Path (Join-Path $distPath "*") -Destination $resolvedWorktreePath -Recurse -Force
         New-Item -ItemType File -Path (Join-Path $resolvedWorktreePath ".nojekyll") -Force | Out-Null
 
-        $sourceRevision = Get-GitOutput -C $repoRoot rev-parse --short HEAD
-        Invoke-Git add -A
+        $sourceRevision = Get-GitOutput -Arguments @("-C", $repoRoot, "rev-parse", "--short", "HEAD")
+        Invoke-Git -Arguments @("add", "-A")
         & git diff --cached --quiet
 
         if ($LASTEXITCODE -eq 0) {
             Write-Host "No publish changes detected in $Branch."
         }
         else {
-            Invoke-Git commit -m "Publish site from $sourceRevision"
+            Invoke-Git -Arguments @("commit", "-m", "Publish site from $sourceRevision")
 
             if (-not $NoPush) {
-                Invoke-Git push -u origin $Branch
+                Invoke-Git -Arguments @("push", "-u", "origin", $Branch)
             }
             else {
                 Write-Host "Skipping push because -NoPush was supplied."
@@ -212,10 +212,10 @@ finally {
     }
 
     if ($currentBranch) {
-        $activeBranch = Get-GitOutput branch --show-current
+        $activeBranch = Get-GitOutput -Arguments @("branch", "--show-current")
 
         if ($activeBranch -ne $currentBranch) {
-            Invoke-Git switch $currentBranch
+            Invoke-Git -Arguments @("switch", $currentBranch)
         }
     }
 
