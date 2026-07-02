@@ -3,7 +3,7 @@
   "config": {
     "appTitle": "Family Heads Up Display",
     "timezone": "America/New_York",
-    "defaultSlideDurationSec": 20
+    "defaultSlideDurationSec": 7
   },
   "scheduleGroups": [
     {
@@ -1075,5 +1075,6 @@
         }
       ]
     }
-  ]
+  ],
+  "generatedAt": "20260702-192516063Z"
 }

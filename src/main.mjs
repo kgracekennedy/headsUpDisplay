@@ -4,6 +4,7 @@ import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
+const BUILD_VERSION = "__BUILD_VERSION__";
 const appElement = document.getElementById("app");
 const dom = {
   appTitle: null,
@@ -34,6 +35,7 @@ const state = {
   lastRenderedSlideKey: null,
   meterAnimationFrame: null
 };
+let hasReloadedForServiceWorkerUpdate = false;
 
 function escapeHtml(value) {
   return String(value)
@@ -252,55 +254,93 @@ function buildChecklistMarkup(slide) {
     .join("");
 }
 
+function renderCelebrationPanel(slide) {
+  const rewardMarkup = slide.rewardMessage
+    ? `
+        <div class="reward-block">
+          <p class="reward-label">Reward</p>
+          <p class="reward-text">${escapeHtml(slide.rewardMessage)}</p>
+        </div>
+      `
+    : "";
+
+  return `
+    <section class="completion-banner">
+      <div class="celebration-sky" aria-hidden="true">
+        <span class="celebration-firework celebration-firework--one"></span>
+        <span class="celebration-firework celebration-firework--two"></span>
+        <span class="celebration-firework celebration-firework--three"></span>
+      </div>
+      <p class="completion-label">Checklist complete</p>
+      <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
+      ${rewardMarkup}
+    </section>
+  `;
+}
+
 function renderChecklistSlide(slide, { animate = false } = {}) {
   const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
   const checkedCount = progressEntry.checkedItemIds.length;
   const isComplete = isChecklistComplete(slide, state.progress);
   const transitionClass = animate ? " slide-card--transition" : "";
-  const completionBanner = isComplete
-    ? `
-        <section class="completion-banner">
-          <p class="completion-label">Complete</p>
-          <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
-        </section>
-      `
-    : "";
+  const completionBanner = isComplete ? renderCelebrationPanel(slide) : "";
 
   return `
-    <article class="slide-card${transitionClass}${isComplete ? " slide-card--completed" : ""}" style="${themeStyle(slide)}">
-      <p class="eyebrow">${escapeHtml(slide.ownerLabel || "Checklist")}</p>
-      <h2>${escapeHtml(slide.title)}</h2>
-      ${completionBanner}
-      <div class="slide-stats">
-        <span class="stat-chip">${checkedCount} / ${slide.activeItems.length} checked</span>
-        <span class="stat-chip">${escapeHtml(slide.activeSchedule.groupLabel)}</span>
+    <article class="slide-card slide-card--checklist${transitionClass}${isComplete ? " slide-card--completed" : ""}" style="${themeStyle(slide)}">
+      <div class="checklist-layout">
+        <div class="checklist-summary">
+          <div>
+            <p class="eyebrow">${escapeHtml(slide.ownerLabel || "Checklist")}</p>
+            <h2>${escapeHtml(slide.title)}</h2>
+          </div>
+          <div class="slide-stats">
+            <span class="stat-chip">${checkedCount} / ${slide.activeItems.length} checked</span>
+            <span class="stat-chip">${escapeHtml(slide.activeSchedule.groupLabel)}</span>
+          </div>
+          ${completionBanner}
+        </div>
+        <div class="checklist-panel">
+          <ul class="checklist">
+            ${buildChecklistMarkup(slide)}
+          </ul>
+        </div>
       </div>
-      <ul class="checklist">
-        ${buildChecklistMarkup(slide)}
-      </ul>
     </article>
   `;
 }
 
 function renderReminderSlide(slide, { animate = false } = {}) {
   const transitionClass = animate ? " slide-card--transition" : "";
+  const itemCountLabel = `${slide.activeItems.length} reminder${slide.activeItems.length === 1 ? "" : "s"}`;
 
   return `
     <article class="slide-card slide-card--reminder${transitionClass}" style="${themeStyle(slide)}">
-      <p class="eyebrow">${escapeHtml(slide.ownerLabel || "Reminder")}</p>
-      <h2>${escapeHtml(slide.title)}</h2>
-      <ul class="reminder-list">
-        ${slide.activeItems
-          .map(
-            (item) => `
-              <li>
-                <span class="reminder-bullet"></span>
-                <span>${escapeHtml(item.text)}</span>
-              </li>
-            `
-          )
-          .join("")}
-      </ul>
+      <div class="reminder-layout">
+        <div class="reminder-summary">
+          <div>
+            <p class="eyebrow">${escapeHtml(slide.ownerLabel || "Reminder")}</p>
+            <h2>${escapeHtml(slide.title)}</h2>
+          </div>
+          <div class="slide-stats">
+            <span class="stat-chip">${escapeHtml(itemCountLabel)}</span>
+            <span class="stat-chip">${escapeHtml(slide.activeSchedule.groupLabel)}</span>
+          </div>
+        </div>
+        <div class="reminder-panel">
+          <ul class="reminder-list">
+            ${slide.activeItems
+              .map(
+                (item) => `
+                  <li>
+                    <span class="reminder-bullet"></span>
+                    <span>${escapeHtml(item.text)}</span>
+                  </li>
+                `
+              )
+              .join("")}
+          </ul>
+        </div>
+      </div>
     </article>
   `;
 }
@@ -320,24 +360,32 @@ function renderUpcomingState({ animate = false } = {}) {
 
   return `
     <article class="slide-card slide-card--idle${transitionClass}">
-      <p class="eyebrow">Off-hours</p>
-      <h2>No slides are active right now</h2>
-      <p class="idle-copy">
-        The rotation only shows slides whose schedule window is active. Update
-        <code>data/source/schedule_groups.csv</code> if the family rhythm changes.
-      </p>
-      <div class="upcoming-list">
-        ${upcoming
-          .map(
-            (entry) => `
-              <div class="upcoming-item">
-                <strong>${escapeHtml(entry.title)}</strong>
-                <span>${escapeHtml(entry.ownerLabel || "Household")}</span>
-                <span>${escapeHtml(formatClock(entry.startsAt, state.data.config.timezone))}</span>
-              </div>
-            `
-          )
-          .join("")}
+      <div class="idle-layout">
+        <div class="idle-summary">
+          <div>
+            <p class="eyebrow">Off-hours</p>
+            <h2>No slides are active right now</h2>
+          </div>
+          <p class="idle-copy">
+            The rotation only shows slides whose schedule window is active. Update
+            <code>data/source/schedule_groups.csv</code> if the family rhythm changes.
+          </p>
+        </div>
+        <div class="idle-panel">
+          <div class="upcoming-list">
+            ${upcoming
+              .map(
+                (entry) => `
+                  <div class="upcoming-item">
+                    <strong>${escapeHtml(entry.title)}</strong>
+                    <span>${escapeHtml(entry.ownerLabel || "Household")}</span>
+                    <span>${escapeHtml(formatClock(entry.startsAt, state.data.config.timezone))}</span>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        </div>
       </div>
     </article>
   `;
@@ -639,8 +687,24 @@ async function registerServiceWorker() {
     return;
   }
 
+  const hadControllerAtLoad = Boolean(navigator.serviceWorker.controller);
+
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadControllerAtLoad || hasReloadedForServiceWorkerUpdate) {
+      return;
+    }
+
+    hasReloadedForServiceWorkerUpdate = true;
+    window.location.reload();
+  });
+
   try {
-    await navigator.serviceWorker.register("./sw.js");
+    const registration = await navigator.serviceWorker.register(
+      `./sw.js?build=${encodeURIComponent(BUILD_VERSION)}`,
+      { updateViaCache: "none" }
+    );
+
+    registration.update().catch(() => {});
   } catch (error) {
     console.warn("Service worker registration failed.", error);
   }

@@ -10,6 +10,20 @@ const projectRoot = path.resolve(__dirname, "..");
 const sourceDataDirectory = path.join(projectRoot, "data", "source");
 const generatedDataDirectory = path.join(projectRoot, "data", "generated");
 const distDirectory = path.join(projectRoot, "dist");
+const BUILD_VERSION_TOKEN = "__BUILD_VERSION__";
+
+export function createBuildVersion(now = new Date()) {
+  return now
+    .toISOString()
+    .replaceAll("-", "")
+    .replaceAll(":", "")
+    .replace(".", "")
+    .replace("T", "-");
+}
+
+export function injectBuildVersion(contents, buildVersion) {
+  return String(contents).replaceAll(BUILD_VERSION_TOKEN, buildVersion);
+}
 
 async function readCsvTable(fileName) {
   const filePath = path.join(sourceDataDirectory, fileName);
@@ -57,14 +71,21 @@ async function copyPublicAssets() {
   }
 }
 
-export async function buildSite() {
+async function writeVersionedAsset(sourcePath, destinationPath, buildVersion) {
+  const sourceContents = await readFile(sourcePath, "utf8");
+  const nextContents = injectBuildVersion(sourceContents, buildVersion);
+  await writeFile(destinationPath, nextContents, "utf8");
+}
+
+export async function buildSite(options = {}) {
+  const buildVersion = options.buildVersion ?? createBuildVersion();
   const tables = {
     appConfigRows: await readCsvTable("app_config.csv"),
     slideRows: await readCsvTable("slides.csv"),
     itemRows: await readCsvTable("slide_items.csv"),
     scheduleRows: await readCsvTable("schedule_groups.csv")
   };
-  const householdData = buildHouseholdData(tables);
+  const householdData = buildHouseholdData(tables, { generatedAt: buildVersion });
   const serializedData = `${JSON.stringify(householdData, null, 2)}\n`;
 
   await mkdir(distDirectory, { recursive: true });
@@ -72,6 +93,16 @@ export async function buildSite() {
   await mkdir(generatedDataDirectory, { recursive: true });
   await copyDirectoryContents(path.join(projectRoot, "src"), distDirectory);
   await copyPublicAssets();
+  await writeVersionedAsset(
+    path.join(projectRoot, "src", "main.mjs"),
+    path.join(distDirectory, "main.mjs"),
+    buildVersion
+  );
+  await writeVersionedAsset(
+    path.join(projectRoot, "public", "sw.js"),
+    path.join(distDirectory, "sw.js"),
+    buildVersion
+  );
   await writeFile(path.join(distDirectory, "data", "household-data.json"), serializedData, "utf8");
   await writeFile(path.join(generatedDataDirectory, "household-data.json"), serializedData, "utf8");
 

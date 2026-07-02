@@ -248,6 +248,9 @@ The published site is served from the `gh-pages` branch.
 ## Troubleshooting
 
 - If your change does not appear, rebuild the site first.
+- If the site looks stuck on an older version in a normal browser tab or installed phone app, open it in a private tab. If the private tab looks correct, the device is holding an older cached build.
+- For a device with an older cached build, close the installed app, open the site in the browser, refresh it, and then reopen the installed app.
+- If the installed app still looks stale after that, remove it from the home screen and add it again.
 - If a slide disappears, check whether its `active` field is `false` or whether its `schedule_group_id` points to a missing schedule.
 - If a checklist item never shows up, check `day_selector`, `week_pattern`, and `active`.
 - If a reminder or checklist looks empty, make sure the slide has at least one matching row in `slide_items.csv`.
