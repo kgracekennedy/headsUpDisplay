@@ -1,4 +1,6 @@
-const CACHE_NAME = "heads-up-display-v1";
+const BUILD_VERSION = "20260702-192641340Z";
+const CACHE_PREFIX = "heads-up-display";
+const CACHE_NAME = `${CACHE_PREFIX}-${BUILD_VERSION}`;
 const CORE_FILES = [
   "./",
   "./index.html",
@@ -7,8 +9,45 @@ const CORE_FILES = [
   "./data/household-data.json",
   "./manifest.webmanifest",
   "./icon.svg",
-  "./apple-touch-icon.svg"
+  "./apple-touch-icon.svg",
+  "./lib/csv.mjs",
+  "./lib/data-model.mjs",
+  "./lib/rotation.mjs",
+  "./lib/runtime-model.mjs",
+  "./lib/schedule.mjs",
+  "./lib/storage.mjs",
+  "./lib/wake-lock.mjs"
 ];
+
+function isCacheableResponse(response) {
+  return Boolean(response) && response.ok;
+}
+
+async function putInCache(cache, request, response) {
+  if (!isCacheableResponse(response)) {
+    return;
+  }
+
+  await cache.put(request, response.clone());
+}
+
+async function networkFirst(request) {
+  const cache = await caches.open(CACHE_NAME);
+
+  try {
+    const response = await fetch(request);
+    await putInCache(cache, request, response);
+    return response;
+  } catch (error) {
+    const cachedResponse = await cache.match(request);
+
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
+    throw error;
+  }
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -23,12 +62,18 @@ self.addEventListener("activate", (event) => {
       .then((cacheNames) =>
         Promise.all(
           cacheNames
-            .filter((cacheName) => cacheName !== CACHE_NAME)
+            .filter((cacheName) => cacheName.startsWith(`${CACHE_PREFIX}-`) && cacheName !== CACHE_NAME)
             .map((cacheName) => caches.delete(cacheName))
         )
       )
       .then(() => self.clients.claim())
   );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("fetch", (event) => {
@@ -37,32 +82,10 @@ self.addEventListener("fetch", (event) => {
   }
 
   const requestUrl = new URL(event.request.url);
-  const isDataRequest = requestUrl.pathname.endsWith("/data/household-data.json");
 
-  if (isDataRequest) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          const cloned = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, cloned));
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
+  if (requestUrl.origin !== self.location.origin) {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      return fetch(event.request).then((response) => {
-        const cloned = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, cloned));
-        return response;
-      });
-    })
-  );
+  event.respondWith(networkFirst(event.request));
 });
