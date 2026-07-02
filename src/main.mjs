@@ -155,7 +155,7 @@ function renderChecklistSlide(slide) {
             data-item-id="${escapeHtml(item.id)}"
             aria-pressed="${checked ? "true" : "false"}"
           >
-            <span class="check-item__mark">${checked ? "✓" : ""}</span>
+            <span class="check-item__mark">${checked ? "&#10003;" : ""}</span>
             <span class="check-item__text">${escapeHtml(item.text)}</span>
           </button>
         </li>

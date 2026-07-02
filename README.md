@@ -24,12 +24,34 @@ Run these from `headsUpDisplay/`:
 - `pwsh -File .\scripts\dev-site.ps1`
   Builds the app and serves `dist/` locally at `http://localhost:4173`.
 
+- `pwsh -File .\scripts\publish-pages.ps1`
+  Runs tests, rebuilds the static site, and publishes the built output to the `gh-pages` branch for GitHub Pages.
+
 The PowerShell wrappers locate `node.exe` from a standard install or the Adobe-bundled runtime available on this machine.
 
 Keep the iPad/device timezone aligned with `app_config.csv`. The current schedule logic assumes the device clock matches the configured household timezone.
 
 ## Deployment
-GitHub Pages deployment is handled by `.github/workflows/deploy-pages.yml`. The workflow runs tests, builds the static site, and uploads `dist/`.
+This project now uses branch-based GitHub Pages publishing instead of the `deploy-pages` action.
+
+One-time GitHub setup:
+
+1. Commit and push your source changes on `main`
+2. Run `pwsh -File .\scripts\publish-pages.ps1` once to create and push the `gh-pages` branch
+3. Open `Settings -> Pages`
+4. Set `Source` to `Deploy from a branch`
+5. Choose branch `gh-pages`
+6. Choose folder `/(root)`
+7. Save
+
+Publishing flow from this computer:
+
+1. Make your CSV or app changes on `main`
+2. Commit and push `main`
+3. Run `pwsh -File .\scripts\publish-pages.ps1`
+4. GitHub Pages will publish from the updated `gh-pages` branch
+
+The workflow in `.github/workflows/deploy-pages.yml` now only validates tests and build output on `main`.
 
 ## Notes
 - The original seed CSV exports remain in `data/` for reference.

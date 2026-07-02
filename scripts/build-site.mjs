@@ -64,9 +64,7 @@ export async function buildSite() {
     itemRows: await readCsvTable("slide_items.csv"),
     scheduleRows: await readCsvTable("schedule_groups.csv")
   };
-  const householdData = buildHouseholdData(tables, {
-    generatedAt: new Date().toISOString()
-  });
+  const householdData = buildHouseholdData(tables);
   const serializedData = `${JSON.stringify(householdData, null, 2)}\n`;
 
   await mkdir(distDirectory, { recursive: true });

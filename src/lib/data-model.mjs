@@ -228,9 +228,8 @@ export function buildHouseholdData(tables, options = {}) {
     })
     .sort((left, right) => left.sortOrder - right.sortOrder);
 
-  return {
+  const result = {
     version: config.dataVersion,
-    generatedAt: options.generatedAt ?? new Date().toISOString(),
     config: {
       appTitle: config.appTitle,
       timezone: config.timezone,
@@ -239,4 +238,10 @@ export function buildHouseholdData(tables, options = {}) {
     scheduleGroups,
     slides
   };
+
+  if (options.generatedAt) {
+    result.generatedAt = options.generatedAt;
+  }
+
+  return result;
 }
