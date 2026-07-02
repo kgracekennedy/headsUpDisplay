@@ -1,9 +1,21 @@
 import { getUpcomingStarts, getActiveSlides } from "./lib/schedule.mjs";
 import { hydrateProgress, isChecklistComplete, toggleChecklistItem } from "./lib/runtime-model.mjs";
+import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
 const appElement = document.getElementById("app");
+const dom = {
+  appTitle: null,
+  clockPanel: null,
+  wakeNote: null,
+  meterFill: null,
+  activePosition: null,
+  windowText: null,
+  stageBoard: null,
+  slideStrip: null,
+  controlRow: null
+};
 const state = {
   data: null,
   progress: { version: 1, slides: {} },
@@ -17,7 +29,10 @@ const state = {
     : "Wake lock is not available here. Install the app and set Auto-Lock to Never if needed.",
   now: new Date(),
   touchPoint: null,
-  lastPersistedProgress: ""
+  lastPersistedProgress: "",
+  lastStructuralSignature: null,
+  lastRenderedSlideKey: null,
+  meterAnimationFrame: null
 };
 
 function escapeHtml(value) {
@@ -74,77 +89,150 @@ function slideDurationMs() {
   return (state.data?.config.defaultSlideDurationSec ?? 20) * 1000;
 }
 
-function selectSlideByIndex(index) {
-  if (state.activeSlides.length === 0) {
-    state.currentSlideId = null;
-    render();
+function getSlideKey(slide) {
+  return slide ? slide.id : "idle";
+}
+
+function ensureShellRendered() {
+  if (dom.stageBoard) {
     return;
   }
 
-  const normalizedIndex = ((index % state.activeSlides.length) + state.activeSlides.length) % state.activeSlides.length;
-  state.currentSlideId = state.activeSlides[normalizedIndex].id;
-  state.rotationStartedAt = Date.now();
-  scheduleRotation();
-  render();
-}
-
-function moveSlide(offset) {
-  selectSlideByIndex(currentIndex() + offset);
-}
-
-function syncDerivedState() {
-  state.activeSlides = getActiveSlides(state.data, state.now);
-  state.progress = hydrateProgress(state.data, state.progress, state.now);
-  persistProgressIfChanged();
-
-  if (state.activeSlides.length === 0) {
-    state.currentSlideId = null;
-    return;
-  }
-
-  if (!state.activeSlides.some((slide) => slide.id === state.currentSlideId)) {
-    state.currentSlideId = state.activeSlides[0].id;
-    state.rotationStartedAt = Date.now();
-  }
-}
-
-function scheduleRotation() {
-  if (state.rotationTimeout) {
-    window.clearTimeout(state.rotationTimeout);
-    state.rotationTimeout = null;
-  }
-
-  if (document.hidden || state.activeSlides.length <= 1) {
-    return;
-  }
-
-  state.rotationTimeout = window.setTimeout(() => {
-    moveSlide(1);
-  }, slideDurationMs());
-}
-
-function renderChecklistSlide(slide) {
-  const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
-  const isComplete = isChecklistComplete(slide, state.progress);
-
-  if (isComplete) {
-    return `
-      <article class="slide-card slide-card--celebration" style="${themeStyle(slide)}">
-        <div class="celebration-shape"></div>
-        <p class="eyebrow">Reward unlocked</p>
-        <h2>${escapeHtml(slide.celebrationTitle)}</h2>
-        <p class="celebration-copy">${escapeHtml(slide.rewardMessage || "Checklist complete.")}</p>
-        <div class="slide-stats">
-          <span class="stat-chip">Held until the next schedule reset</span>
-          <span class="stat-chip">Completed</span>
+  appElement.innerHTML = `
+    <div class="chrome-panel">
+      <div>
+        <p class="eyebrow">Heads Up Display</p>
+        <h1 data-role="app-title"></h1>
+      </div>
+      <div class="status-stack">
+        <div class="clock-panel" data-role="clock-panel"></div>
+        <div class="wake-note" data-role="wake-note"></div>
+      </div>
+    </div>
+    <div class="stage-shell">
+      <div class="rotation-meter" aria-hidden="true">
+        <span data-role="meter-fill"></span>
+      </div>
+      <div class="stage-meta">
+        <div>
+          <span class="meta-label">Active now</span>
+          <strong data-role="active-position">0 / 0</strong>
         </div>
-      </article>
-    `;
+        <div>
+          <span class="meta-label">Window</span>
+          <strong data-role="window-text">Waiting</strong>
+        </div>
+        <div>
+          <span class="meta-label">Interaction</span>
+          <strong>Swipe or tap to jump fast</strong>
+        </div>
+      </div>
+      <section class="stage-board" data-role="stage-board"></section>
+    </div>
+    <nav class="slide-strip" data-role="slide-strip" aria-label="Active slides"></nav>
+    <div class="control-row" data-role="control-row"></div>
+  `;
+
+  dom.appTitle = appElement.querySelector("[data-role='app-title']");
+  dom.clockPanel = appElement.querySelector("[data-role='clock-panel']");
+  dom.wakeNote = appElement.querySelector("[data-role='wake-note']");
+  dom.meterFill = appElement.querySelector("[data-role='meter-fill']");
+  dom.activePosition = appElement.querySelector("[data-role='active-position']");
+  dom.windowText = appElement.querySelector("[data-role='window-text']");
+  dom.stageBoard = appElement.querySelector("[data-role='stage-board']");
+  dom.slideStrip = appElement.querySelector("[data-role='slide-strip']");
+  dom.controlRow = appElement.querySelector("[data-role='control-row']");
+}
+
+function updateStatusPanel() {
+  if (!state.data || !dom.clockPanel || !dom.wakeNote) {
+    return;
   }
 
-  const itemMarkup = slide.activeItems
+  dom.clockPanel.textContent = formatClock(state.now, state.data.config.timezone);
+  dom.wakeNote.textContent = state.wakeLockMessage;
+}
+
+function updateMeter() {
+  if (!dom.meterFill) {
+    return;
+  }
+
+  const activeSlide = currentSlide();
+  const shouldTrackRotation = Boolean(activeSlide) && state.activeSlides.length > 1;
+  const ratio = shouldTrackRotation
+    ? getRotationRatio(state.rotationStartedAt, Date.now(), slideDurationMs())
+    : 0;
+
+  dom.meterFill.style.width = `${(ratio * 100).toFixed(2)}%`;
+}
+
+function updateLiveDisplay() {
+  updateStatusPanel();
+  updateMeter();
+}
+
+function startMeterLoop() {
+  stopMeterLoop();
+
+  const step = () => {
+    updateMeter();
+
+    if (document.hidden) {
+      state.meterAnimationFrame = null;
+      return;
+    }
+
+    state.meterAnimationFrame = window.requestAnimationFrame(step);
+  };
+
+  state.meterAnimationFrame = window.requestAnimationFrame(step);
+}
+
+function stopMeterLoop() {
+  if (!state.meterAnimationFrame) {
+    return;
+  }
+
+  window.cancelAnimationFrame(state.meterAnimationFrame);
+  state.meterAnimationFrame = null;
+}
+
+function buildStructuralSignature() {
+  const slideStates = state.activeSlides.map((slide) => {
+    const activeItemIds = slide.activeItems.map((item) => item.id).join(",");
+
+    if (slide.type !== "checklist") {
+      return `${slide.id}:reminder:${slide.activeSchedule.instanceKey}:${activeItemIds}`;
+    }
+
+    const checkedItemIds = [...(state.progress.slides[slide.id]?.checkedItemIds ?? [])]
+      .sort()
+      .join(",");
+    const completionState = isChecklistComplete(slide, state.progress) ? "complete" : "progress";
+
+    return [
+      slide.id,
+      slide.activeSchedule.instanceKey,
+      activeItemIds,
+      checkedItemIds,
+      completionState
+    ].join(":");
+  });
+
+  return JSON.stringify({
+    activeSlides: slideStates,
+    currentSlideId: state.currentSlideId
+  });
+}
+
+function buildChecklistMarkup(slide) {
+  const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
+
+  return slide.activeItems
     .map((item) => {
       const checked = progressEntry.checkedItemIds.includes(item.id);
+
       return `
         <li>
           <button
@@ -162,25 +250,43 @@ function renderChecklistSlide(slide) {
       `;
     })
     .join("");
+}
+
+function renderChecklistSlide(slide, { animate = false } = {}) {
+  const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
+  const checkedCount = progressEntry.checkedItemIds.length;
+  const isComplete = isChecklistComplete(slide, state.progress);
+  const transitionClass = animate ? " slide-card--transition" : "";
+  const completionBanner = isComplete
+    ? `
+        <section class="completion-banner">
+          <p class="completion-label">Complete</p>
+          <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
+        </section>
+      `
+    : "";
 
   return `
-    <article class="slide-card" style="${themeStyle(slide)}">
+    <article class="slide-card${transitionClass}${isComplete ? " slide-card--completed" : ""}" style="${themeStyle(slide)}">
       <p class="eyebrow">${escapeHtml(slide.ownerLabel || "Checklist")}</p>
       <h2>${escapeHtml(slide.title)}</h2>
+      ${completionBanner}
       <div class="slide-stats">
-        <span class="stat-chip">${slide.activeItems.length} active item${slide.activeItems.length === 1 ? "" : "s"}</span>
+        <span class="stat-chip">${checkedCount} / ${slide.activeItems.length} checked</span>
         <span class="stat-chip">${escapeHtml(slide.activeSchedule.groupLabel)}</span>
       </div>
       <ul class="checklist">
-        ${itemMarkup}
+        ${buildChecklistMarkup(slide)}
       </ul>
     </article>
   `;
 }
 
-function renderReminderSlide(slide) {
+function renderReminderSlide(slide, { animate = false } = {}) {
+  const transitionClass = animate ? " slide-card--transition" : "";
+
   return `
-    <article class="slide-card slide-card--reminder" style="${themeStyle(slide)}">
+    <article class="slide-card slide-card--reminder${transitionClass}" style="${themeStyle(slide)}">
       <p class="eyebrow">${escapeHtml(slide.ownerLabel || "Reminder")}</p>
       <h2>${escapeHtml(slide.title)}</h2>
       <ul class="reminder-list">
@@ -208,11 +314,12 @@ function themeStyle(slide) {
   ].join(";");
 }
 
-function renderUpcomingState() {
+function renderUpcomingState({ animate = false } = {}) {
   const upcoming = getUpcomingStarts(state.data, state.now, 4);
+  const transitionClass = animate ? " slide-card--transition" : "";
 
   return `
-    <article class="slide-card slide-card--idle">
+    <article class="slide-card slide-card--idle${transitionClass}">
       <p class="eyebrow">Off-hours</p>
       <h2>No slides are active right now</h2>
       <p class="idle-copy">
@@ -241,98 +348,143 @@ function renderNavigation() {
     return "";
   }
 
-  return `
-    <nav class="slide-strip" aria-label="Active slides">
-      ${state.activeSlides
-        .map((slide, index) => {
-          const selected = slide.id === state.currentSlideId;
-          const complete = slide.type === "checklist" && isChecklistComplete(slide, state.progress);
-          return `
-            <button
-              type="button"
-              class="slide-pill ${selected ? "slide-pill--selected" : ""}"
-              data-action="select-slide"
-              data-slide-index="${index}"
-              aria-pressed="${selected ? "true" : "false"}"
-            >
-              <span>${escapeHtml(slide.title)}</span>
-              <small>${complete ? "reward" : slide.type}</small>
-            </button>
-          `;
-        })
-        .join("")}
-    </nav>
-  `;
+  return state.activeSlides
+    .map((slide, index) => {
+      const selected = slide.id === state.currentSlideId;
+      const complete = slide.type === "checklist" && isChecklistComplete(slide, state.progress);
+
+      return `
+        <button
+          type="button"
+          class="slide-pill ${selected ? "slide-pill--selected" : ""}"
+          data-action="select-slide"
+          data-slide-index="${index}"
+          aria-pressed="${selected ? "true" : "false"}"
+        >
+          <span>${escapeHtml(slide.title)}</span>
+          <small>${complete ? "complete" : slide.type}</small>
+        </button>
+      `;
+    })
+    .join("");
 }
 
 function renderControls() {
   if (state.activeSlides.length === 0) {
     return `
-      <div class="control-row">
-        <button type="button" class="control-button" data-action="request-wake-lock">
-          ${supportsWakeLock() ? "Try keep-awake mode" : "Wake-lock unavailable"}
-        </button>
-      </div>
+      <button type="button" class="control-button" data-action="request-wake-lock">
+        ${supportsWakeLock() ? "Try keep-awake mode" : "Wake-lock unavailable"}
+      </button>
     `;
   }
 
   return `
-    <div class="control-row">
-      <button type="button" class="control-button" data-action="prev-slide">Previous</button>
-      <button type="button" class="control-button" data-action="next-slide">Next</button>
-      <button type="button" class="control-button" data-action="request-wake-lock">
-        Keep display awake
-      </button>
-    </div>
+    <button type="button" class="control-button" data-action="prev-slide">Previous</button>
+    <button type="button" class="control-button" data-action="next-slide">Next</button>
+    <button type="button" class="control-button" data-action="request-wake-lock">
+      Keep display awake
+    </button>
   `;
 }
 
-function render() {
+function renderStructure({ force = false, animateSlide = false } = {}) {
   if (!state.data) {
+    return false;
+  }
+
+  ensureShellRendered();
+  dom.appTitle.textContent = state.data.config.appTitle;
+
+  const activeSlide = currentSlide();
+  const structuralSignature = buildStructuralSignature();
+  const slideKey = getSlideKey(activeSlide);
+  const shouldAnimate = animateSlide && state.lastRenderedSlideKey !== null && state.lastRenderedSlideKey !== slideKey;
+
+  if (!force && structuralSignature === state.lastStructuralSignature) {
+    updateLiveDisplay();
+    return false;
+  }
+
+  dom.activePosition.textContent = activeSlide
+    ? `${currentIndex() + 1} / ${state.activeSlides.length}`
+    : "0 / 0";
+  dom.windowText.textContent = activeSlide
+    ? `${formatTime(activeSlide.activeSchedule.startsAt, state.data.config.timezone)} - ${formatTime(activeSlide.activeSchedule.endsAt, state.data.config.timezone)}`
+    : "Waiting";
+  dom.stageBoard.innerHTML = activeSlide
+    ? (
+        activeSlide.type === "checklist"
+          ? renderChecklistSlide(activeSlide, { animate: shouldAnimate })
+          : renderReminderSlide(activeSlide, { animate: shouldAnimate })
+      )
+    : renderUpcomingState({ animate: shouldAnimate });
+  dom.slideStrip.innerHTML = renderNavigation();
+  dom.controlRow.innerHTML = renderControls();
+
+  state.lastStructuralSignature = structuralSignature;
+  state.lastRenderedSlideKey = slideKey;
+  updateLiveDisplay();
+  return true;
+}
+
+function syncDerivedState() {
+  const previousActiveSlideIds = state.activeSlides.map((slide) => slide.id).join("|");
+  const previousCurrentSlideId = state.currentSlideId;
+
+  state.activeSlides = getActiveSlides(state.data, state.now);
+  state.progress = hydrateProgress(state.data, state.progress, state.now);
+  persistProgressIfChanged();
+
+  if (state.activeSlides.length === 0) {
+    state.currentSlideId = null;
+  } else if (!state.activeSlides.some((slide) => slide.id === state.currentSlideId)) {
+    state.currentSlideId = state.activeSlides[0].id;
+    state.rotationStartedAt = Date.now();
+  }
+
+  return {
+    activeSlidesChanged: previousActiveSlideIds !== state.activeSlides.map((slide) => slide.id).join("|"),
+    currentSlideChanged: previousCurrentSlideId !== state.currentSlideId
+  };
+}
+
+function scheduleRotation() {
+  if (state.rotationTimeout) {
+    window.clearTimeout(state.rotationTimeout);
+    state.rotationTimeout = null;
+  }
+
+  if (document.hidden || state.activeSlides.length <= 1) {
     return;
   }
 
-  const activeSlide = currentSlide();
-  const elapsed = Date.now() - state.rotationStartedAt;
-  const meterRatio = activeSlide ? Math.min(1, elapsed / slideDurationMs()) : 0;
-  const activePosition = activeSlide ? `${currentIndex() + 1} / ${state.activeSlides.length}` : "0 / 0";
+  const delayMs = getRotationDelayMs(state.rotationStartedAt, Date.now(), slideDurationMs());
 
-  appElement.innerHTML = `
-    <div class="chrome-panel">
-      <div>
-        <p class="eyebrow">Heads Up Display</p>
-        <h1>${escapeHtml(state.data.config.appTitle)}</h1>
-      </div>
-      <div class="status-stack">
-        <div class="clock-panel">${escapeHtml(formatClock(state.now, state.data.config.timezone))}</div>
-        <div class="wake-note">${escapeHtml(state.wakeLockMessage)}</div>
-      </div>
-    </div>
-    <div class="stage-shell">
-      <div class="rotation-meter" aria-hidden="true">
-        <span style="width:${Math.round(meterRatio * 100)}%"></span>
-      </div>
-      <div class="stage-meta">
-        <div>
-          <span class="meta-label">Active now</span>
-          <strong>${escapeHtml(activePosition)}</strong>
-        </div>
-        <div>
-          <span class="meta-label">Window</span>
-          <strong>${activeSlide ? `${escapeHtml(formatTime(activeSlide.activeSchedule.startsAt, state.data.config.timezone))} - ${escapeHtml(formatTime(activeSlide.activeSchedule.endsAt, state.data.config.timezone))}` : "Waiting"}</strong>
-        </div>
-        <div>
-          <span class="meta-label">Interaction</span>
-          <strong>Swipe or tap to jump fast</strong>
-        </div>
-      </div>
-      <section class="stage-board" id="stage-board">
-        ${activeSlide ? (activeSlide.type === "checklist" ? renderChecklistSlide(activeSlide) : renderReminderSlide(activeSlide)) : renderUpcomingState()}
-      </section>
-    </div>
-    ${renderNavigation()}
-    ${renderControls()}
-  `;
+  state.rotationTimeout = window.setTimeout(() => {
+    moveSlide(1);
+  }, delayMs);
+}
+
+function selectSlideByIndex(index, { animateSlide = true } = {}) {
+  if (state.activeSlides.length === 0) {
+    state.currentSlideId = null;
+    renderStructure({ force: true, animateSlide: false });
+    return;
+  }
+
+  const normalizedIndex =
+    ((index % state.activeSlides.length) + state.activeSlides.length) % state.activeSlides.length;
+  const nextSlideId = state.activeSlides[normalizedIndex].id;
+  const currentSlideChanged = nextSlideId !== state.currentSlideId;
+
+  state.currentSlideId = nextSlideId;
+  state.rotationStartedAt = Date.now();
+  renderStructure({ animateSlide: animateSlide && currentSlideChanged });
+  scheduleRotation();
+}
+
+function moveSlide(offset) {
+  selectSlideByIndex(currentIndex() + offset, { animateSlide: true });
 }
 
 async function ensureWakeLock() {
@@ -344,11 +496,11 @@ async function ensureWakeLock() {
     sentinel.addEventListener("release", () => {
       state.wakeLockSentinel = null;
       state.wakeLockMessage = "Wake lock released. Tap Keep display awake to request it again.";
-      render();
+      updateStatusPanel();
     });
   }
 
-  render();
+  updateStatusPanel();
 }
 
 function handleClick(event) {
@@ -373,12 +525,14 @@ function handleClick(event) {
       state.now
     );
     persistProgressIfChanged();
-    render();
+    renderStructure({ animateSlide: false });
     return;
   }
 
   if (action === "select-slide") {
-    selectSlideByIndex(Number.parseInt(target.dataset.slideIndex ?? "0", 10));
+    selectSlideByIndex(Number.parseInt(target.dataset.slideIndex ?? "0", 10), {
+      animateSlide: true
+    });
     return;
   }
 
@@ -428,6 +582,16 @@ function handleTouchEnd(event) {
   moveSlide(deltaX < 0 ? 1 : -1);
 }
 
+function handleLiveTick() {
+  state.now = new Date();
+  const syncResult = syncDerivedState();
+  renderStructure({ animateSlide: syncResult.currentSlideChanged });
+
+  if (syncResult.activeSlidesChanged || syncResult.currentSlideChanged) {
+    scheduleRotation();
+  }
+}
+
 function installEventListeners() {
   appElement.addEventListener("click", handleClick);
   appElement.addEventListener("touchstart", handleTouchStart, { passive: true });
@@ -439,26 +603,25 @@ function installEventListeners() {
         window.clearTimeout(state.rotationTimeout);
         state.rotationTimeout = null;
       }
+
+      stopMeterLoop();
       return;
     }
 
     state.now = new Date();
-    syncDerivedState();
+    const syncResult = syncDerivedState();
+    renderStructure({ animateSlide: syncResult.currentSlideChanged });
     scheduleRotation();
+    startMeterLoop();
 
     if (!state.wakeLockSentinel) {
       ensureWakeLock();
     } else {
-      render();
+      updateStatusPanel();
     }
   });
 
-  window.setInterval(() => {
-    state.now = new Date();
-    syncDerivedState();
-    scheduleRotation();
-    render();
-  }, 1000);
+  window.setInterval(handleLiveTick, 1000);
 }
 
 async function loadHouseholdData() {
@@ -486,11 +649,20 @@ async function registerServiceWorker() {
 async function initialize() {
   try {
     state.data = await loadHouseholdData();
-    state.progress = loadProgressState() ?? state.progress;
+
+    const savedProgress = loadProgressState();
+
+    if (savedProgress) {
+      state.progress = savedProgress;
+      state.lastPersistedProgress = JSON.stringify(savedProgress);
+    }
+
     syncDerivedState();
+    ensureShellRendered();
     installEventListeners();
-    render();
+    renderStructure({ force: true, animateSlide: false });
     scheduleRotation();
+    startMeterLoop();
     registerServiceWorker();
     ensureWakeLock();
   } catch (error) {

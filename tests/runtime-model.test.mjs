@@ -42,4 +42,32 @@ describe("runtime checklist behavior", () => {
     assert.equal(isChecklistComplete(refreshedSlide, progress), false);
     assert.deepEqual(progress.slides.alexander_am.checkedItemIds, []);
   });
+
+  it("allows a completed checklist item to be unchecked directly", async () => {
+    const data = await loadSourceData();
+    const morning = new Date("2026-07-07T07:30:00");
+    let progress = hydrateProgress(data, { version: 1, slides: {} }, morning);
+    const alexanderSlide = getActiveSlides(data, morning).find((slide) => slide.id === "alexander_am");
+
+    for (const item of alexanderSlide.activeItems) {
+      progress = toggleChecklistItem(data, progress, "alexander_am", item.id, morning);
+    }
+
+    assert.equal(isChecklistComplete(alexanderSlide, progress), true);
+
+    progress = toggleChecklistItem(
+      data,
+      progress,
+      "alexander_am",
+      alexanderSlide.activeItems[0].id,
+      morning
+    );
+
+    const refreshedSlide = getActiveSlides(data, morning).find((slide) => slide.id === "alexander_am");
+    assert.equal(isChecklistComplete(refreshedSlide, progress), false);
+    assert.equal(
+      progress.slides.alexander_am.checkedItemIds.includes(alexanderSlide.activeItems[0].id),
+      false
+    );
+  });
 });
