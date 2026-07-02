@@ -308,14 +308,16 @@ function renderCelebrationPanel(slide) {
         </div>
       `
     : "";
-  const completionLabel = slide.rewardMessage ? "Reward unlocked" : "Checklist complete";
+    const completionLabel = slide.rewardMessage ? "Reward unlocked" : "Checklist complete";
 
   return `
     <section class="completion-banner">
-      <p class="completion-label">${completionLabel}</p>
-      <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
+      <div class="completion-copy">
+        <p class="completion-label">${completionLabel}</p>
+        <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
+        <p class="completion-note">Tap any checked item to reopen the list.</p>
+      </div>
       ${rewardMarkup}
-      <p class="completion-note">Tap any checked item to reopen the list.</p>
     </section>
   `;
 }
