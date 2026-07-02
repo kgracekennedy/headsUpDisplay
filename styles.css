@@ -165,7 +165,7 @@ code {
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #ffe083 0%, #ff9d62 50%, #8bc1ff 100%);
-  transition: width 0.85s linear;
+  will-change: width;
 }
 
 .stage-meta {
@@ -207,7 +207,10 @@ code {
     radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.16), transparent 24%),
     radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.1), transparent 18%),
     linear-gradient(160deg, var(--slide-start, #1f2937), var(--slide-end, #111827));
-  animation: card-rise 500ms ease;
+}
+
+.slide-card--transition {
+  animation: card-rise 350ms ease;
 }
 
 .slide-card::after {
@@ -327,33 +330,38 @@ code {
   box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.08);
 }
 
-.slide-card--celebration {
+.completion-banner {
+  position: relative;
+  z-index: 1;
   display: grid;
-  align-content: center;
-  gap: 0.9rem;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.slide-card--celebration h2 {
-  max-width: 12ch;
-}
-
-.celebration-copy {
-  max-width: 26ch;
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  line-height: 1.35;
+.completion-label,
+.completion-title {
   margin: 0;
 }
 
-.celebration-shape {
-  position: absolute;
-  inset: auto -6rem -6rem auto;
-  width: 22rem;
-  height: 22rem;
-  background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0 8%, transparent 8%),
-    conic-gradient(from 90deg, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.22), transparent);
-  opacity: 0.45;
-  transform: rotate(12deg);
+.completion-label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  opacity: 0.8;
+}
+
+.completion-title {
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.slide-card--completed .check-item {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .slide-card--idle {
