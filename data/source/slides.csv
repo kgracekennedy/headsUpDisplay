@@ -1,0 +1,11 @@
+slide_id,sort_order,slide_type,title,owner_label,schedule_group_id,background_start,background_end,accent_color,text_color,reward_message,celebration_title,active,notes
+parents_am,10,checklist,Parents Morning Reset,Mommy and Pabbi,parents_am,#f5c77c,#f26a4b,#4d8f8a,#1e2432,"Fresh coffee and a five-minute quiet kitchen reset.","Parents are clear for the morning.",true,Shared parent AM checklist.
+alexander_am,20,checklist,Alexander Morning Run,Alexander,kids_am,#8bc1ff,#4464e1,#ffe083,#102039,"A screen token is waiting once the list is fully closed.","Alexander morning checklist complete.",true,Separate AM checklist for Alexander.
+lilja_am,30,checklist,Lilja Morning Run,Lilja,kids_am,#ffb8da,#ff7a59,#ffe38b,#2b1636,"Pick the first car song after the checklist is done.","Lilja morning checklist complete.",true,Separate AM checklist for Lilja.
+weekday_launch_reminder,40,reminder,Weekday Launch,Household,school_launch_reminder,#9be8c5,#2f8b7d,#fef6c8,#102320,,,true,Reminder slide for weekday departure rhythm.
+parents_pm,50,checklist,Parents Evening Reset,Mommy and Pabbi,parents_pm,#18243f,#39517a,#f1d06a,#f5f7ff,"Tea, dim lights, and a calmer kitchen before bed.","Parents evening checklist complete.",true,Shared parent PM checklist.
+alexander_pm,60,checklist,Alexander Evening Run,Alexander,kids_pm,#86e0d7,#0d6c88,#ffe083,#08222f,"Choose the bedtime story first tonight.","Alexander evening checklist complete.",true,Separate PM checklist for Alexander.
+lilja_pm,70,checklist,Lilja Evening Run,Lilja,kids_pm,#f4a8ff,#7256d8,#ffe49f,#1c1036,"Choose the bedtime song tonight.","Lilja evening checklist complete.",true,Separate PM checklist for Lilja.
+weekend_screen_reminder,80,reminder,Weekend Screen Unlock,Household,weekend_screen,#ffe799,#ff9d62,#176c7f,#2c1705,,,true,Reminder slide for weekend screen expectations.
+cleaner_prep_reminder,90,reminder,Cleaner Prep Tonight,Household,cleaner_monday,#d1d6ff,#6c7cff,#ffd789,#121a34,,,true,Alternating Monday prep reminder.
+sunday_reset_reminder,100,reminder,Sunday Night Reset,Household,sunday_reset,#8fd9de,#236474,#ffd7a8,#0f1b20,,,true,Reminder slide for Sunday preparation.

@@ -1,0 +1,26 @@
+Create a heads up display for my family.  I want the "app" to display slides for about 20 seconds.
+
+Initial check-lists are in the data folder.  
+- We need to figure out the best way to store it.
+- We need to draft an initial "reminder" data for that slide.
+
+I think the best way to do this is deploying on GitHub like we did for the math app.
+
+Required features
+- two types of screens: checklists and reminder pages
+- some screens should be checklists that refresh at the beginning of each display time
+- the rotating screens should persist and ipad should not fall asleep when turned on
+- celebration screen when a checklist is complete with a reminder of a reward
+
+
+Configurable parameters
+- duration for slide to display
+- dates and times that a slides should display
+- text for todo items on checklists
+- text for reminder slides
+- who is responsible for the checklist
+- rewards for finishing checklist
+- the ability for parents to have a shared checklist
+- kids list should be separate
+- the ability to swipe between slides so someone can get to their checklist quickly to check something off
+- color scheme for each page

@@ -1,0 +1,25 @@
+{
+  "name": "Family Heads Up Display",
+  "short_name": "HUD",
+  "description": "Rotating family checklists, reminder slides, and celebration screens.",
+  "display": "standalone",
+  "start_url": "./",
+  "scope": "./",
+  "background_color": "#101829",
+  "theme_color": "#18243f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

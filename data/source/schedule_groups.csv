@@ -1,0 +1,12 @@
+schedule_group_id,label,sort_order,day_selector,start_time,end_time,week_pattern,anchor_date,active,notes
+parents_am,Parents morning,10,Weekdays,05:00,12:00,all,,true,
+parents_am,Parents morning,20,"Sat,Sun",07:00,13:00,all,,true,
+kids_am,Kids morning,10,Weekdays,05:00,18:00,all,,true,
+kids_am,Kids morning,20,"Sat,Sun",07:00,15:00,all,,true,
+school_launch_reminder,School launch,10,Weekdays,05:30,09:00,all,,true,
+parents_pm,Parents evening,10,"Mon,Tue,Wed,Thu,Fri,Sun",16:00,02:00,all,,true,
+parents_pm,Parents evening,20,Sat,17:00,23:00,all,,true,
+kids_pm,Kids evening,10,All,16:00,02:00,all,,true,
+weekend_screen,Weekend screens,10,"Sat,Sun",08:00,16:00,all,,true,
+cleaner_monday,Cleaner prep,10,Mon,16:00,23:00,every_other_from_anchor,2026-06-29,true,
+sunday_reset,Sunday reset,10,Sun,18:00,22:00,all,,true,

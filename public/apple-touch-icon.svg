@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="56" fill="#18243f" />
+  <rect x="24" y="24" width="208" height="208" rx="42" fill="#f8fafc" opacity="0.08" />
+  <circle cx="80" cy="92" r="26" fill="#ffe083" />
+  <path d="M74 92l8 8 18-20" fill="none" stroke="#18243f" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" />
+  <rect x="120" y="76" width="70" height="14" rx="7" fill="#8bc1ff" />
+  <rect x="120" y="102" width="52" height="14" rx="7" fill="#f5c77c" />
+  <rect x="58" y="146" width="140" height="52" rx="20" fill="#f26a4b" opacity="0.9" />
+  <text x="128" y="179" font-family="Avenir Next, Segoe UI, sans-serif" font-size="34" font-weight="700" text-anchor="middle" fill="#fff8ef">HUD</text>
+</svg>
