@@ -277,7 +277,7 @@
         "accent": "#ffe083",
         "text": "#102039"
       },
-      "rewardMessage": "A screen token is waiting once the list is fully closed.",
+      "rewardMessage": "Well done!  Have a great day, sweetheart!",
       "celebrationTitle": "Alexander morning checklist complete.",
       "notes": "Separate AM checklist for Alexander.",
       "items": [
@@ -446,7 +446,7 @@
         "accent": "#ffe38b",
         "text": "#2b1636"
       },
-      "rewardMessage": "Pick the first car song after the checklist is done.",
+      "rewardMessage": "Well done!  Have a great day, sweetheart!",
       "celebrationTitle": "Lilja morning checklist complete.",
       "notes": "Separate AM checklist for Lilja.",
       "items": [
@@ -803,7 +803,7 @@
         "accent": "#ffe083",
         "text": "#08222f"
       },
-      "rewardMessage": "Choose the bedtime story first tonight.",
+      "rewardMessage": "Enjoy playtime on the blue phone.",
       "celebrationTitle": "Alexander evening checklist complete.",
       "notes": "Separate PM checklist for Alexander.",
       "items": [
@@ -872,7 +872,7 @@
         "accent": "#ffe49f",
         "text": "#1c1036"
       },
-      "rewardMessage": "Choose the bedtime song tonight.",
+      "rewardMessage": "Enjoy playtime on the pink phone. phone.",
       "celebrationTitle": "Lilja evening checklist complete.",
       "notes": "Separate PM checklist for Lilja.",
       "items": [
@@ -1076,5 +1076,5 @@
       ]
     }
   ],
-  "generatedAt": "20260702-193753521Z"
+  "generatedAt": "20260702-194212217Z"
 }
