@@ -60,6 +60,26 @@ export function isChecklistComplete(activeSlide, progressState) {
   return activeSlide.activeItems.every((item) => progressEntry.checkedItemIds.includes(item.id));
 }
 
+export function getOrderedChecklistItems(activeSlide, progressState) {
+  if (activeSlide.type !== "checklist") {
+    return activeSlide.activeItems;
+  }
+
+  const checkedItemIds = new Set(progressState.slides[activeSlide.id]?.checkedItemIds ?? []);
+  const pendingItems = [];
+  const completedItems = [];
+
+  for (const item of activeSlide.activeItems) {
+    if (checkedItemIds.has(item.id)) {
+      completedItems.push(item);
+    } else {
+      pendingItems.push(item);
+    }
+  }
+
+  return [...pendingItems, ...completedItems];
+}
+
 export function toggleChecklistItem(data, progressState, slideId, itemId, now) {
   const activeSlide = getActiveSlides(data, now).find((slide) => slide.id === slideId);
 

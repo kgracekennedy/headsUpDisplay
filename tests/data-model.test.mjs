@@ -7,7 +7,7 @@ describe("buildHouseholdData", () => {
     const data = await loadSourceData();
 
     assert.equal(data.config.appTitle, "Family Heads Up Display");
-    assert.equal(data.config.defaultSlideDurationSec, 7);
+    assert.equal(data.config.defaultSlideDurationSec, 15);
     assert.equal(data.slides.length, 10);
     assert.equal(data.scheduleGroups.length, 8);
   });

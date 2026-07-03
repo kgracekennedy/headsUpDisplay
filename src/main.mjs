@@ -1,5 +1,10 @@
 import { getUpcomingStarts, getActiveSlides } from "./lib/schedule.mjs";
-import { hydrateProgress, isChecklistComplete, toggleChecklistItem } from "./lib/runtime-model.mjs";
+import {
+  getOrderedChecklistItems,
+  hydrateProgress,
+  isChecklistComplete,
+  toggleChecklistItem
+} from "./lib/runtime-model.mjs";
 import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
@@ -230,8 +235,9 @@ function buildStructuralSignature() {
 
 function buildChecklistMarkup(slide) {
   const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
+  const orderedItems = getOrderedChecklistItems(slide, state.progress);
 
-  return slide.activeItems
+  return orderedItems
     .map((item) => {
       const checked = progressEntry.checkedItemIds.includes(item.id);
 
