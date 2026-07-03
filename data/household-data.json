@@ -3,7 +3,7 @@
   "config": {
     "appTitle": "Family Heads Up Display",
     "timezone": "America/New_York",
-    "defaultSlideDurationSec": 7
+    "defaultSlideDurationSec": 15
   },
   "scheduleGroups": [
     {
@@ -29,7 +29,7 @@
           "sortOrder": 10,
           "daySelector": "All",
           "startTime": "16:00",
-          "endTime": "02:00",
+          "endTime": "21:30",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -44,7 +44,7 @@
           "sortOrder": 10,
           "daySelector": "Weekdays",
           "startTime": "05:00",
-          "endTime": "18:00",
+          "endTime": "09:00",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -659,20 +659,20 @@
       "notes": "Shared parent PM checklist.",
       "items": [
         {
-          "id": "parents_pm_dinner",
+          "id": "parents_pm_dishwasher_run",
           "sortOrder": 10,
           "type": "check_item",
-          "text": "Make dinner",
+          "text": "Load and start the dishwasher",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
-          "id": "parents_pm_dishwasher_run",
+          "id": "parents_pm_dinner",
           "sortOrder": 20,
           "type": "check_item",
-          "text": "Run and empty the dishwasher",
+          "text": "Make dinner",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -689,20 +689,20 @@
           "notes": ""
         },
         {
-          "id": "parents_pm_handwash",
+          "id": "parents_pm_bins",
           "sortOrder": 40,
           "type": "check_item",
-          "text": "Hand-wash dishes",
-          "daySelector": "All",
+          "text": "Prep kids' camp bins",
+          "daySelector": "Sun,Mon,Tue,Wed,Thu,Fri",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
-          "id": "parents_pm_compost",
+          "id": "parents_pm_coffee",
           "sortOrder": 50,
           "type": "check_item",
-          "text": "Take out compost and recycling",
+          "text": "Prep coffee",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -719,8 +719,38 @@
           "notes": ""
         },
         {
-          "id": "parents_pm_clear_table",
+          "id": "parents_pm_reload",
           "sortOrder": 70,
+          "type": "check_item",
+          "text": "Empty and reload the dishwasher",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_handwash",
+          "sortOrder": 80,
+          "type": "check_item",
+          "text": "Hand-wash dishes",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_compost",
+          "sortOrder": 90,
+          "type": "check_item",
+          "text": "Take out compost and recycling",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_clear_table",
+          "sortOrder": 100,
           "type": "check_item",
           "text": "Clear table",
           "daySelector": "All",
@@ -729,41 +759,11 @@
           "notes": ""
         },
         {
-          "id": "parents_pm_bins",
-          "sortOrder": 80,
-          "type": "check_item",
-          "text": "Prep kids camp bins",
-          "daySelector": "Sun,Mon,Tue,Wed,Thu,Fri",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_towel",
-          "sortOrder": 90,
-          "type": "check_item",
-          "text": "Put hand towel in laundry",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_reload",
-          "sortOrder": 100,
-          "type": "check_item",
-          "text": "Reload dishwasher",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_coffee",
+          "id": "parents_pm_trash",
           "sortOrder": 110,
           "type": "check_item",
-          "text": "Prep coffee",
-          "daySelector": "All",
+          "text": "Take out trash and recycling",
+          "daySelector": "Wed",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -779,11 +779,11 @@
           "notes": "Cleaner week task."
         },
         {
-          "id": "parents_pm_trash",
+          "id": "parents_pm_towel",
           "sortOrder": 130,
           "type": "check_item",
-          "text": "Take out trash and recycling",
-          "daySelector": "Wed",
+          "text": "Put hand towel in laundry",
+          "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -1076,5 +1076,5 @@
       ]
     }
   ],
-  "generatedAt": "20260702-194212217Z"
+  "generatedAt": "20260703-035621270Z"
 }
