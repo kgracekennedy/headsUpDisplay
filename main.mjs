@@ -9,7 +9,7 @@ import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
-const BUILD_VERSION = "20260703-035621270Z";
+const BUILD_VERSION = "20260704-144003415Z";
 const appElement = document.getElementById("app");
 const dom = {
   appTitle: null,
@@ -128,10 +128,6 @@ function ensureShellRendered() {
         <div>
           <span class="meta-label">Window</span>
           <strong data-role="window-text">Waiting</strong>
-        </div>
-        <div>
-          <span class="meta-label">Interaction</span>
-          <strong>Swipe or tap to jump fast</strong>
         </div>
       </div>
       <section class="stage-board" data-role="stage-board"></section>
