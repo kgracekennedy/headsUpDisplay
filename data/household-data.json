@@ -91,6 +91,21 @@
       ]
     },
     {
+      "id": "mommy_pt_anytime",
+      "label": "Mommy PT anytime",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "All",
+          "startTime": "00:00",
+          "endTime": "00:00",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
       "id": "parents_pm",
       "label": "Parents evening",
       "rules": [
@@ -214,7 +229,7 @@
         },
         {
           "id": "parents_am_feed_saela_breakfast",
-          "sortOrder": 15,
+          "sortOrder": 20,
           "type": "check_item",
           "text": "Feed Sæla breakfast",
           "daySelector": "All",
@@ -224,9 +239,9 @@
         },
         {
           "id": "parents_am_bins",
-          "sortOrder": 20,
+          "sortOrder": 30,
           "type": "check_item",
-          "text": "Load kids camp bins",
+          "text": "Load kids' camp bins",
           "daySelector": "Weekdays",
           "weekPattern": "all",
           "anchorDate": "",
@@ -234,17 +249,27 @@
         },
         {
           "id": "parents_am_brush_saela_teeth",
-          "sortOrder": 25,
+          "sortOrder": 40,
           "type": "check_item",
           "text": "Brush Sæla's teeth",
-          "daySelector": "All",
+          "daySelector": "Sat,Sun",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
+          "id": "parents_am_saela_training",
+          "sortOrder": 50,
+          "type": "check_item",
+          "text": "Training session with Sæla",
+          "daySelector": "Sat,Sun",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Weekend mornings only."
+        },
+        {
           "id": "parents_am_sunscreen",
-          "sortOrder": 30,
+          "sortOrder": 60,
           "type": "check_item",
           "text": "Sunscreen the kids",
           "daySelector": "Weekdays",
@@ -254,7 +279,7 @@
         },
         {
           "id": "parents_am_brush_saela",
-          "sortOrder": 35,
+          "sortOrder": 70,
           "type": "check_item",
           "text": "Brush Sæla",
           "daySelector": "Sat,Sun",
@@ -264,7 +289,7 @@
         },
         {
           "id": "parents_am_clear_table",
-          "sortOrder": 40,
+          "sortOrder": 80,
           "type": "check_item",
           "text": "Clear the table",
           "daySelector": "All",
@@ -274,7 +299,7 @@
         },
         {
           "id": "parents_am_dishwasher",
-          "sortOrder": 50,
+          "sortOrder": 90,
           "type": "check_item",
           "text": "Load the dishwasher",
           "daySelector": "All",
@@ -284,7 +309,7 @@
         },
         {
           "id": "parents_am_laundry",
-          "sortOrder": 60,
+          "sortOrder": 100,
           "type": "check_item",
           "text": "Start laundry",
           "daySelector": "All",
@@ -293,18 +318,8 @@
           "notes": ""
         },
         {
-          "id": "parents_am_saela_training",
-          "sortOrder": 65,
-          "type": "check_item",
-          "text": "Training session with Sæla",
-          "daySelector": "Sat,Sun",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Weekend only."
-        },
-        {
           "id": "parents_am_fold_laundry",
-          "sortOrder": 70,
+          "sortOrder": 110,
           "type": "check_item",
           "text": "Fold laundry",
           "daySelector": "Sat,Sun",
@@ -313,8 +328,18 @@
           "notes": ""
         },
         {
+          "id": "parents_am_prep_workout_clothes",
+          "sortOrder": 120,
+          "type": "check_item",
+          "text": "Prep workout clothes for the week",
+          "daySelector": "Sat",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "parents_am_restock_paper",
-          "sortOrder": 75,
+          "sortOrder": 130,
           "type": "check_item",
           "text": "Restock kleenex and toilet paper",
           "daySelector": "Sat",
@@ -324,7 +349,7 @@
         },
         {
           "id": "parents_am_cleaner_beds",
-          "sortOrder": 80,
+          "sortOrder": 140,
           "type": "check_item",
           "text": "Strip beds and lay out sheets",
           "daySelector": "Mon",
@@ -334,7 +359,7 @@
         },
         {
           "id": "parents_am_refill_med_boxes",
-          "sortOrder": 85,
+          "sortOrder": 150,
           "type": "check_item",
           "text": "Refill medication boxes",
           "daySelector": "Sun",
@@ -343,14 +368,44 @@
           "notes": "Sunday only."
         },
         {
+          "id": "parents_am_water_plants",
+          "sortOrder": 160,
+          "type": "check_item",
+          "text": "Water plants",
+          "daySelector": "Sat",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Saturday only."
+        },
+        {
           "id": "parents_am_cleaner_bathroom",
-          "sortOrder": 90,
+          "sortOrder": 170,
           "type": "check_item",
           "text": "Put bathroom items away",
           "daySelector": "Mon",
           "weekPattern": "every_other_from_anchor",
           "anchorDate": "2026-06-29",
           "notes": "Cleaner week task."
+        },
+        {
+          "id": "parents_am_feed_orchids",
+          "sortOrder": 180,
+          "type": "check_item",
+          "text": "Feed orchids",
+          "daySelector": "Sat",
+          "weekPattern": "first_and_third_weeks_of_month",
+          "anchorDate": "",
+          "notes": "First and third Saturday only."
+        },
+        {
+          "id": "parents_am_mommy_speedwalk",
+          "sortOrder": 190,
+          "type": "check_item",
+          "text": "Mommy speedwalk",
+          "daySelector": "Sun,Fri",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
         }
       ]
     },
@@ -405,17 +460,7 @@
           "id": "alexander_am_teeth",
           "sortOrder": 40,
           "type": "check_item",
-          "text": "Brush teeth",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_am_hair",
-          "sortOrder": 50,
-          "type": "check_item",
-          "text": "Brush hair",
+          "text": "Brush teeth and hair",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -423,7 +468,7 @@
         },
         {
           "id": "alexander_am_backpack",
-          "sortOrder": 60,
+          "sortOrder": 50,
           "type": "check_item",
           "text": "Load backpack",
           "daySelector": "Weekdays",
@@ -433,7 +478,7 @@
         },
         {
           "id": "alexander_am_sunscreen",
-          "sortOrder": 70,
+          "sortOrder": 60,
           "type": "check_item",
           "text": "Put on sunscreen and bug spray",
           "daySelector": "Weekdays",
@@ -443,7 +488,7 @@
         },
         {
           "id": "alexander_am_fold_laundry",
-          "sortOrder": 80,
+          "sortOrder": 70,
           "type": "check_item",
           "text": "Fold laundry",
           "daySelector": "Sat,Sun",
@@ -453,7 +498,7 @@
         },
         {
           "id": "alexander_am_sheets",
-          "sortOrder": 90,
+          "sortOrder": 80,
           "type": "check_item",
           "text": "Take sheets to laundry or get a star",
           "daySelector": "All",
@@ -463,7 +508,7 @@
         },
         {
           "id": "alexander_am_room",
-          "sortOrder": 100,
+          "sortOrder": 90,
           "type": "check_item",
           "text": "Tidy and organize room",
           "daySelector": "Sat,Sun",
@@ -473,7 +518,7 @@
         },
         {
           "id": "alexander_am_stofa",
-          "sortOrder": 110,
+          "sortOrder": 100,
           "type": "check_item",
           "text": "Tidy and organize stofa",
           "daySelector": "Sat,Sun",
@@ -483,17 +528,17 @@
         },
         {
           "id": "alexander_am_stairs",
-          "sortOrder": 120,
+          "sortOrder": 110,
           "type": "check_item",
           "text": "Clear stairs",
-          "daySelector": "Tue,Sat,Sun",
+          "daySelector": "Sat,Sun",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
           "id": "alexander_am_drops",
-          "sortOrder": 130,
+          "sortOrder": 120,
           "type": "check_item",
           "text": "Drops",
           "daySelector": "Sat,Sun",
@@ -503,7 +548,7 @@
         },
         {
           "id": "alexander_am_reading",
-          "sortOrder": 140,
+          "sortOrder": 130,
           "type": "check_item",
           "text": "Read to Pabbi in Icelandic",
           "daySelector": "Sat,Sun",
@@ -513,7 +558,7 @@
         },
         {
           "id": "alexander_am_lunch",
-          "sortOrder": 150,
+          "sortOrder": 140,
           "type": "check_item",
           "text": "Lunch",
           "daySelector": "Sat,Sun",
@@ -574,17 +619,7 @@
           "id": "lilja_am_teeth",
           "sortOrder": 40,
           "type": "check_item",
-          "text": "Brush teeth",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_am_hair",
-          "sortOrder": 50,
-          "type": "check_item",
-          "text": "Brush hair",
+          "text": "Brush teeth and hair",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -592,7 +627,7 @@
         },
         {
           "id": "lilja_am_backpack",
-          "sortOrder": 60,
+          "sortOrder": 50,
           "type": "check_item",
           "text": "Load backpack",
           "daySelector": "Weekdays",
@@ -602,7 +637,7 @@
         },
         {
           "id": "lilja_am_sunscreen",
-          "sortOrder": 70,
+          "sortOrder": 60,
           "type": "check_item",
           "text": "Put on sunscreen and bug spray",
           "daySelector": "Weekdays",
@@ -612,7 +647,7 @@
         },
         {
           "id": "lilja_am_fold_laundry",
-          "sortOrder": 80,
+          "sortOrder": 70,
           "type": "check_item",
           "text": "Fold laundry",
           "daySelector": "Sat,Sun",
@@ -622,7 +657,7 @@
         },
         {
           "id": "lilja_am_room",
-          "sortOrder": 90,
+          "sortOrder": 80,
           "type": "check_item",
           "text": "Tidy and organize room",
           "daySelector": "Sat,Sun",
@@ -632,7 +667,7 @@
         },
         {
           "id": "lilja_am_stofa",
-          "sortOrder": 100,
+          "sortOrder": 90,
           "type": "check_item",
           "text": "Tidy and organize stofa",
           "daySelector": "Sat,Sun",
@@ -642,17 +677,17 @@
         },
         {
           "id": "lilja_am_stairs",
-          "sortOrder": 110,
+          "sortOrder": 100,
           "type": "check_item",
           "text": "Clear stairs",
-          "daySelector": "Tue,Sat,Sun",
+          "daySelector": "Sat,Sun",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
           "id": "lilja_am_drops",
-          "sortOrder": 120,
+          "sortOrder": 110,
           "type": "check_item",
           "text": "Drops",
           "daySelector": "Sat,Sun",
@@ -662,7 +697,7 @@
         },
         {
           "id": "lilja_am_reading",
-          "sortOrder": 130,
+          "sortOrder": 120,
           "type": "check_item",
           "text": "Read to Pabbi in Icelandic",
           "daySelector": "Sat,Sun",
@@ -672,7 +707,7 @@
         },
         {
           "id": "lilja_am_lunch",
-          "sortOrder": 140,
+          "sortOrder": 130,
           "type": "check_item",
           "text": "Lunch",
           "daySelector": "Sat,Sun",
@@ -733,6 +768,16 @@
           "id": "healthy_breakfast_line_4",
           "sortOrder": 40,
           "type": "text_line",
+          "text": "Avocado and whole-grain toast",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_breakfast_line_5",
+          "sortOrder": 50,
+          "type": "text_line",
           "text": "Smoothie with yogurt and fruit.",
           "daySelector": "All",
           "weekPattern": "all",
@@ -742,47 +787,147 @@
       ]
     },
     {
-      "id": "weekday_launch_reminder",
-      "sortOrder": 40,
+      "id": "mommy_pt_reminder",
+      "sortOrder": 45,
       "type": "reminder",
-      "title": "Weekday Launch",
-      "ownerLabel": "Household",
-      "scheduleGroupId": "school_launch_reminder",
+      "title": "Mommy PT: Do a Few When You Have Time",
+      "ownerLabel": "Mommy",
+      "scheduleGroupId": "mommy_pt_anytime",
       "colors": {
-        "backgroundStart": "#9be8c5",
-        "backgroundEnd": "#2f8b7d",
-        "accent": "#fef6c8",
-        "text": "#102320"
+        "backgroundStart": "#d7edd9",
+        "backgroundEnd": "#6fa37a",
+        "accent": "#f8d07a",
+        "text": "#163124"
       },
       "rewardMessage": "",
-      "celebrationTitle": "Weekday Launch complete",
-      "notes": "Reminder slide for weekday departure rhythm.",
+      "celebrationTitle": "Mommy PT: Do a Few When You Have Time complete",
+      "notes": "All-day reminder slide for Mommy PT exercises.",
       "items": [
         {
-          "id": "weekday_launch_line_1",
+          "id": "mommy_pt_line_1",
           "sortOrder": 10,
           "type": "text_line",
-          "text": "Camp bins and backpacks should be by the door.",
+          "text": "Downward dog",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
-          "id": "weekday_launch_line_2",
+          "id": "mommy_pt_line_2",
           "sortOrder": 20,
           "type": "text_line",
-          "text": "Water bottles belong by the sink before breakfast wraps up.",
+          "text": "Hamstring stretch",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
-          "id": "weekday_launch_line_3",
+          "id": "mommy_pt_line_3",
           "sortOrder": 30,
           "type": "text_line",
-          "text": "Sunscreen happens before shoes.",
+          "text": "Deep squat",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_4",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "90/90",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_5",
+          "sortOrder": 50,
+          "type": "text_line",
+          "text": "Calf stretch, straight leg",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_6",
+          "sortOrder": 60,
+          "type": "text_line",
+          "text": "Calf stretch, bent leg",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_7",
+          "sortOrder": 70,
+          "type": "text_line",
+          "text": "Wall angles",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_8",
+          "sortOrder": 80,
+          "type": "text_line",
+          "text": "Ankle walks",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_9",
+          "sortOrder": 90,
+          "type": "text_line",
+          "text": "Toe splaying (5 seconds, 15 reps)",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_10",
+          "sortOrder": 100,
+          "type": "text_line",
+          "text": "Sæla carry",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_11",
+          "sortOrder": 110,
+          "type": "text_line",
+          "text": "Dead lifts",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_12",
+          "sortOrder": 120,
+          "type": "text_line",
+          "text": "Balance with big toe press against band",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_13",
+          "sortOrder": 130,
+          "type": "text_line",
+          "text": "Banded external arm rotation",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -808,18 +953,8 @@
       "notes": "Shared parent PM checklist.",
       "items": [
         {
-          "id": "parents_pm_dishwasher_run",
-          "sortOrder": 10,
-          "type": "check_item",
-          "text": "Load and start the dishwasher",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
           "id": "parents_pm_dinner",
-          "sortOrder": 20,
+          "sortOrder": 10,
           "type": "check_item",
           "text": "Make dinner",
           "daySelector": "All",
@@ -829,7 +964,7 @@
         },
         {
           "id": "parents_pm_feed_saela_dinner",
-          "sortOrder": 25,
+          "sortOrder": 20,
           "type": "check_item",
           "text": "Feed Sæla dinner",
           "daySelector": "All",
@@ -838,8 +973,18 @@
           "notes": ""
         },
         {
-          "id": "parents_pm_laundry",
+          "id": "parents_pm_dishwasher_run",
           "sortOrder": 30,
+          "type": "check_item",
+          "text": "Load and start the dishwasher",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_laundry",
+          "sortOrder": 40,
           "type": "check_item",
           "text": "Run laundry",
           "daySelector": "Weekdays",
@@ -848,58 +993,8 @@
           "notes": ""
         },
         {
-          "id": "parents_pm_bins",
-          "sortOrder": 40,
-          "type": "check_item",
-          "text": "Prep kids' camp bins",
-          "daySelector": "Sun,Mon,Tue,Wed,Thu,Fri",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_coffee",
-          "sortOrder": 50,
-          "type": "check_item",
-          "text": "Prep coffee",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_saela_training",
-          "sortOrder": 55,
-          "type": "check_item",
-          "text": "Training session with Sæla",
-          "daySelector": "Mon,Tue,Wed,Thu,Fri",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Weekday evenings only."
-        },
-        {
-          "id": "parents_pm_counter",
-          "sortOrder": 60,
-          "type": "check_item",
-          "text": "Wipe down counter",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_reload",
-          "sortOrder": 70,
-          "type": "check_item",
-          "text": "Empty and reload the dishwasher",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
           "id": "parents_pm_handwash",
-          "sortOrder": 80,
+          "sortOrder": 50,
           "type": "check_item",
           "text": "Hand-wash dishes",
           "daySelector": "All",
@@ -909,7 +1004,7 @@
         },
         {
           "id": "parents_pm_compost",
-          "sortOrder": 90,
+          "sortOrder": 60,
           "type": "check_item",
           "text": "Take out compost and recycling",
           "daySelector": "All",
@@ -918,18 +1013,18 @@
           "notes": ""
         },
         {
-          "id": "parents_pm_water_plants",
-          "sortOrder": 95,
+          "id": "parents_pm_counter",
+          "sortOrder": 70,
           "type": "check_item",
-          "text": "Water plants",
-          "daySelector": "Sat",
+          "text": "Wipe down counter",
+          "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
-          "notes": "Saturday only."
+          "notes": ""
         },
         {
           "id": "parents_pm_clear_table",
-          "sortOrder": 100,
+          "sortOrder": 80,
           "type": "check_item",
           "text": "Clear table",
           "daySelector": "All",
@@ -938,28 +1033,58 @@
           "notes": ""
         },
         {
-          "id": "parents_pm_trash",
-          "sortOrder": 110,
+          "id": "parents_pm_bins",
+          "sortOrder": 90,
           "type": "check_item",
-          "text": "Take out trash and recycling",
-          "daySelector": "Wed",
+          "text": "Prep kids' camp bins",
+          "daySelector": "Sun,Mon,Tue,Wed,Thu,Fri",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
-          "id": "parents_pm_feed_orchids",
-          "sortOrder": 115,
+          "id": "parents_pm_towel",
+          "sortOrder": 100,
           "type": "check_item",
-          "text": "Feed orchids",
-          "daySelector": "Sat",
-          "weekPattern": "first_and_third_weeks_of_month",
+          "text": "Put hand towel in laundry",
+          "daySelector": "All",
+          "weekPattern": "all",
           "anchorDate": "",
-          "notes": "First and third Saturday only."
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_reload",
+          "sortOrder": 110,
+          "type": "check_item",
+          "text": "Empty and reload the dishwasher",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_coffee",
+          "sortOrder": 120,
+          "type": "check_item",
+          "text": "Prep coffee",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_saela_training",
+          "sortOrder": 130,
+          "type": "check_item",
+          "text": "Training session with Sæla",
+          "daySelector": "Mon,Tue,Wed,Thu,Fri",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Weekday evenings only."
         },
         {
           "id": "parents_pm_cleaner_supplies",
-          "sortOrder": 120,
+          "sortOrder": 140,
           "type": "check_item",
           "text": "Pull out trash bags and granite cleaner",
           "daySelector": "Mon",
@@ -968,11 +1093,21 @@
           "notes": "Cleaner week task."
         },
         {
-          "id": "parents_pm_towel",
-          "sortOrder": 130,
+          "id": "parents_pm_trash",
+          "sortOrder": 150,
           "type": "check_item",
-          "text": "Put hand towel in laundry",
-          "daySelector": "All",
+          "text": "Take out trash and recycling",
+          "daySelector": "Wed",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_mommy_workout",
+          "sortOrder": 160,
+          "type": "check_item",
+          "text": "Mommy work out",
+          "daySelector": "Sat,Mon,Thu",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -1027,24 +1162,34 @@
           "notes": ""
         },
         {
-          "id": "alexander_pm_room",
+          "id": "alexander_pm_bed",
           "sortOrder": 40,
           "type": "check_item",
-          "text": "Tidy room",
-          "daySelector": "Mon",
+          "text": "Make bed",
+          "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
-          "id": "alexander_pm_stofa",
+          "id": "alexander_pm_room",
           "sortOrder": 50,
+          "type": "check_item",
+          "text": "Tidy room",
+          "daySelector": "Mon",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-06-29",
+          "notes": "Cleaner week task."
+        },
+        {
+          "id": "alexander_pm_stofa",
+          "sortOrder": 60,
           "type": "check_item",
           "text": "Tidy stofa",
           "daySelector": "Mon",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-06-29",
+          "notes": "Cleaner week task."
         }
       ]
     },
@@ -1101,9 +1246,9 @@
           "type": "check_item",
           "text": "Tidy room",
           "daySelector": "Mon",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-06-29",
+          "notes": "Cleaner week task."
         },
         {
           "id": "lilja_pm_stofa",
@@ -1111,9 +1256,9 @@
           "type": "check_item",
           "text": "Tidy stofa",
           "daySelector": "Mon",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-06-29",
+          "notes": "Cleaner week task."
         }
       ]
     },
@@ -1207,7 +1352,7 @@
           "id": "weekend_screen_line_1",
           "sortOrder": 10,
           "type": "text_line",
-          "text": "Screens open after rooms, laundry, and reading are done.",
+          "text": "Screens open after you finish your checklist.",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -1334,5 +1479,5 @@
       ]
     }
   ],
-  "generatedAt": "20260704-144003415Z"
+  "generatedAt": "20260704-164004503Z"
 }
