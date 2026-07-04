@@ -1,16 +1,13 @@
 # GitHub Pages Publishing
 
-This repository publishes the static site from the `gh-pages` branch.
+This repository publishes the static site with the GitHub Actions workflow in `.github/workflows/deploy-pages.yml`.
 
 ## One-Time GitHub Setup
 
-1. Commit and push your source changes on `main`.
-2. Run `pwsh -File .\scripts\publish-pages.ps1` once to create and push the `gh-pages` branch.
-3. Open the repository on GitHub.
-4. Go to `Settings -> Pages`.
-5. Under `Build and deployment`, set `Source` to `Deploy from a branch`.
-6. Set `Branch` to `gh-pages` and folder to `/(root)`.
-7. Save.
+1. Open the repository on GitHub.
+2. Go to `Settings -> Pages`.
+3. Under `Build and deployment`, set `Source` to `GitHub Actions`.
+4. Save.
 
 ## Publish Command
 
@@ -20,22 +17,21 @@ Run this from the repository root:
 
 What it does:
 
-- verifies the working tree is clean
-- runs the test suite
-- rebuilds `dist/`
-- copies the built site into a temporary worktree
-- commits the static output to `gh-pages`
-- pushes `gh-pages` to `origin`
+- runs the test suite unless `-SkipTests` is supplied
+- rebuilds `dist/` unless `-SkipBuild` is supplied
+- confirms whether you are on `main`
+- reminds you to push `main`, which is what triggers the real Pages deployment
 
 ## Day-to-Day Workflow
 
 1. Edit the CSV files or app source on `main`.
-2. Commit and push `main`.
-3. Run `pwsh -File .\scripts\publish-pages.ps1`.
-4. Wait a minute or two for GitHub Pages to refresh.
+2. Run `pwsh -File .\scripts\publish-pages.ps1`.
+3. Commit the intended changes.
+4. Push `main`.
+5. Wait for the `Validate and Deploy via GitHub Actions` workflow to finish.
 
 ## Notes
 
-- The publish script uses `C:\tmp\headsUpDisplay-gh-pages` as a temporary worktree path.
-- Use `-NoPush` if you want to verify the local publish branch update without sending it to GitHub.
-- The GitHub Actions workflow only validates tests and build output; it does not deploy Pages.
+- The site is no longer published from a `gh-pages` branch.
+- The workflow queues Pages deployments instead of canceling one in progress, which avoids the `due to in progress deployment` API failure.
+- If a deployment is already running, the next one waits for the active deployment to finish.

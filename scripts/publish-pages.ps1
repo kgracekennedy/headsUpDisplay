@@ -1,28 +1,13 @@
 [CmdletBinding()]
 param(
-    [string] $Branch = "gh-pages",
-    [string] $WorktreePath = "C:\tmp\headsUpDisplay-gh-pages",
     [switch] $SkipTests,
-    [switch] $NoPush
+    [switch] $SkipBuild
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 function Invoke-Git {
-    param(
-        [Parameter(ValueFromRemainingArguments = $true)]
-        [string[]] $Arguments
-    )
-
-    & git @Arguments
-
-    if ($LASTEXITCODE -ne 0) {
-        throw "git $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
-    }
-}
-
-function Get-GitOutput {
     param(
         [Parameter(ValueFromRemainingArguments = $true)]
         [string[]] $Arguments
@@ -37,187 +22,54 @@ function Get-GitOutput {
     return ($output -join "`n").Trim()
 }
 
-function Clear-DirectoryContents {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string] $Path
-    )
-
-    Get-ChildItem -LiteralPath $Path -Force |
-        Where-Object { $_.Name -ne ".git" } |
-        Remove-Item -Recurse -Force
-}
-
-function Test-RegisteredWorktree {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string] $Path
-    )
-
-    $normalizedTarget = [System.IO.Path]::GetFullPath($Path)
-    $worktreeList = & git worktree list --porcelain
-
-    if ($LASTEXITCODE -ne 0) {
-        throw "git worktree list --porcelain failed with exit code $LASTEXITCODE."
-    }
-
-    foreach ($line in $worktreeList) {
-        if (-not $line.StartsWith("worktree ")) {
-            continue
-        }
-
-        $registeredPath = $line.Substring(9).Trim()
-        $normalizedRegistered = [System.IO.Path]::GetFullPath($registeredPath)
-
-        if ($normalizedRegistered.Equals($normalizedTarget, [System.StringComparison]::OrdinalIgnoreCase)) {
-            return $true
-        }
-    }
-
-    return $false
-}
-
-function Remove-RegisteredWorktree {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string] $Path
-    )
-
-    if (Test-RegisteredWorktree -Path $Path) {
-        Invoke-Git -Arguments @("worktree", "remove", "--force", $Path)
-    }
-}
-
-function Test-SafeWorktreePath {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string] $Path
-    )
-
-    $fullPath = [System.IO.Path]::GetFullPath($Path)
-    return $fullPath.StartsWith("C:\tmp\", [System.StringComparison]::OrdinalIgnoreCase)
-}
-
 $scriptDirectory = Split-Path -Parent $PSCommandPath
 $repoRoot = Split-Path -Parent $scriptDirectory
-$distPath = Join-Path $repoRoot "dist"
-$resolvedWorktreePath = [System.IO.Path]::GetFullPath($WorktreePath)
-$currentBranch = ""
-
-if (-not (Test-SafeWorktreePath -Path $resolvedWorktreePath)) {
-    throw "WorktreePath must stay under C:\tmp\ for safety. Current value: $resolvedWorktreePath"
-}
 
 Push-Location $repoRoot
 
 try {
-    $status = Get-GitOutput -Arguments @("status", "--porcelain")
+    $workflowPath = Join-Path $repoRoot ".github\workflows\deploy-pages.yml"
 
-    if ($status) {
-        throw "Working tree must be clean before publishing. Commit or stash changes first."
+    if (-not (Test-Path -LiteralPath $workflowPath)) {
+        throw "GitHub Pages workflow not found at $workflowPath"
     }
-
-    $originUrl = Get-GitOutput -Arguments @("remote", "get-url", "origin")
-
-    if (-not $originUrl) {
-        throw "Remote 'origin' is not configured."
-    }
-
-    $currentBranch = Get-GitOutput -Arguments @("branch", "--show-current")
 
     if (-not $SkipTests) {
         & (Join-Path $scriptDirectory "test.ps1")
 
         if ($LASTEXITCODE -ne 0) {
-            throw "Tests failed. Aborting Pages publish."
+            throw "Tests failed. Aborting deploy preparation."
         }
     }
 
-    & (Join-Path $scriptDirectory "build-site.ps1")
+    if (-not $SkipBuild) {
+        & (Join-Path $scriptDirectory "build-site.ps1")
 
-    if ($LASTEXITCODE -ne 0) {
-        throw "Static site build failed. Aborting Pages publish."
-    }
-
-    if (-not (Test-Path -LiteralPath $distPath)) {
-        throw "Build output directory not found at $distPath"
-    }
-
-    Remove-RegisteredWorktree -Path $resolvedWorktreePath
-    Invoke-Git -Arguments @("worktree", "prune")
-
-    if (Test-Path -LiteralPath $resolvedWorktreePath) {
-        Remove-Item -LiteralPath $resolvedWorktreePath -Recurse -Force
-    }
-
-    $remoteBranchExists = [bool](Get-GitOutput -Arguments @("ls-remote", "--heads", "origin", $Branch))
-    & git show-ref --verify --quiet "refs/heads/$Branch"
-    $localBranchExists = $LASTEXITCODE -eq 0
-
-    if ($remoteBranchExists) {
-        Invoke-Git -Arguments @("fetch", "origin", $Branch)
-        Invoke-Git -Arguments @("worktree", "add", "--force", "-B", $Branch, $resolvedWorktreePath, "origin/$Branch")
-    }
-    elseif ($localBranchExists) {
-        Invoke-Git -Arguments @("worktree", "add", "--force", $resolvedWorktreePath, $Branch)
-    }
-    else {
-        Invoke-Git -Arguments @("worktree", "add", "--force", "--detach", $resolvedWorktreePath, "HEAD")
-
-        Push-Location $resolvedWorktreePath
-
-        try {
-            Invoke-Git -Arguments @("checkout", "--orphan", $Branch)
-            Clear-DirectoryContents -Path $resolvedWorktreePath
-        }
-        finally {
-            Pop-Location
+        if ($LASTEXITCODE -ne 0) {
+            throw "Static site build failed. Aborting deploy preparation."
         }
     }
 
-    Push-Location $resolvedWorktreePath
+    $currentBranch = Invoke-Git -Arguments @("branch", "--show-current")
+    $status = Invoke-Git -Arguments @("status", "--short")
 
-    try {
-        Clear-DirectoryContents -Path $resolvedWorktreePath
-        Copy-Item -Path (Join-Path $distPath "*") -Destination $resolvedWorktreePath -Recurse -Force
-        New-Item -ItemType File -Path (Join-Path $resolvedWorktreePath ".nojekyll") -Force | Out-Null
+    Write-Host "Local deployment preparation completed."
+    Write-Host "GitHub Pages is deployed by GitHub Actions from the main branch."
 
-        $sourceRevision = Get-GitOutput -Arguments @("-C", $repoRoot, "rev-parse", "--short", "HEAD")
-        Invoke-Git -Arguments @("add", "-A")
-        & git diff --cached --quiet
-
-        if ($LASTEXITCODE -eq 0) {
-            Write-Host "No publish changes detected in $Branch."
-        }
-        else {
-            Invoke-Git -Arguments @("commit", "-m", "Publish site from $sourceRevision")
-
-            if (-not $NoPush) {
-                Invoke-Git -Arguments @("push", "-u", "origin", $Branch)
-            }
-            else {
-                Write-Host "Skipping push because -NoPush was supplied."
-            }
-        }
+    if ($currentBranch -ne "main") {
+        Write-Warning "Current branch is '$currentBranch'. Pages deploy only runs automatically from 'main'."
     }
-    finally {
-        Pop-Location
+
+    if ($status) {
+        Write-Warning "Working tree has uncommitted changes. Commit and push the intended changes before expecting a Pages deploy."
     }
+
+    Write-Host ""
+    Write-Host "Next step:"
+    Write-Host "  git push origin main"
+    Write-Host ""
+    Write-Host "After the push completes, GitHub Actions will queue the Pages deployment automatically."
 }
 finally {
-    Remove-RegisteredWorktree -Path $resolvedWorktreePath
-
-    if (Test-Path -LiteralPath $resolvedWorktreePath) {
-        Remove-Item -LiteralPath $resolvedWorktreePath -Recurse -Force
-    }
-
-    if ($currentBranch) {
-        $activeBranch = Get-GitOutput -Arguments @("branch", "--show-current")
-
-        if ($activeBranch -ne $currentBranch) {
-            Invoke-Git -Arguments @("switch", $currentBranch)
-        }
-    }
-
     Pop-Location
 }

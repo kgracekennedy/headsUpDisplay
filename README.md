@@ -24,8 +24,9 @@ The app also generates `data/generated/household-data.json` from those CSV files
 3. Save it back as CSV.
 4. Run:
    `powershell -ExecutionPolicy Bypass -File .\scripts\build-site.ps1`
-5. If the result looks right, publish:
+5. If the result looks right, prepare the deploy:
    `powershell -ExecutionPolicy Bypass -File .\scripts\publish-pages.ps1`
+6. Commit and push `main` to trigger the GitHub Pages deployment workflow.
 
 If you only want to check for data mistakes before publishing, run:
 
@@ -244,7 +245,7 @@ Run these from the `headsUpDisplay` folder on this Windows machine:
 - Publish to GitHub Pages:
   `powershell -ExecutionPolicy Bypass -File .\scripts\publish-pages.ps1`
 
-The published site is served from the `gh-pages` branch.
+The published site is deployed by the GitHub Actions Pages workflow when `main` is pushed.
 
 ## Troubleshooting
 
