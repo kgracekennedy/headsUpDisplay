@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getActiveScheduleForGroup } from "../src/lib/schedule.mjs";
+import { getActiveScheduleForGroup, weekPatternMatches } from "../src/lib/schedule.mjs";
 import { loadSourceData } from "./helpers.mjs";
 
 describe("schedule evaluation", () => {
@@ -27,5 +27,16 @@ describe("schedule evaluation", () => {
       null
     );
     assert.ok(getActiveScheduleForGroup(cleanerPrep, new Date("2026-07-13T18:00:00")));
+  });
+
+  it("supports first and third Saturday monthly rules", async () => {
+    const rule = {
+      weekPattern: "first_and_third_weeks_of_month"
+    };
+
+    assert.equal(weekPatternMatches(rule, new Date("2026-07-04T18:00:00")), true);
+    assert.equal(weekPatternMatches(rule, new Date("2026-07-11T18:00:00")), false);
+    assert.equal(weekPatternMatches(rule, new Date("2026-07-18T18:00:00")), true);
+    assert.equal(weekPatternMatches(rule, new Date("2026-07-25T18:00:00")), false);
   });
 });

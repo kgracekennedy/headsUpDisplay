@@ -129,10 +129,6 @@ function ensureShellRendered() {
           <span class="meta-label">Window</span>
           <strong data-role="window-text">Waiting</strong>
         </div>
-        <div>
-          <span class="meta-label">Interaction</span>
-          <strong>Swipe or tap to jump fast</strong>
-        </div>
       </div>
       <section class="stage-board" data-role="stage-board"></section>
     </div>

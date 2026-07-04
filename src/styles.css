@@ -192,7 +192,7 @@ code {
 
 .stage-meta {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.65rem;
   margin: 0;
 }
@@ -736,6 +736,13 @@ code {
   padding: 0.75rem;
   background: rgba(8, 12, 20, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.checklist-panel,
+.reminder-panel {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .slide-strip {

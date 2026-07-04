@@ -227,6 +227,7 @@ Useful `week_pattern` values:
 - `odd_weeks`
 - `even_weeks`
 - `every_other_from_anchor`
+- `first_and_third_weeks_of_month`
 
 Only use `anchor_date` when `week_pattern` is `every_other_from_anchor`.
 

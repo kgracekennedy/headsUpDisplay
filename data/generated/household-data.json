@@ -22,6 +22,36 @@
       ]
     },
     {
+      "id": "healthy_breakfast",
+      "label": "Healthy breakfast",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "All",
+          "startTime": "05:00",
+          "endTime": "11:00",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "kids_bedtime",
+      "label": "Kids bedtime",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "All",
+          "startTime": "20:00",
+          "endTime": "21:15",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
       "id": "kids_pm",
       "label": "Kids evening",
       "rules": [
@@ -183,11 +213,31 @@
           "notes": ""
         },
         {
+          "id": "parents_am_feed_saela_breakfast",
+          "sortOrder": 15,
+          "type": "check_item",
+          "text": "Feed Sæla breakfast",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "parents_am_bins",
           "sortOrder": 20,
           "type": "check_item",
           "text": "Load kids camp bins",
           "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_am_brush_saela_teeth",
+          "sortOrder": 25,
+          "type": "check_item",
+          "text": "Brush Sæla's teeth",
+          "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -201,6 +251,16 @@
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
+        },
+        {
+          "id": "parents_am_brush_saela",
+          "sortOrder": 35,
+          "type": "check_item",
+          "text": "Brush Sæla",
+          "daySelector": "Sat,Sun",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Weekend only."
         },
         {
           "id": "parents_am_clear_table",
@@ -233,6 +293,16 @@
           "notes": ""
         },
         {
+          "id": "parents_am_saela_training",
+          "sortOrder": 65,
+          "type": "check_item",
+          "text": "Training session with Sæla",
+          "daySelector": "Sat,Sun",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Weekend only."
+        },
+        {
           "id": "parents_am_fold_laundry",
           "sortOrder": 70,
           "type": "check_item",
@@ -243,6 +313,16 @@
           "notes": ""
         },
         {
+          "id": "parents_am_restock_paper",
+          "sortOrder": 75,
+          "type": "check_item",
+          "text": "Restock kleenex and toilet paper",
+          "daySelector": "Sat",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Saturday only."
+        },
+        {
           "id": "parents_am_cleaner_beds",
           "sortOrder": 80,
           "type": "check_item",
@@ -251,6 +331,16 @@
           "weekPattern": "every_other_from_anchor",
           "anchorDate": "2026-06-29",
           "notes": "Cleaner week task."
+        },
+        {
+          "id": "parents_am_refill_med_boxes",
+          "sortOrder": 85,
+          "type": "check_item",
+          "text": "Refill medication boxes",
+          "daySelector": "Sun",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Sunday only."
         },
         {
           "id": "parents_am_cleaner_bathroom",
@@ -593,6 +683,65 @@
       ]
     },
     {
+      "id": "healthy_breakfast_reminder",
+      "sortOrder": 35,
+      "type": "reminder",
+      "title": "Healthy Breakfast Ideas",
+      "ownerLabel": "Household",
+      "scheduleGroupId": "healthy_breakfast",
+      "colors": {
+        "backgroundStart": "#f7e6b1",
+        "backgroundEnd": "#f09e57",
+        "accent": "#6d8f6f",
+        "text": "#2f2210"
+      },
+      "rewardMessage": "",
+      "celebrationTitle": "Healthy Breakfast Ideas complete",
+      "notes": "Morning breakfast reminder slide.",
+      "items": [
+        {
+          "id": "healthy_breakfast_line_1",
+          "sortOrder": 10,
+          "type": "text_line",
+          "text": "Yogurt with fruit and nuts.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_breakfast_line_2",
+          "sortOrder": 20,
+          "type": "text_line",
+          "text": "Oatmeal with berries and cinnamon.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_breakfast_line_3",
+          "sortOrder": 30,
+          "type": "text_line",
+          "text": "Eggs and whole-grain toast.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_breakfast_line_4",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "Smoothie with yogurt and fruit.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
       "id": "weekday_launch_reminder",
       "sortOrder": 40,
       "type": "reminder",
@@ -679,6 +828,16 @@
           "notes": ""
         },
         {
+          "id": "parents_pm_feed_saela_dinner",
+          "sortOrder": 25,
+          "type": "check_item",
+          "text": "Feed Sæla dinner",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "parents_pm_laundry",
           "sortOrder": 30,
           "type": "check_item",
@@ -707,6 +866,16 @@
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
+        },
+        {
+          "id": "parents_pm_saela_training",
+          "sortOrder": 55,
+          "type": "check_item",
+          "text": "Training session with Sæla",
+          "daySelector": "Mon,Tue,Wed,Thu,Fri",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Weekday evenings only."
         },
         {
           "id": "parents_pm_counter",
@@ -749,6 +918,16 @@
           "notes": ""
         },
         {
+          "id": "parents_pm_water_plants",
+          "sortOrder": 95,
+          "type": "check_item",
+          "text": "Water plants",
+          "daySelector": "Sat",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Saturday only."
+        },
+        {
           "id": "parents_pm_clear_table",
           "sortOrder": 100,
           "type": "check_item",
@@ -767,6 +946,16 @@
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
+        },
+        {
+          "id": "parents_pm_feed_orchids",
+          "sortOrder": 115,
+          "type": "check_item",
+          "text": "Feed orchids",
+          "daySelector": "Sat",
+          "weekPattern": "first_and_third_weeks_of_month",
+          "anchorDate": "",
+          "notes": "First and third Saturday only."
         },
         {
           "id": "parents_pm_cleaner_supplies",
@@ -929,6 +1118,75 @@
       ]
     },
     {
+      "id": "kids_bedtime_reminder",
+      "sortOrder": 75,
+      "type": "reminder",
+      "title": "Kids Bedtime Routine",
+      "ownerLabel": "Household",
+      "scheduleGroupId": "kids_bedtime",
+      "colors": {
+        "backgroundStart": "#9db5ff",
+        "backgroundEnd": "#5667c9",
+        "accent": "#ffe7a1",
+        "text": "#101735"
+      },
+      "rewardMessage": "",
+      "celebrationTitle": "Kids Bedtime Routine complete",
+      "notes": "Evening reminder slide for the bedtime routine.",
+      "items": [
+        {
+          "id": "kids_bedtime_line_1",
+          "sortOrder": 10,
+          "type": "text_line",
+          "text": "8:00 PM go upstairs to brush teeth.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "kids_bedtime_line_2",
+          "sortOrder": 20,
+          "type": "text_line",
+          "text": "Read with Mommy.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "kids_bedtime_line_3",
+          "sortOrder": 30,
+          "type": "text_line",
+          "text": "Read to yourselves in bed.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "kids_bedtime_line_4",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "9:00 PM lights out.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "kids_bedtime_line_5",
+          "sortOrder": 50,
+          "type": "text_line",
+          "text": "Listen to Sonos for 15 minutes.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
       "id": "weekend_screen_reminder",
       "sortOrder": 80,
       "type": "reminder",
@@ -1076,5 +1334,5 @@
       ]
     }
   ],
-  "generatedAt": "20260703-034427327Z"
+  "generatedAt": "20260704-143225315Z"
 }

@@ -20,6 +20,7 @@ describe("runtime checklist behavior", () => {
       "parents_am",
       "alexander_am",
       "lilja_am",
+      "healthy_breakfast_reminder",
       "weekday_launch_reminder"
     ]);
     assert.ok(alexanderMorning);
