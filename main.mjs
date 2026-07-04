@@ -15,7 +15,7 @@ import {
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
-const BUILD_VERSION = "20260704-164004503Z";
+const BUILD_VERSION = "20260704-165851829Z";
 const REMINDER_AUTO_SCROLL_SPEED_PX_PER_SEC = 22;
 const REMINDER_AUTO_SCROLL_RESUME_MS = 4000;
 const REMINDER_AUTO_SCROLL_LOOP_PAUSE_MS = 1500;
