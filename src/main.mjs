@@ -6,10 +6,19 @@ import {
   toggleChecklistItem
 } from "./lib/runtime-model.mjs";
 import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
+import {
+  advanceReminderScrollTop,
+  getReminderMaxScrollTop,
+  isReminderScrollAtBottom,
+  reminderNeedsAutoScroll
+} from "./lib/reminder-scroll.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
 const BUILD_VERSION = "__BUILD_VERSION__";
+const REMINDER_AUTO_SCROLL_SPEED_PX_PER_SEC = 22;
+const REMINDER_AUTO_SCROLL_RESUME_MS = 4000;
+const REMINDER_AUTO_SCROLL_LOOP_PAUSE_MS = 1500;
 const appElement = document.getElementById("app");
 const dom = {
   appTitle: null,
@@ -38,7 +47,16 @@ const state = {
   lastPersistedProgress: "",
   lastStructuralSignature: null,
   lastRenderedSlideKey: null,
-  meterAnimationFrame: null
+  meterAnimationFrame: null,
+  reminderAutoScroll: {
+    panel: null,
+    cleanup: null,
+    frameId: null,
+    resumeTimeoutId: null,
+    lastTimestamp: null,
+    isPaused: false,
+    isProgrammaticScroll: false
+  }
 };
 let hasReloadedForServiceWorkerUpdate = false;
 
@@ -199,6 +217,224 @@ function stopMeterLoop() {
 
   window.cancelAnimationFrame(state.meterAnimationFrame);
   state.meterAnimationFrame = null;
+}
+
+function clearReminderAutoScrollFrame() {
+  if (!state.reminderAutoScroll.frameId) {
+    return;
+  }
+
+  window.cancelAnimationFrame(state.reminderAutoScroll.frameId);
+  state.reminderAutoScroll.frameId = null;
+}
+
+function clearReminderAutoScrollResumeTimer() {
+  if (!state.reminderAutoScroll.resumeTimeoutId) {
+    return;
+  }
+
+  window.clearTimeout(state.reminderAutoScroll.resumeTimeoutId);
+  state.reminderAutoScroll.resumeTimeoutId = null;
+}
+
+function setReminderPanelScrollTop(panel, scrollTop) {
+  state.reminderAutoScroll.isProgrammaticScroll = true;
+  panel.scrollTop = scrollTop;
+  state.reminderAutoScroll.isProgrammaticScroll = false;
+}
+
+function stopReminderAutoScroll({ detachPanel = false } = {}) {
+  clearReminderAutoScrollFrame();
+  clearReminderAutoScrollResumeTimer();
+  state.reminderAutoScroll.lastTimestamp = null;
+  state.reminderAutoScroll.isPaused = false;
+  state.reminderAutoScroll.isProgrammaticScroll = false;
+
+  if (!detachPanel) {
+    return;
+  }
+
+  if (state.reminderAutoScroll.cleanup) {
+    state.reminderAutoScroll.cleanup();
+  }
+
+  state.reminderAutoScroll.cleanup = null;
+  state.reminderAutoScroll.panel = null;
+}
+
+function pauseReminderAutoScroll(delayMs, { resetToTop = false } = {}) {
+  const panel = state.reminderAutoScroll.panel;
+
+  clearReminderAutoScrollFrame();
+  clearReminderAutoScrollResumeTimer();
+  state.reminderAutoScroll.lastTimestamp = null;
+  state.reminderAutoScroll.isPaused = true;
+
+  if (!panel) {
+    return;
+  }
+
+  state.reminderAutoScroll.resumeTimeoutId = window.setTimeout(() => {
+    const currentPanel = state.reminderAutoScroll.panel;
+
+    state.reminderAutoScroll.resumeTimeoutId = null;
+
+    if (!currentPanel || document.hidden) {
+      return;
+    }
+
+    if (!reminderNeedsAutoScroll(currentPanel)) {
+      state.reminderAutoScroll.isPaused = false;
+      setReminderPanelScrollTop(currentPanel, 0);
+      return;
+    }
+
+    if (resetToTop) {
+      setReminderPanelScrollTop(currentPanel, 0);
+    }
+
+    state.reminderAutoScroll.isPaused = false;
+    startReminderAutoScroll();
+  }, delayMs);
+}
+
+function startReminderAutoScroll() {
+  const panel = state.reminderAutoScroll.panel;
+
+  if (
+    !panel ||
+    document.hidden ||
+    state.reminderAutoScroll.isPaused ||
+    !reminderNeedsAutoScroll(panel)
+  ) {
+    return;
+  }
+
+  clearReminderAutoScrollFrame();
+  state.reminderAutoScroll.lastTimestamp = null;
+
+  const step = (timestamp) => {
+    const currentPanel = state.reminderAutoScroll.panel;
+
+    if (
+      currentPanel !== panel ||
+      !currentPanel ||
+      document.hidden ||
+      state.reminderAutoScroll.isPaused ||
+      !reminderNeedsAutoScroll(currentPanel)
+    ) {
+      state.reminderAutoScroll.frameId = null;
+      state.reminderAutoScroll.lastTimestamp = null;
+      return;
+    }
+
+    const maxScrollTop = getReminderMaxScrollTop(currentPanel);
+
+    if (isReminderScrollAtBottom(currentPanel.scrollTop, maxScrollTop)) {
+      state.reminderAutoScroll.frameId = null;
+      pauseReminderAutoScroll(REMINDER_AUTO_SCROLL_LOOP_PAUSE_MS, { resetToTop: true });
+      return;
+    }
+
+    if (state.reminderAutoScroll.lastTimestamp === null) {
+      state.reminderAutoScroll.lastTimestamp = timestamp;
+      state.reminderAutoScroll.frameId = window.requestAnimationFrame(step);
+      return;
+    }
+
+    const elapsedSeconds = (timestamp - state.reminderAutoScroll.lastTimestamp) / 1000;
+    state.reminderAutoScroll.lastTimestamp = timestamp;
+
+    const nextScrollTop = advanceReminderScrollTop(
+      currentPanel.scrollTop,
+      elapsedSeconds * REMINDER_AUTO_SCROLL_SPEED_PX_PER_SEC,
+      maxScrollTop
+    );
+
+    setReminderPanelScrollTop(currentPanel, nextScrollTop);
+
+    if (isReminderScrollAtBottom(nextScrollTop, maxScrollTop)) {
+      state.reminderAutoScroll.frameId = null;
+      pauseReminderAutoScroll(REMINDER_AUTO_SCROLL_LOOP_PAUSE_MS, { resetToTop: true });
+      return;
+    }
+
+    state.reminderAutoScroll.frameId = window.requestAnimationFrame(step);
+  };
+
+  state.reminderAutoScroll.frameId = window.requestAnimationFrame(step);
+}
+
+function interruptReminderAutoScroll() {
+  if (!state.reminderAutoScroll.panel) {
+    return;
+  }
+
+  pauseReminderAutoScroll(REMINDER_AUTO_SCROLL_RESUME_MS);
+}
+
+function syncReminderAutoScroll({ forceRestart = false } = {}) {
+  const activeSlide = currentSlide();
+  const nextPanel =
+    activeSlide?.type === "reminder"
+      ? dom.stageBoard?.querySelector("[data-role='reminder-panel']")
+      : null;
+
+  if (nextPanel !== state.reminderAutoScroll.panel) {
+    stopReminderAutoScroll({ detachPanel: true });
+
+    if (!nextPanel) {
+      return;
+    }
+
+    const handleUserScroll = () => {
+      if (state.reminderAutoScroll.isProgrammaticScroll) {
+        return;
+      }
+
+      interruptReminderAutoScroll();
+    };
+    const handleUserInteraction = () => {
+      interruptReminderAutoScroll();
+    };
+
+    nextPanel.addEventListener("scroll", handleUserScroll, { passive: true });
+    nextPanel.addEventListener("wheel", handleUserInteraction, { passive: true });
+    nextPanel.addEventListener("touchstart", handleUserInteraction, { passive: true });
+    nextPanel.addEventListener("pointerdown", handleUserInteraction, { passive: true });
+
+    state.reminderAutoScroll.panel = nextPanel;
+    state.reminderAutoScroll.cleanup = () => {
+      nextPanel.removeEventListener("scroll", handleUserScroll);
+      nextPanel.removeEventListener("wheel", handleUserInteraction);
+      nextPanel.removeEventListener("touchstart", handleUserInteraction);
+      nextPanel.removeEventListener("pointerdown", handleUserInteraction);
+    };
+  }
+
+  if (!nextPanel) {
+    return;
+  }
+
+  if (!reminderNeedsAutoScroll(nextPanel)) {
+    stopReminderAutoScroll();
+    setReminderPanelScrollTop(nextPanel, 0);
+    return;
+  }
+
+  if (forceRestart) {
+    stopReminderAutoScroll();
+    startReminderAutoScroll();
+    return;
+  }
+
+  if (
+    !state.reminderAutoScroll.frameId &&
+    !state.reminderAutoScroll.resumeTimeoutId &&
+    !state.reminderAutoScroll.isPaused
+  ) {
+    startReminderAutoScroll();
+  }
 }
 
 function buildStructuralSignature() {
@@ -374,7 +610,7 @@ function renderReminderSlide(slide, { animate = false } = {}) {
             <span class="stat-chip">${escapeHtml(slide.activeSchedule.groupLabel)}</span>
           </div>
         </div>
-        <div class="reminder-panel">
+        <div class="reminder-panel" data-role="reminder-panel">
           <ul class="reminder-list">
             ${slide.activeItems
               .map(
@@ -519,6 +755,7 @@ function renderStructure({ force = false, animateSlide = false } = {}) {
 
   state.lastStructuralSignature = structuralSignature;
   state.lastRenderedSlideKey = slideKey;
+  syncReminderAutoScroll({ forceRestart: true });
   updateLiveDisplay();
   return true;
 }
@@ -656,7 +893,8 @@ function handleTouchStart(event) {
 
   state.touchPoint = {
     x: touch.clientX,
-    y: touch.clientY
+    y: touch.clientY,
+    allowSwipeNavigation: !touch.target.closest("[data-role='reminder-panel']")
   };
 }
 
@@ -664,6 +902,11 @@ function handleTouchEnd(event) {
   const touch = event.changedTouches?.[0];
 
   if (!touch || !state.touchPoint) {
+    return;
+  }
+
+  if (!state.touchPoint.allowSwipeNavigation) {
+    state.touchPoint = null;
     return;
   }
 
@@ -701,6 +944,7 @@ function installEventListeners() {
       }
 
       stopMeterLoop();
+      stopReminderAutoScroll();
       return;
     }
 
@@ -709,6 +953,7 @@ function installEventListeners() {
     renderStructure({ animateSlide: syncResult.currentSlideChanged });
     scheduleRotation();
     startMeterLoop();
+    syncReminderAutoScroll({ forceRestart: true });
 
     if (!state.wakeLockSentinel) {
       ensureWakeLock();
@@ -718,6 +963,9 @@ function installEventListeners() {
   });
 
   window.setInterval(handleLiveTick, 1000);
+  window.addEventListener("resize", () => {
+    syncReminderAutoScroll({ forceRestart: true });
+  });
 }
 
 async function loadHouseholdData() {

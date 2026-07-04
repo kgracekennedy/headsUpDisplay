@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getActiveScheduleForGroup, weekPatternMatches } from "../src/lib/schedule.mjs";
+import {
+  getActiveScheduleForGroup,
+  parseAnchorDate,
+  weekPatternMatches
+} from "../src/lib/schedule.mjs";
 import { loadSourceData } from "./helpers.mjs";
 
 describe("schedule evaluation", () => {
@@ -29,6 +33,49 @@ describe("schedule evaluation", () => {
     assert.ok(getActiveScheduleForGroup(cleanerPrep, new Date("2026-07-13T18:00:00")));
   });
 
+  it("supports all-day reminder windows", async () => {
+    const data = await loadSourceData();
+    const mommyPt = data.scheduleGroups.find((group) => group.id === "mommy_pt_anytime");
+
+    assert.ok(getActiveScheduleForGroup(mommyPt, new Date("2026-07-07T00:15:00")));
+    assert.ok(getActiveScheduleForGroup(mommyPt, new Date("2026-07-07T14:30:00")));
+    assert.ok(getActiveScheduleForGroup(mommyPt, new Date("2026-07-07T23:45:00")));
+  });
+
+  it("accepts ISO and spreadsheet-style anchor dates", () => {
+    const julySixth = new Date("2026-07-06T18:00:00");
+    const julyThirteenth = new Date("2026-07-13T18:00:00");
+
+    assert.equal(
+      weekPatternMatches(
+        { weekPattern: "every_other_from_anchor", anchorDate: "2026-06-29" },
+        julySixth
+      ),
+      false
+    );
+    assert.equal(
+      weekPatternMatches(
+        { weekPattern: "every_other_from_anchor", anchorDate: "6/29/2026" },
+        julySixth
+      ),
+      false
+    );
+    assert.equal(
+      weekPatternMatches(
+        { weekPattern: "every_other_from_anchor", anchorDate: "06/29/2026" },
+        julyThirteenth
+      ),
+      true
+    );
+    assert.equal(
+      weekPatternMatches(
+        { weekPattern: "every_other_from_anchor", anchorDate: "not-a-date" },
+        julyThirteenth
+      ),
+      false
+    );
+  });
+
   it("supports first and third Saturday monthly rules", async () => {
     const rule = {
       weekPattern: "first_and_third_weeks_of_month"
@@ -38,5 +85,13 @@ describe("schedule evaluation", () => {
     assert.equal(weekPatternMatches(rule, new Date("2026-07-11T18:00:00")), false);
     assert.equal(weekPatternMatches(rule, new Date("2026-07-18T18:00:00")), true);
     assert.equal(weekPatternMatches(rule, new Date("2026-07-25T18:00:00")), false);
+  });
+
+  it("parses valid anchor dates and rejects invalid ones", () => {
+    assert.deepEqual(parseAnchorDate("2026-06-29"), new Date(2026, 5, 29));
+    assert.deepEqual(parseAnchorDate("6/29/2026"), new Date(2026, 5, 29));
+    assert.deepEqual(parseAnchorDate("06/29/2026"), new Date(2026, 5, 29));
+    assert.equal(parseAnchorDate("2026-02-31"), null);
+    assert.equal(parseAnchorDate("29/06/2026"), null);
   });
 });

@@ -745,6 +745,10 @@ code {
   scrollbar-gutter: stable;
 }
 
+.reminder-panel {
+  touch-action: pan-y;
+}
+
 .slide-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));

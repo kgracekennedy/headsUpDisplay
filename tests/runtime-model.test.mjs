@@ -21,7 +21,7 @@ describe("runtime checklist behavior", () => {
       "alexander_am",
       "lilja_am",
       "healthy_breakfast_reminder",
-      "weekday_launch_reminder"
+      "mommy_pt_reminder"
     ]);
     assert.ok(alexanderMorning);
     assert.ok(alexanderMorning.activeItems.some((item) => item.id === "alexander_am_backpack"));

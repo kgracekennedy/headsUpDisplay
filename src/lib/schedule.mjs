@@ -80,6 +80,48 @@ function weekOfMonth(date) {
   return Math.ceil(date.getDate() / 7);
 }
 
+export function parseAnchorDate(value) {
+  const normalized = String(value ?? "").trim();
+
+  if (normalized === "") {
+    return null;
+  }
+
+  let year;
+  let month;
+  let day;
+  let match = normalized.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+
+  if (match) {
+    year = Number.parseInt(match[1], 10);
+    month = Number.parseInt(match[2], 10);
+    day = Number.parseInt(match[3], 10);
+  } else {
+    match = normalized.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+
+    if (!match) {
+      return null;
+    }
+
+    month = Number.parseInt(match[1], 10);
+    day = Number.parseInt(match[2], 10);
+    year = Number.parseInt(match[3], 10);
+  }
+
+  const parsed = new Date(year, month - 1, day);
+
+  if (
+    Number.isNaN(parsed.getTime()) ||
+    parsed.getFullYear() !== year ||
+    parsed.getMonth() !== month - 1 ||
+    parsed.getDate() !== day
+  ) {
+    return null;
+  }
+
+  return parsed;
+}
+
 export function weekPatternMatches(rule, date) {
   const pattern = String(rule.weekPattern ?? "all").trim().toLowerCase();
 
@@ -104,7 +146,12 @@ export function weekPatternMatches(rule, date) {
       return false;
     }
 
-    const anchorDate = new Date(`${rule.anchorDate}T00:00:00`);
+    const anchorDate = parseAnchorDate(rule.anchorDate);
+
+    if (!anchorDate) {
+      return false;
+    }
+
     return weeksBetween(anchorDate, date) % 2 === 0;
   }
 
