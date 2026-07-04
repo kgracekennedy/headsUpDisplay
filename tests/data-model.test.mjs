@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
+import { buildHouseholdData } from "../src/lib/data-model.mjs";
 import { loadSourceData } from "./helpers.mjs";
 
 describe("buildHouseholdData", () => {
@@ -47,5 +48,63 @@ describe("buildHouseholdData", () => {
     assert.equal(ptReminder.items[9].text, "Sæla carry");
     assert.ok(bedtimeReminder);
     assert.equal(bedtimeReminder.items.length, 5);
+  });
+  it("normalizes spreadsheet-style schedule times to two-digit hours", () => {
+    const data = buildHouseholdData({
+      appConfigRows: [
+        { key: "app_title", value: "Test" },
+        { key: "timezone", value: "America/New_York" },
+        { key: "default_slide_duration_sec", value: "15" }
+      ],
+      scheduleRows: [
+        {
+          schedule_group_id: "weekday_morning",
+          label: "Weekday morning",
+          sort_order: "10",
+          day_selector: "Weekdays",
+          start_time: "5:00",
+          end_time: "0:00",
+          week_pattern: "all",
+          anchor_date: "",
+          active: "true",
+          notes: ""
+        }
+      ],
+      slideRows: [
+        {
+          slide_id: "test_slide",
+          sort_order: "10",
+          slide_type: "reminder",
+          title: "Test slide",
+          owner_label: "",
+          schedule_group_id: "weekday_morning",
+          background_start: "#111111",
+          background_end: "#222222",
+          accent_color: "#333333",
+          text_color: "#ffffff",
+          reward_message: "",
+          celebration_title: "",
+          active: "true",
+          notes: ""
+        }
+      ],
+      itemRows: [
+        {
+          slide_id: "test_slide",
+          item_id: "test_line",
+          sort_order: "10",
+          item_type: "text_line",
+          text: "Test",
+          day_selector: "All",
+          week_pattern: "all",
+          anchor_date: "",
+          active: "true",
+          notes: ""
+        }
+      ]
+    });
+
+    assert.equal(data.scheduleGroups[0].rules[0].startTime, "05:00");
+    assert.equal(data.scheduleGroups[0].rules[0].endTime, "00:00");
   });
 });

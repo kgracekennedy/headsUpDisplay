@@ -16,7 +16,7 @@
           "startTime": "16:00",
           "endTime": "23:00",
           "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-06-29",
+          "anchorDate": "6/29/2026",
           "notes": ""
         }
       ]
@@ -82,8 +82,8 @@
         {
           "sortOrder": 20,
           "daySelector": "Sat,Sun",
-          "startTime": "07:00",
-          "endTime": "15:00",
+          "startTime": "06:00",
+          "endTime": "18:00",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -146,7 +146,7 @@
           "sortOrder": 20,
           "daySelector": "Sat,Sun",
           "startTime": "07:00",
-          "endTime": "13:00",
+          "endTime": "17:00",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -1479,5 +1479,5 @@
       ]
     }
   ],
-  "generatedAt": "20260704-171131125Z"
+  "generatedAt": "20260704-194818889Z"
 }
