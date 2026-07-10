@@ -3,6 +3,8 @@ parents_am,10,checklist,Parents Morning Reset,Mommy and Pabbi,parents_am,#f5c77c
 alexander_am,20,checklist,Alexander Morning Run,Alexander,kids_am,#8bc1ff,#4464e1,#ffe083,#102039,"Well done!  Have a great day, sweetheart!",Alexander morning checklist complete.,TRUE,Separate AM checklist for Alexander.
 lilja_am,30,checklist,Lilja Morning Run,Lilja,kids_am,#ffb8da,#ff7a59,#ffe38b,#2b1636,"Well done!  Have a great day, sweetheart!",Lilja morning checklist complete.,TRUE,Separate AM checklist for Lilja.
 healthy_breakfast_reminder,35,reminder,Healthy Breakfast Ideas,Household,healthy_breakfast,#f7e6b1,#f09e57,#6d8f6f,#2f2210,,,TRUE,Morning breakfast reminder slide.
+healthy_lunch_reminder,36,reminder,Healthy Lunch Ideas,Household,healthy_lunch,#cfe7b5,#73a857,#f6d778,#1f2c16,,,TRUE,Midday lunch reminder slide.
+healthy_snacks_reminder,38,reminder,Healthy Snack Ideas,Household,healthy_snacks,#ffd9a8,#f28a5b,#7eb0a1,#2f1d12,,,TRUE,Afternoon snack reminder slide.
 mommy_pt_reminder,45,reminder,Mommy PT: Do a Few When You Have Time,Mommy,mommy_pt_anytime,#d7edd9,#6fa37a,#f8d07a,#163124,,,TRUE,All-day reminder slide for Mommy PT exercises.
 weekday_launch_reminder,40,reminder,Weekday Launch,Household,school_launch_reminder,#9be8c5,#2f8b7d,#fef6c8,#102320,,,FALSE,Reminder slide for weekday departure rhythm.
 parents_pm,50,checklist,Parents Evening Reset,Mommy and Pabbi,parents_pm,#18243f,#39517a,#f1d06a,#f5f7ff,"Tea, dim lights, and a calmer kitchen before bed.",Parents evening checklist complete.,TRUE,Shared parent PM checklist.

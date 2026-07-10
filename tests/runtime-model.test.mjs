@@ -5,6 +5,8 @@ import {
   getOrderedChecklistItems,
   hydrateProgress,
   isChecklistComplete,
+  isSlideMinimized,
+  toggleSlideMinimized,
   toggleChecklistItem
 } from "../src/lib/runtime-model.mjs";
 import { loadSourceData } from "./helpers.mjs";
@@ -77,18 +79,17 @@ describe("runtime checklist behavior", () => {
     );
   });
 
-  it("moves completed items to the end while preserving the default relative order", async () => {
+  it("moves completed items to the end in the order they were checked", async () => {
     const data = await loadSourceData();
     const morning = new Date("2026-07-07T07:30:00");
     let progress = hydrateProgress(data, { version: 1, slides: {} }, morning);
     const alexanderSlide = getActiveSlides(data, morning).find((slide) => slide.id === "alexander_am");
-    const checkedIds = new Set([
-      alexanderSlide.activeItems[3].id,
-      alexanderSlide.activeItems[1].id
-    ]);
+    const firstCheckedId = alexanderSlide.activeItems[3].id;
+    const secondCheckedId = alexanderSlide.activeItems[1].id;
+    const checkedIds = new Set([firstCheckedId, secondCheckedId]);
 
-    progress = toggleChecklistItem(data, progress, "alexander_am", alexanderSlide.activeItems[3].id, morning);
-    progress = toggleChecklistItem(data, progress, "alexander_am", alexanderSlide.activeItems[1].id, morning);
+    progress = toggleChecklistItem(data, progress, "alexander_am", firstCheckedId, morning);
+    progress = toggleChecklistItem(data, progress, "alexander_am", secondCheckedId, morning);
 
     assert.deepEqual(
       getOrderedChecklistItems(alexanderSlide, progress).map((item) => item.id),
@@ -96,9 +97,8 @@ describe("runtime checklist behavior", () => {
         ...alexanderSlide.activeItems
           .filter((item) => !checkedIds.has(item.id))
           .map((item) => item.id),
-        ...alexanderSlide.activeItems
-          .filter((item) => checkedIds.has(item.id))
-          .map((item) => item.id)
+        firstCheckedId,
+        secondCheckedId
       ]
     );
   });
@@ -134,5 +134,20 @@ describe("runtime checklist behavior", () => {
       getOrderedChecklistItems(refreshedSlide, progress).map((item) => item.id),
       refreshedSlide.activeItems.map((item) => item.id)
     );
+  });
+
+  it("keeps minimized checklists out of rotation state until they are restored", async () => {
+    const data = await loadSourceData();
+    const morning = new Date("2026-07-07T07:30:00");
+    let progress = hydrateProgress(data, { version: 1, slides: {} }, morning);
+
+    progress = toggleSlideMinimized(progress, "alexander_am");
+    assert.equal(isSlideMinimized(progress, "alexander_am"), true);
+
+    progress = hydrateProgress(data, progress, morning);
+    assert.equal(isSlideMinimized(progress, "alexander_am"), true);
+
+    progress = toggleSlideMinimized(progress, "alexander_am");
+    assert.equal(isSlideMinimized(progress, "alexander_am"), false);
   });
 });

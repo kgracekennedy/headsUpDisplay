@@ -144,6 +144,7 @@ code {
 .clock-panel,
 .wake-note,
 .control-button,
+.secondary-button,
 .slide-pill,
 .stat-chip {
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -260,6 +261,12 @@ code {
   margin: 0;
 }
 
+.slide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
 .stat-chip {
   display: inline-flex;
   align-items: center;
@@ -268,6 +275,20 @@ code {
   padding: 0.35rem 0.75rem;
   font-weight: 600;
   font-size: 0.86rem;
+}
+
+.slide-helper {
+  margin: -0.2rem 0 0;
+  color: rgba(248, 250, 252, 0.8);
+  font-size: 0.88rem;
+  line-height: 1.25;
+}
+
+.secondary-button {
+  border-radius: 999px;
+  color: inherit;
+  padding: 0.62rem 0.92rem;
+  font-weight: 650;
 }
 
 .checklist,
@@ -764,6 +785,11 @@ code {
   color: #f8fafc;
   padding: 0.65rem 0.8rem;
   text-align: left;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .slide-pill span,
@@ -788,6 +814,10 @@ code {
   background: rgba(255, 224, 131, 0.18);
 }
 
+.slide-pill--manual small {
+  color: rgba(255, 240, 184, 0.86);
+}
+
 .control-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -796,17 +826,29 @@ code {
   border-radius: 20px;
 }
 
+.control-row[hidden] {
+  display: none;
+}
+
 .control-button {
   border-radius: 999px;
   color: #f8fafc;
   padding: 0.72rem 0.85rem;
 }
 
+.secondary-button:hover,
+.secondary-button:focus-visible,
 .control-button:hover,
 .control-button:focus-visible,
-.slide-pill:hover,
-.slide-pill:focus-visible {
+.slide-pill:hover {
   border-color: rgba(255, 224, 131, 0.8);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.slide-pill:focus-visible,
+.secondary-button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(139, 193, 255, 0.34);
   outline: none;
 }
 

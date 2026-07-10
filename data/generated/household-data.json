@@ -37,6 +37,36 @@
       ]
     },
     {
+      "id": "healthy_lunch",
+      "label": "Healthy lunch",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "All",
+          "startTime": "11:00",
+          "endTime": "14:00",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "healthy_snacks",
+      "label": "Healthy snacks",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "All",
+          "startTime": "14:00",
+          "endTime": "19:00",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
       "id": "kids_bedtime",
       "label": "Kids bedtime",
       "rules": [
@@ -500,7 +530,7 @@
           "id": "alexander_am_sheets",
           "sortOrder": 80,
           "type": "check_item",
-          "text": "Take sheets to laundry or get a star",
+          "text": "If your bed needs fresh sheets bring them to the laundry or get a star",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -787,6 +817,144 @@
       ]
     },
     {
+      "id": "healthy_lunch_reminder",
+      "sortOrder": 36,
+      "type": "reminder",
+      "title": "Healthy Lunch Ideas",
+      "ownerLabel": "Household",
+      "scheduleGroupId": "healthy_lunch",
+      "colors": {
+        "backgroundStart": "#cfe7b5",
+        "backgroundEnd": "#73a857",
+        "accent": "#f6d778",
+        "text": "#1f2c16"
+      },
+      "rewardMessage": "",
+      "celebrationTitle": "Healthy Lunch Ideas complete",
+      "notes": "Midday lunch reminder slide.",
+      "items": [
+        {
+          "id": "healthy_lunch_line_1",
+          "sortOrder": 10,
+          "type": "text_line",
+          "text": "Protein plus fruit or veggies makes a strong lunch.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_lunch_line_2",
+          "sortOrder": 20,
+          "type": "text_line",
+          "text": "Turkey and cheese on whole-grain bread with fruit.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_lunch_line_3",
+          "sortOrder": 30,
+          "type": "text_line",
+          "text": "Hummus plate with carrots cucumbers and pita.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_lunch_line_4",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "Quesadilla with fruit and sliced veggies.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_lunch_line_5",
+          "sortOrder": 50,
+          "type": "text_line",
+          "text": "Leftovers are a great lunch choice.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "healthy_snacks_reminder",
+      "sortOrder": 38,
+      "type": "reminder",
+      "title": "Healthy Snack Ideas",
+      "ownerLabel": "Household",
+      "scheduleGroupId": "healthy_snacks",
+      "colors": {
+        "backgroundStart": "#ffd9a8",
+        "backgroundEnd": "#f28a5b",
+        "accent": "#7eb0a1",
+        "text": "#2f1d12"
+      },
+      "rewardMessage": "",
+      "celebrationTitle": "Healthy Snack Ideas complete",
+      "notes": "Afternoon snack reminder slide.",
+      "items": [
+        {
+          "id": "healthy_snacks_line_1",
+          "sortOrder": 10,
+          "type": "text_line",
+          "text": "Apple with peanut butter.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_snacks_line_2",
+          "sortOrder": 20,
+          "type": "text_line",
+          "text": "Yogurt with berries.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_snacks_line_3",
+          "sortOrder": 30,
+          "type": "text_line",
+          "text": "Cheese stick and fruit.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_snacks_line_4",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "Carrots or cucumbers with hummus.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "healthy_snacks_line_5",
+          "sortOrder": 50,
+          "type": "text_line",
+          "text": "Nuts or trail mix with water.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
       "id": "mommy_pt_reminder",
       "sortOrder": 45,
       "type": "reminder",
@@ -804,8 +972,28 @@
       "notes": "All-day reminder slide for Mommy PT exercises.",
       "items": [
         {
-          "id": "mommy_pt_line_1",
+          "id": "mommy_pt_line_6",
           "sortOrder": 10,
+          "type": "text_line",
+          "text": "Meditate",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_11",
+          "sortOrder": 20,
+          "type": "text_line",
+          "text": "Dead lifts",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_1",
+          "sortOrder": 30,
           "type": "text_line",
           "text": "Downward dog",
           "daySelector": "All",
@@ -815,7 +1003,7 @@
         },
         {
           "id": "mommy_pt_line_2",
-          "sortOrder": 20,
+          "sortOrder": 40,
           "type": "text_line",
           "text": "Hamstring stretch",
           "daySelector": "All",
@@ -825,7 +1013,7 @@
         },
         {
           "id": "mommy_pt_line_3",
-          "sortOrder": 30,
+          "sortOrder": 50,
           "type": "text_line",
           "text": "Deep squat",
           "daySelector": "All",
@@ -835,7 +1023,7 @@
         },
         {
           "id": "mommy_pt_line_4",
-          "sortOrder": 40,
+          "sortOrder": 60,
           "type": "text_line",
           "text": "90/90",
           "daySelector": "All",
@@ -845,7 +1033,7 @@
         },
         {
           "id": "mommy_pt_line_5",
-          "sortOrder": 50,
+          "sortOrder": 70,
           "type": "text_line",
           "text": "Calf stretch, straight leg",
           "daySelector": "All",
@@ -854,18 +1042,8 @@
           "notes": ""
         },
         {
-          "id": "mommy_pt_line_6",
-          "sortOrder": 60,
-          "type": "text_line",
-          "text": "Calf stretch, bent leg",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
           "id": "mommy_pt_line_7",
-          "sortOrder": 70,
+          "sortOrder": 80,
           "type": "text_line",
           "text": "Wall angles",
           "daySelector": "All",
@@ -874,8 +1052,18 @@
           "notes": ""
         },
         {
+          "id": "mommy_pt_line_12",
+          "sortOrder": 90,
+          "type": "text_line",
+          "text": "Balance with big toe press against band",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "mommy_pt_line_8",
-          "sortOrder": 80,
+          "sortOrder": 100,
           "type": "text_line",
           "text": "Ankle walks",
           "daySelector": "All",
@@ -885,7 +1073,7 @@
         },
         {
           "id": "mommy_pt_line_9",
-          "sortOrder": 90,
+          "sortOrder": 110,
           "type": "text_line",
           "text": "Toe splaying (5 seconds, 15 reps)",
           "daySelector": "All",
@@ -894,40 +1082,20 @@
           "notes": ""
         },
         {
-          "id": "mommy_pt_line_10",
-          "sortOrder": 100,
-          "type": "text_line",
-          "text": "Sæla carry",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_11",
-          "sortOrder": 110,
-          "type": "text_line",
-          "text": "Dead lifts",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_12",
+          "id": "mommy_pt_line_13",
           "sortOrder": 120,
           "type": "text_line",
-          "text": "Balance with big toe press against band",
+          "text": "Banded external arm rotation",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
         },
         {
-          "id": "mommy_pt_line_13",
+          "id": "mommy_pt_line_10",
           "sortOrder": 130,
           "type": "text_line",
-          "text": "Banded external arm rotation",
+          "text": "Sæla carry",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -1165,7 +1333,7 @@
           "id": "alexander_pm_bed",
           "sortOrder": 40,
           "type": "check_item",
-          "text": "Make bed",
+          "text": "If your bed needs fresh sheets help remake it",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",
@@ -1377,6 +1545,16 @@
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
+        },
+        {
+          "id": "weekend_screen_line_4",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "The blue and pink phones stay downstairs.",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
         }
       ]
     },
@@ -1479,5 +1657,5 @@
       ]
     }
   ],
-  "generatedAt": "20260704-195145259Z"
+  "generatedAt": "20260708-203730842Z"
 }

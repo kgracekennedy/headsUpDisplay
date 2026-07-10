@@ -6,7 +6,7 @@ export async function requestWakeLock() {
   if (!supportsWakeLock()) {
     return {
       sentinel: null,
-      message: "Wake lock is not available on this browser. Install the app and set iPad Auto-Lock to Never when needed."
+      message: "This browser cannot keep the display awake automatically."
     };
   }
 
@@ -14,12 +14,14 @@ export async function requestWakeLock() {
     const sentinel = await navigator.wakeLock.request("screen");
     return {
       sentinel,
-      message: "Screen wake lock requested for this session."
+      message: "Display will stay awake while this app is open."
     };
   } catch (error) {
     return {
       sentinel: null,
-      message: `Wake lock request failed: ${error instanceof Error ? error.message : "unknown error"}`
+      message: error instanceof Error && error.name === "NotAllowedError"
+        ? "Automatic keep-awake was blocked. The app will try again on the next tap."
+        : `Keep-awake request failed: ${error instanceof Error ? error.message : "unknown error"}`
     };
   }
 }

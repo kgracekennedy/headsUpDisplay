@@ -9,8 +9,8 @@ describe("buildHouseholdData", () => {
 
     assert.equal(data.config.appTitle, "Family Heads Up Display");
     assert.equal(data.config.defaultSlideDurationSec, 15);
-    assert.equal(data.slides.length, 12);
-    assert.equal(data.scheduleGroups.length, 11);
+    assert.equal(data.slides.length, 14);
+    assert.equal(data.scheduleGroups.length, 13);
   });
 
   it("keeps reminder rows with comma-containing text intact", async () => {
@@ -35,20 +35,28 @@ describe("buildHouseholdData", () => {
     assert.equal(orchidsItem.weekPattern, "first_and_third_weeks_of_month");
   });
 
-  it("includes the breakfast, PT, and bedtime reminder slides", async () => {
+  it("includes the meal, PT, and bedtime reminder slides", async () => {
     const data = await loadSourceData();
     const breakfastReminder = data.slides.find((slide) => slide.id === "healthy_breakfast_reminder");
+    const lunchReminder = data.slides.find((slide) => slide.id === "healthy_lunch_reminder");
+    const snacksReminder = data.slides.find((slide) => slide.id === "healthy_snacks_reminder");
     const ptReminder = data.slides.find((slide) => slide.id === "mommy_pt_reminder");
     const bedtimeReminder = data.slides.find((slide) => slide.id === "kids_bedtime_reminder");
 
     assert.ok(breakfastReminder);
     assert.equal(breakfastReminder.items.length, 5);
+    assert.ok(lunchReminder);
+    assert.equal(lunchReminder.items.length, 5);
+    assert.ok(snacksReminder);
+    assert.equal(snacksReminder.items.length, 5);
     assert.ok(ptReminder);
     assert.equal(ptReminder.items.length, 13);
-    assert.equal(ptReminder.items[9].text, "Sæla carry");
+    assert.equal(ptReminder.items[0].text, "Meditate");
+    assert.equal(ptReminder.items.some((item) => item.text === "Calf stretch, bent leg"), false);
     assert.ok(bedtimeReminder);
     assert.equal(bedtimeReminder.items.length, 5);
   });
+
   it("normalizes spreadsheet-style schedule times to two-digit hours", () => {
     const data = buildHouseholdData({
       appConfigRows: [
