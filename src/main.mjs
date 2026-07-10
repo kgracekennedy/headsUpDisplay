@@ -724,25 +724,18 @@ function renderNavigation() {
     .map((slide) => {
       const selected = slide.id === state.currentSlideId;
       const inRotation = rotatingSlideIds.has(slide.id);
-      const complete = slide.type === "checklist" && isChecklistComplete(slide, state.progress);
-      const minimized = slide.type === "checklist" && isSlideMinimized(state.progress, slide.id);
-      const statusLabel = minimized
-        ? "manual"
-        : complete
-          ? "complete"
-          : slide.type;
 
       return `
         <button
           type="button"
-          class="slide-pill${selected ? " slide-pill--selected" : ""}${inRotation ? " slide-pill--rotating" : ""}${minimized ? " slide-pill--manual" : ""}"
+          class="slide-pill${selected ? " slide-pill--selected" : ""}${inRotation ? " slide-pill--rotating" : ""}"
           data-action="select-slide"
           data-slide-id="${escapeHtml(slide.id)}"
           aria-pressed="${selected ? "true" : "false"}"
           aria-current="${selected ? "true" : "false"}"
         >
           <span>${escapeHtml(slide.title)}</span>
-          <small>${escapeHtml(statusLabel)}</small>
+          <small>${escapeHtml(slide.type)}</small>
         </button>
       `;
     })

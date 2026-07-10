@@ -818,10 +818,6 @@ code {
   background: rgba(255, 224, 131, 0.18);
 }
 
-.slide-pill--manual small {
-  color: rgba(255, 240, 184, 0.86);
-}
-
 .control-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
