@@ -809,6 +809,10 @@ code {
   font-size: 0.72rem;
 }
 
+.slide-pill--rotating {
+  border-color: rgba(255, 255, 255, 0.34);
+}
+
 .slide-pill--selected {
   border-color: rgba(255, 224, 131, 0.8);
   background: rgba(255, 224, 131, 0.18);
@@ -839,8 +843,7 @@ code {
 .secondary-button:hover,
 .secondary-button:focus-visible,
 .control-button:hover,
-.control-button:focus-visible,
-.slide-pill:hover {
+.control-button:focus-visible {
   border-color: rgba(255, 224, 131, 0.8);
   transform: translateY(-1px);
   outline: none;

@@ -718,9 +718,12 @@ function renderNavigation() {
     return "";
   }
 
+  const rotatingSlideIds = new Set(rotatingSlides().map((slide) => slide.id));
+
   return state.activeSlides
     .map((slide) => {
       const selected = slide.id === state.currentSlideId;
+      const inRotation = rotatingSlideIds.has(slide.id);
       const complete = slide.type === "checklist" && isChecklistComplete(slide, state.progress);
       const minimized = slide.type === "checklist" && isSlideMinimized(state.progress, slide.id);
       const statusLabel = minimized
@@ -732,7 +735,7 @@ function renderNavigation() {
       return `
         <button
           type="button"
-          class="slide-pill ${selected ? "slide-pill--selected" : ""}${minimized ? " slide-pill--manual" : ""}"
+          class="slide-pill${selected ? " slide-pill--selected" : ""}${inRotation ? " slide-pill--rotating" : ""}${minimized ? " slide-pill--manual" : ""}"
           data-action="select-slide"
           data-slide-id="${escapeHtml(slide.id)}"
           aria-pressed="${selected ? "true" : "false"}"
