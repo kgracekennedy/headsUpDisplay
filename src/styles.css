@@ -809,11 +809,12 @@ code {
   font-size: 0.72rem;
 }
 
-.slide-pill--rotating {
+.slide-pill--outlined {
   border-color: rgba(255, 255, 255, 0.34);
 }
 
-.slide-pill--selected {
+.slide-pill--selected-rotating,
+.slide-pill--selected-out-of-rotation {
   border-color: rgba(255, 224, 131, 0.8);
   background: rgba(255, 224, 131, 0.18);
 }

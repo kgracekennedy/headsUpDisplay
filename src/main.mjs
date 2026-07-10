@@ -15,6 +15,7 @@ import {
   isReminderScrollAtBottom,
   reminderNeedsAutoScroll
 } from "./lib/reminder-scroll.mjs";
+import { getSlidePillClassNames } from "./lib/navigation-state.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
@@ -723,12 +724,11 @@ function renderNavigation() {
   return state.activeSlides
     .map((slide) => {
       const selected = slide.id === state.currentSlideId;
-      const inRotation = rotatingSlideIds.has(slide.id);
 
       return `
         <button
           type="button"
-          class="slide-pill${selected ? " slide-pill--selected" : ""}${inRotation ? " slide-pill--rotating" : ""}"
+          class="${getSlidePillClassNames(slide.id, state.currentSlideId, rotatingSlideIds)}"
           data-action="select-slide"
           data-slide-id="${escapeHtml(slide.id)}"
           aria-pressed="${selected ? "true" : "false"}"
