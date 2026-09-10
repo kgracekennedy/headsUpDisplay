@@ -18,9 +18,9 @@ describe("buildHouseholdData", () => {
     const sundayResetReminder = data.slides.find((slide) => slide.id === "sunday_reset_reminder");
 
     assert.ok(sundayResetReminder);
-    assert.equal(sundayResetReminder.items.length, 3);
+    assert.equal(sundayResetReminder.items.length, 4);
     assert.equal(
-      sundayResetReminder.items[1].text,
+      sundayResetReminder.items[3].text,
       "Prep camp bins, coffee, and hand towels before bed."
     );
   });
