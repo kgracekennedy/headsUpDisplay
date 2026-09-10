@@ -9,8 +9,8 @@ describe("buildHouseholdData", () => {
 
     assert.equal(data.config.appTitle, "Family Heads Up Display");
     assert.equal(data.config.defaultSlideDurationSec, 15);
-    assert.equal(data.slides.length, 14);
-    assert.equal(data.scheduleGroups.length, 13);
+    assert.equal(data.slides.length, 13);
+    assert.equal(data.scheduleGroups.length, 12);
   });
 
   it("keeps reminder rows with comma-containing text intact", async () => {
@@ -28,11 +28,13 @@ describe("buildHouseholdData", () => {
   it("allows first and third week monthly recurrence rules", async () => {
     const data = await loadSourceData();
     const orchidsItem = data.slides
-      .find((slide) => slide.id === "parents_am")
+      .find((slide) => slide.id === "parents")
       .items.find((item) => item.id === "parents_am_feed_orchids");
 
     assert.ok(orchidsItem);
     assert.equal(orchidsItem.weekPattern, "first_and_third_weeks_of_month");
+    assert.equal(orchidsItem.section, "am");
+    assert.equal(orchidsItem.dayMode, "non_school_day");
   });
 
   it("includes the meal, PT, and bedtime reminder slides", async () => {
@@ -50,9 +52,9 @@ describe("buildHouseholdData", () => {
     assert.ok(snacksReminder);
     assert.equal(snacksReminder.items.length, 5);
     assert.ok(ptReminder);
-    assert.equal(ptReminder.items.length, 13);
+    assert.equal(ptReminder.items.length, 17);
     assert.equal(ptReminder.items[0].text, "Meditate");
-    assert.equal(ptReminder.items.some((item) => item.text === "Calf stretch, bent leg"), false);
+    assert.equal(ptReminder.items.some((item) => item.text === "Calf stretch, bent knee"), true);
     assert.ok(bedtimeReminder);
     assert.equal(bedtimeReminder.items.length, 5);
   });
@@ -103,6 +105,9 @@ describe("buildHouseholdData", () => {
           sort_order: "10",
           item_type: "text_line",
           text: "Test",
+          section: "anytime",
+          day_mode: "all",
+          season_mode: "all",
           day_selector: "All",
           week_pattern: "all",
           anchor_date: "",

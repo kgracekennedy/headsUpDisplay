@@ -31,6 +31,18 @@ async function readCsvTable(fileName) {
   return parseCsv(fileContents);
 }
 
+async function readOptionalCsvTable(fileName) {
+  try {
+    return await readCsvTable(fileName);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
 async function copyFile(sourcePath, destinationPath) {
   const contents = await readFile(sourcePath);
   await mkdir(path.dirname(destinationPath), { recursive: true });
@@ -55,7 +67,7 @@ async function copyTree(sourcePath, destinationPath) {
 }
 
 async function copyDirectoryContents(sourceDirectory, destinationDirectory) {
-  const entries = ["index.html", "styles.css", "main.mjs", "lib"];
+  const entries = ["index.html", "review.html", "styles.css", "main.mjs", "review.mjs", "lib"];
 
   for (const entry of entries) {
     await copyTree(path.join(sourceDirectory, entry), path.join(destinationDirectory, entry));
@@ -83,7 +95,8 @@ export async function buildSite(options = {}) {
     appConfigRows: await readCsvTable("app_config.csv"),
     slideRows: await readCsvTable("slides.csv"),
     itemRows: await readCsvTable("slide_items.csv"),
-    scheduleRows: await readCsvTable("schedule_groups.csv")
+    scheduleRows: await readCsvTable("schedule_groups.csv"),
+    schoolDaysOffRows: await readOptionalCsvTable("school_days_off.csv")
   };
   const householdData = buildHouseholdData(tables, { generatedAt: buildVersion });
   const serializedData = `${JSON.stringify(householdData, null, 2)}\n`;

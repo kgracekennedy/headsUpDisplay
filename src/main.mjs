@@ -1,10 +1,14 @@
 import { getUpcomingStarts, getActiveSlides } from "./lib/schedule.mjs";
 import {
-  getOrderedChecklistItems,
+  getModeLabel,
+  getRequiredChecklistItems,
+  getVisibleChecklistSections,
   hydrateProgress,
   isChecklistComplete,
   isSlideMinimized,
   normalizeProgressState,
+  setDayMode,
+  setSeasonMode,
   toggleSlideMinimized,
   toggleChecklistItem
 } from "./lib/runtime-model.mjs";
@@ -466,7 +470,7 @@ function buildStructuralSignature() {
       ...(state.progress.slides[slide.id]?.orderedCheckedItemIds ?? [])
     ]
       .join(",");
-    const completionState = isChecklistComplete(slide, state.progress) ? "complete" : "progress";
+    const completionState = isChecklistComplete(slide, state.progress, state.now) ? "complete" : "progress";
     const minimizedState = isSlideMinimized(state.progress, slide.id) ? "minimized" : "rotation";
 
     return [
@@ -476,7 +480,9 @@ function buildStructuralSignature() {
       checkedItemIds,
       orderedCheckedItemIds,
       completionState,
-      minimizedState
+      minimizedState,
+      state.progress.modes?.dayMode,
+      state.progress.modes?.seasonMode
     ].join(":");
   });
 
@@ -487,11 +493,10 @@ function buildStructuralSignature() {
   });
 }
 
-function buildChecklistMarkup(slide) {
+function buildChecklistItemsMarkup(slide, items) {
   const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
-  const orderedItems = getOrderedChecklistItems(slide, state.progress);
 
-  return orderedItems
+  return items
     .map((item) => {
       const checked = progressEntry.checkedItemIds.includes(item.id);
 
@@ -511,6 +516,23 @@ function buildChecklistMarkup(slide) {
         </li>
       `;
     })
+    .join("");
+}
+
+function buildChecklistMarkup(slide) {
+  const sections = getVisibleChecklistSections(slide, state.progress, state.now);
+
+  return sections
+    .map(
+      (section) => `
+        <section class="checklist-section">
+          <h3>${escapeHtml(section.title)}</h3>
+          <ul class="checklist">
+            ${buildChecklistItemsMarkup(slide, section.items)}
+          </ul>
+        </section>
+      `
+    )
     .join("");
 }
 
@@ -582,10 +604,85 @@ function renderCelebrationPanel(slide) {
   `;
 }
 
+function isPmTimeForRender(slide) {
+  const currentMinutes = state.now.getHours() * 60 + state.now.getMinutes();
+  const pmStartText =
+    state.progress.modes?.dayMode === "non_school_day"
+      ? slide.pmStartNonSchool
+      : slide.pmStartSchool;
+  const [hoursText, minutesText] = String(pmStartText || "16:00").split(":");
+
+  return currentMinutes >= Number.parseInt(hoursText, 10) * 60 + Number.parseInt(minutesText, 10);
+}
+
+function isSectionComplete(slide, sectionId) {
+  const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
+  const sectionItems = slide.activeItems.filter((item) => (item.section ?? "am") === sectionId);
+
+  return (
+    sectionItems.length > 0 &&
+    sectionItems.every((item) => progressEntry.checkedItemIds.includes(item.id))
+  );
+}
+
+function renderModeActions(slide) {
+  const modes = state.progress.modes ?? {};
+  const dayModeLabel = getModeLabel(modes.dayMode);
+  const seasonModeLabel = modes.seasonMode === "summer_camp" ? "Summer Camp" : "School Year";
+  const seasonButton =
+    slide.id === "parents"
+      ? `
+          <button
+            type="button"
+            class="secondary-button"
+            data-action="toggle-season-mode"
+          >
+            ${escapeHtml(seasonModeLabel)}
+          </button>
+        `
+      : "";
+
+  return `
+    <button
+      type="button"
+      class="secondary-button"
+      data-action="toggle-day-mode"
+    >
+      ${escapeHtml(dayModeLabel)}
+    </button>
+    ${seasonButton}
+  `;
+}
+
+function renderHelperPanel(slide) {
+  const pmStarted = isPmTimeForRender(slide);
+  const helpers = (slide.activeHelpers ?? []).filter((item) =>
+    pmStarted ? item.id.includes("_activity_") : !item.id.includes("_activity_")
+  );
+
+  if (
+    helpers.length === 0 ||
+    (!pmStarted && !isSectionComplete(slide, "am"))
+  ) {
+    return "";
+  }
+
+  return `
+    <div class="helper-panel">
+      <p class="helper-title">${pmStarted ? "Activity ideas" : "Done early?"}</p>
+      <ul>
+        ${helpers.map((item) => `<li>${escapeHtml(item.text)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
 function renderChecklistSlide(slide, { animate = false } = {}) {
   const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
-  const checkedCount = progressEntry.checkedItemIds.length;
-  const isComplete = isChecklistComplete(slide, state.progress);
+  const requiredItems = getRequiredChecklistItems(slide, state.now, state.progress.modes);
+  const requiredItemIds = new Set(requiredItems.map((item) => item.id));
+  const checkedCount = progressEntry.checkedItemIds.filter((itemId) => requiredItemIds.has(itemId)).length;
+  const isComplete = isChecklistComplete(slide, state.progress, state.now);
   const minimized = isSlideMinimized(state.progress, slide.id);
   const transitionClass = animate ? " slide-card--transition" : "";
   const completionBanner = isComplete ? renderCelebrationPanel(slide) : "";
@@ -605,10 +702,11 @@ function renderChecklistSlide(slide, { animate = false } = {}) {
             <h2>${escapeHtml(slide.title)}</h2>
           </div>
           <div class="slide-stats">
-            <span class="stat-chip">${checkedCount} / ${slide.activeItems.length} checked</span>
+            <span class="stat-chip">${checkedCount} / ${requiredItems.length} checked</span>
             <span class="stat-chip">${escapeHtml(slide.activeSchedule.groupLabel)}</span>
           </div>
           <div class="slide-actions">
+            ${renderModeActions(slide)}
             <button
               type="button"
               class="secondary-button"
@@ -620,12 +718,11 @@ function renderChecklistSlide(slide, { animate = false } = {}) {
             </button>
           </div>
           ${rotationStatusMarkup}
+          ${renderHelperPanel(slide)}
           ${completionBanner}
         </div>
         <div class="checklist-panel">
-          <ul class="checklist">
-            ${buildChecklistMarkup(slide)}
-          </ul>
+          ${buildChecklistMarkup(slide)}
         </div>
       </div>
     </article>
@@ -799,8 +896,8 @@ function syncDerivedState() {
   const previousActiveSlideIds = state.activeSlides.map((slide) => slide.id).join("|");
   const previousCurrentSlideId = state.currentSlideId;
 
-  state.activeSlides = getActiveSlides(state.data, state.now);
   state.progress = hydrateProgress(state.data, state.progress, state.now);
+  state.activeSlides = getActiveSlides(state.data, state.now, state.progress.modes);
   persistProgressIfChanged();
   const activeRotationSlides = rotatingSlides();
   const defaultSlide = activeRotationSlides[0] ?? state.activeSlides[0] ?? null;
@@ -938,6 +1035,31 @@ function handleClick(event) {
     }
 
     renderStructure({ animateSlide: false });
+    scheduleRotation();
+    target.blur();
+    return;
+  }
+
+  if (action === "toggle-day-mode") {
+    const nextDayMode = state.progress.modes?.dayMode === "school_day" ? "non_school_day" : "school_day";
+
+    state.progress = setDayMode(state.data, state.progress, nextDayMode, state.now);
+    persistProgressIfChanged();
+    const syncResult = syncDerivedState();
+    renderStructure({ animateSlide: syncResult.currentSlideChanged });
+    scheduleRotation();
+    target.blur();
+    return;
+  }
+
+  if (action === "toggle-season-mode") {
+    const nextSeasonMode =
+      state.progress.modes?.seasonMode === "summer_camp" ? "school_year" : "summer_camp";
+
+    state.progress = setSeasonMode(state.data, state.progress, nextSeasonMode, state.now);
+    persistProgressIfChanged();
+    const syncResult = syncDerivedState();
+    renderStructure({ animateSlide: syncResult.currentSlideChanged });
     scheduleRotation();
     target.blur();
     return;

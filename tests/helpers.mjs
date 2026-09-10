@@ -13,13 +13,26 @@ async function readCsv(fileName) {
   return parseCsv(await readFile(filePath, "utf8"));
 }
 
+async function readOptionalCsv(fileName) {
+  try {
+    return await readCsv(fileName);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
 export async function loadSourceData() {
   return buildHouseholdData(
     {
       appConfigRows: await readCsv("app_config.csv"),
       slideRows: await readCsv("slides.csv"),
       itemRows: await readCsv("slide_items.csv"),
-      scheduleRows: await readCsv("schedule_groups.csv")
+      scheduleRows: await readCsv("schedule_groups.csv"),
+      schoolDaysOffRows: await readOptionalCsv("school_days_off.csv")
     },
     {
       generatedAt: "2026-07-02T00:00:00.000Z"

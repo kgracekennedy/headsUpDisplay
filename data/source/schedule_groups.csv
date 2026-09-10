@@ -1,17 +1,13 @@
 schedule_group_id,label,sort_order,day_selector,start_time,end_time,week_pattern,anchor_date,active,notes
-parents_am,Parents morning,10,Weekdays,5:00,12:00,all,,TRUE,
-parents_am,Parents morning,20,"Sat,Sun",7:00,17:00,all,,TRUE,
-kids_am,Kids morning,10,Weekdays,5:00,9:00,all,,TRUE,
-kids_am,Kids morning,20,"Sat,Sun",6:00,18:00,all,,TRUE,
+person_day,Person checklist day,10,All,5:00,2:00,all,,TRUE,Checklist day resets at 2 AM.
 healthy_breakfast,Healthy breakfast,10,All,5:00,11:00,all,,TRUE,
 healthy_lunch,Healthy lunch,10,All,11:00,14:00,all,,TRUE,
 healthy_snacks,Healthy snacks,10,All,14:00,19:00,all,,TRUE,
-mommy_pt_anytime,Mommy PT anytime,10,All,0:00,0:00,all,,TRUE,
 school_launch_reminder,School launch,10,Weekdays,5:30,9:00,all,,TRUE,
-parents_pm,Parents evening,10,"Mon,Tue,Wed,Thu,Fri,Sun",16:00,2:00,all,,TRUE,
-parents_pm,Parents evening,20,Sat,17:00,23:00,all,,TRUE,
-kids_pm,Kids evening,10,All,16:00,21:30,all,,TRUE,
+mommy_pt_anytime,Mommy PT anytime,10,All,0:00,0:00,all,,TRUE,
 kids_bedtime,Kids bedtime,10,All,20:00,21:15,all,,TRUE,
 weekend_screen,Weekend screens,10,"Sat,Sun",8:00,16:00,all,,TRUE,
-cleaner_monday,Cleaner prep,10,Mon,16:00,23:00,every_other_from_anchor,6/29/2026,TRUE,
+cleaner_sunday,Cleaner big tidy,10,Sun,5:00,2:00,every_other_from_anchor,2026-09-20,TRUE,Sunday before alternating Tuesday cleaners.
+cleaner_monday,Cleaner maintenance,10,Mon,16:00,23:00,every_other_from_anchor,2026-09-21,TRUE,Monday before alternating Tuesday cleaners.
+cleaner_tuesday,Cleaner last minute,10,Tue,5:00,12:00,every_other_from_anchor,2026-09-22,TRUE,Alternating Tuesday cleaners.
 sunday_reset,Sunday reset,10,Sun,18:00,22:00,all,,TRUE,

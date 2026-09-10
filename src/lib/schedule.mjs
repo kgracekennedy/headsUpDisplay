@@ -168,6 +168,55 @@ export function timeToMinutes(timeText) {
   return Number.parseInt(hoursText, 10) * 60 + Number.parseInt(minutesText, 10);
 }
 
+export function getOperationalDateKey(date) {
+  const operationalDate = new Date(date);
+  operationalDate.setHours(operationalDate.getHours() - 2);
+
+  return [
+    operationalDate.getFullYear(),
+    String(operationalDate.getMonth() + 1).padStart(2, "0"),
+    String(operationalDate.getDate()).padStart(2, "0")
+  ].join("-");
+}
+
+export function getDefaultDayMode(data, now) {
+  const dayKey = getOperationalDateKey(now);
+  const operationalDate = new Date(now);
+  operationalDate.setHours(operationalDate.getHours() - 2);
+
+  if (operationalDate.getDay() === 0 || operationalDate.getDay() === 6) {
+    return "non_school_day";
+  }
+
+  if ((data.schoolDaysOff ?? []).some((day) => day.date === dayKey)) {
+    return "non_school_day";
+  }
+
+  return "school_day";
+}
+
+export function getEffectiveModes(data, progressState, now) {
+  const dayKey = getOperationalDateKey(now);
+  const defaultDayMode = getDefaultDayMode(data, now);
+  const savedModes = progressState?.modes ?? {};
+  const savedDayMode =
+    savedModes.dayKey === dayKey &&
+    (savedModes.dayMode === "school_day" || savedModes.dayMode === "non_school_day")
+      ? savedModes.dayMode
+      : defaultDayMode;
+  const seasonMode =
+    savedModes.seasonMode === "summer_camp" || savedModes.seasonMode === "school_year"
+      ? savedModes.seasonMode
+      : "school_year";
+
+  return {
+    dayKey,
+    defaultDayMode,
+    dayMode: savedDayMode,
+    seasonMode
+  };
+}
+
 function buildDateAtMinutes(date, minutes) {
   const next = startOfDay(date);
   next.setMinutes(minutes);
@@ -237,9 +286,44 @@ export function getActiveScheduleForGroup(group, now) {
   return null;
 }
 
-export function getActiveItemsForSlide(slide, now) {
+function itemModeMatches(item, modes) {
+  const dayMode = item.dayMode ?? "all";
+  const seasonMode = item.seasonMode ?? "all";
+
+  return (
+    (dayMode === "all" || dayMode === modes.dayMode) &&
+    (seasonMode === "all" || seasonMode === modes.seasonMode)
+  );
+}
+
+export function getActiveItemsForSlide(slide, now, modes = { dayMode: "school_day", seasonMode: "school_year" }) {
   return slide.items.filter(
-    (item) => daySelectorMatches(item.daySelector, now) && weekPatternMatches(item, now)
+    (item) =>
+      (slide.type !== "checklist" || item.type === "check_item") &&
+      item.section !== "helper" &&
+      itemModeMatches(item, modes) &&
+      daySelectorMatches(item.daySelector, now) &&
+      weekPatternMatches(item, now)
+  );
+}
+
+export function getScheduledChecklistItemsForSlide(slide, now) {
+  return slide.items.filter(
+    (item) =>
+      item.type === "check_item" &&
+      item.section !== "helper" &&
+      daySelectorMatches(item.daySelector, now) &&
+      weekPatternMatches(item, now)
+  );
+}
+
+export function getActiveHelperItemsForSlide(slide, now, modes = { dayMode: "school_day", seasonMode: "school_year" }) {
+  return slide.items.filter(
+    (item) =>
+      item.section === "helper" &&
+      itemModeMatches(item, modes) &&
+      daySelectorMatches(item.daySelector, now) &&
+      weekPatternMatches(item, now)
   );
 }
 
@@ -251,7 +335,7 @@ export function getScheduleGroupMap(data) {
   return new Map(data.scheduleGroups.map((group) => [group.id, group]));
 }
 
-export function getActiveSlides(data, now) {
+export function getActiveSlides(data, now, modes = { dayMode: "school_day", seasonMode: "school_year" }) {
   const scheduleGroupMap = getScheduleGroupMap(data);
 
   return data.slides
@@ -263,10 +347,18 @@ export function getActiveSlides(data, now) {
         return null;
       }
 
+      const activeItems = getActiveItemsForSlide(slide, now, modes);
+      const activeHelpers = getActiveHelperItemsForSlide(slide, now, modes);
+
+      if (activeItems.length === 0 && activeHelpers.length === 0) {
+        return null;
+      }
+
       return {
         ...slide,
         activeSchedule,
-        activeItems: getActiveItemsForSlide(slide, now)
+        activeItems,
+        activeHelpers
       };
     })
     .filter(Boolean)

@@ -11,9 +11,14 @@ The app reads JSON at runtime, but that JSON is generated from spreadsheet-frien
 - `data/source/slide_items.csv`
   - one row per checklist item or reminder line
   - use `item_type` of `check_item` or `text_line`
+  - use `section` for `am`, `pm`, `anytime`, or non-checkable `helper`
+  - use `day_mode` for `all`, `school_day`, or `non_school_day`
+  - use `season_mode` for `all`, `school_year`, or `summer_camp`
 - `data/source/schedule_groups.csv`
   - one row per schedule rule
   - multiple rows can share the same `schedule_group_id`
+- `data/source/school_days_off.csv`
+  - local dates that should default to Non-school Day
 
 ## Scheduling Rules
 Use schedule groups instead of repeating time windows on every slide.

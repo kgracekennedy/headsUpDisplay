@@ -10,27 +10,27 @@ import { loadSourceData } from "./helpers.mjs";
 describe("schedule evaluation", () => {
   it("keeps cross-midnight evening schedules active after midnight", async () => {
     const data = await loadSourceData();
-    const parentsEvening = data.scheduleGroups.find((group) => group.id === "parents_pm");
-    const activeSchedule = getActiveScheduleForGroup(parentsEvening, new Date("2026-07-07T01:00:00"));
+    const personDay = data.scheduleGroups.find((group) => group.id === "person_day");
+    const activeSchedule = getActiveScheduleForGroup(personDay, new Date("2026-09-24T01:00:00"));
 
     assert.ok(activeSchedule);
     assert.equal(activeSchedule.startsAt.getFullYear(), 2026);
-    assert.equal(activeSchedule.startsAt.getMonth(), 6);
-    assert.equal(activeSchedule.startsAt.getDate(), 6);
-    assert.equal(activeSchedule.startsAt.getHours(), 16);
-    assert.equal(activeSchedule.endsAt.getDate(), 7);
+    assert.equal(activeSchedule.startsAt.getMonth(), 8);
+    assert.equal(activeSchedule.startsAt.getDate(), 23);
+    assert.equal(activeSchedule.startsAt.getHours(), 5);
+    assert.equal(activeSchedule.endsAt.getDate(), 24);
     assert.equal(activeSchedule.endsAt.getHours(), 2);
   });
 
-  it("supports alternating cleaner weeks from an anchor date", async () => {
+  it("supports alternating Tuesday cleaner weeks from an anchor date", async () => {
     const data = await loadSourceData();
-    const cleanerPrep = data.scheduleGroups.find((group) => group.id === "cleaner_monday");
+    const cleanerPrep = data.scheduleGroups.find((group) => group.id === "cleaner_tuesday");
 
     assert.equal(
-      getActiveScheduleForGroup(cleanerPrep, new Date("2026-07-06T18:00:00")),
+      getActiveScheduleForGroup(cleanerPrep, new Date("2026-09-15T08:00:00")),
       null
     );
-    assert.ok(getActiveScheduleForGroup(cleanerPrep, new Date("2026-07-13T18:00:00")));
+    assert.ok(getActiveScheduleForGroup(cleanerPrep, new Date("2026-09-22T08:00:00")));
   });
 
   it("supports all-day reminder windows", async () => {

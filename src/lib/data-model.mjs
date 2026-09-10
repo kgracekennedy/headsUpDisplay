@@ -1,5 +1,8 @@
 const VALID_SLIDE_TYPES = new Set(["checklist", "reminder"]);
 const VALID_ITEM_TYPES = new Set(["check_item", "text_line"]);
+const VALID_ITEM_SECTIONS = new Set(["am", "pm", "anytime", "helper"]);
+const VALID_DAY_MODES = new Set(["all", "school_day", "non_school_day"]);
+const VALID_SEASON_MODES = new Set(["all", "school_year", "summer_camp"]);
 const VALID_WEEK_PATTERNS = new Set([
   "all",
   "odd_weeks",
@@ -90,6 +93,51 @@ function asTime(value, fieldName) {
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 }
 
+function asOptionalTime(value, fieldName) {
+  const trimmed = asOptionalText(value);
+
+  if (trimmed === "") {
+    return "";
+  }
+
+  return asTime(trimmed, fieldName);
+}
+
+function asChoice(value, fallback, validValues, fieldName) {
+  const normalized = asOptionalText(value).toLowerCase() || fallback;
+
+  if (!validValues.has(normalized)) {
+    throw new Error(`Unsupported ${fieldName}: ${value}`);
+  }
+
+  return normalized;
+}
+
+function asDateKey(value, fieldName) {
+  const trimmed = asRequiredText(value, fieldName);
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    throw new Error(`Invalid date for ${fieldName}: ${value}`);
+  }
+
+  const [yearText, monthText, dayText] = trimmed.split("-");
+  const year = Number.parseInt(yearText, 10);
+  const month = Number.parseInt(monthText, 10);
+  const day = Number.parseInt(dayText, 10);
+  const parsed = new Date(year, month - 1, day);
+
+  if (
+    Number.isNaN(parsed.getTime()) ||
+    parsed.getFullYear() !== year ||
+    parsed.getMonth() !== month - 1 ||
+    parsed.getDate() !== day
+  ) {
+    throw new Error(`Invalid date for ${fieldName}: ${value}`);
+  }
+
+  return trimmed;
+}
+
 function mapConfigRows(rows) {
   const settings = new Map();
 
@@ -167,6 +215,14 @@ function normalizeItemRows(rows) {
       sortOrder: asInteger(row.sort_order, 999, `slide_items.sort_order for ${slideId}`),
       type: itemType,
       text: asRequiredText(row.text, `slide_items.text for ${slideId}`),
+      section: asChoice(row.section, "am", VALID_ITEM_SECTIONS, `slide_items.section for ${slideId}`),
+      dayMode: asChoice(row.day_mode, "all", VALID_DAY_MODES, `slide_items.day_mode for ${slideId}`),
+      seasonMode: asChoice(
+        row.season_mode,
+        "all",
+        VALID_SEASON_MODES,
+        `slide_items.season_mode for ${slideId}`
+      ),
       daySelector: asOptionalText(row.day_selector) || "All",
       weekPattern: asWeekPattern(row.week_pattern),
       anchorDate: asOptionalText(row.anchor_date),
@@ -218,6 +274,11 @@ export function buildHouseholdData(tables, options = {}) {
         title: asRequiredText(row.title, `slides.title for ${slideId}`),
         ownerLabel: asOptionalText(row.owner_label),
         scheduleGroupId,
+        pmStartSchool: asOptionalTime(row.pm_start_school, `slides.pm_start_school for ${slideId}`),
+        pmStartNonSchool: asOptionalTime(
+          row.pm_start_non_school,
+          `slides.pm_start_non_school for ${slideId}`
+        ),
         colors: {
           backgroundStart: asColor(row.background_start, "#1f2937"),
           backgroundEnd: asColor(row.background_end, "#111827"),
@@ -242,7 +303,14 @@ export function buildHouseholdData(tables, options = {}) {
       defaultSlideDurationSec: config.defaultSlideDurationSec
     },
     scheduleGroups,
-    slides
+    slides,
+    schoolDaysOff: (tables.schoolDaysOffRows ?? [])
+      .filter((row) => asBoolean(row.active, true))
+      .map((row) => ({
+        date: asDateKey(row.date, "school_days_off.date"),
+        label: asOptionalText(row.label)
+      }))
+      .sort((left, right) => left.date.localeCompare(right.date))
   };
 
   if (options.generatedAt) {

@@ -14,6 +14,7 @@ The editable source of truth lives in `data/source/`:
 | `slides.csv` | One row per slide | checklist vs reminder, titles, owner labels, colors, celebration text |
 | `slide_items.csv` | The lines inside each slide | checklist items or reminder text |
 | `schedule_groups.csv` | Time windows | when a slide is active |
+| `school_days_off.csv` | School calendar overrides | dates that default to Non-school Day |
 
 The app also generates `data/generated/household-data.json` from those CSV files. Do not edit the generated JSON directly. It gets rebuilt from the CSVs.
 
@@ -78,6 +79,9 @@ What each value means:
 - `sort_order`: where it appears in the list
 - `item_type`: `check_item` for a checklist row
 - `text`: what the child or parent sees on the screen
+- `section`: `am`, `pm`, `anytime`, or `helper`
+- `day_mode`: `all`, `school_day`, or `non_school_day`
+- `season_mode`: `all`, `school_year`, or `summer_camp`
 - `day_selector`: when it appears, such as `All`, `Weekdays`, or `Sat,Sun`
 - `week_pattern`: usually `all`
 
@@ -193,6 +197,9 @@ Common keys:
 | `sort_order` | Order within the slide |
 | `item_type` | `check_item` or `text_line` |
 | `text` | What is shown on the screen |
+| `section` | Checklist section: `am`, `pm`, `anytime`, or non-checkable `helper` |
+| `day_mode` | Whether the row appears in `all`, `school_day`, or `non_school_day` mode |
+| `season_mode` | Whether the row appears in `all`, `school_year`, or `summer_camp` season |
 | `day_selector` | Which days this row appears |
 | `week_pattern` | Which weeks this row appears |
 | `anchor_date` | Only used with `every_other_from_anchor` |
