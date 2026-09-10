@@ -616,9 +616,35 @@ function formatRewardTitle(rewardMessage) {
   return shortened.charAt(0).toUpperCase() + shortened.slice(1);
 }
 
+function getKidPhoneColor(slide) {
+  if (slide.id === "alexander") {
+    return "blue";
+  }
+
+  if (slide.id === "lilja") {
+    return "pink";
+  }
+
+  return "";
+}
+
+function getRewardMessage(slide) {
+  const phoneColor = getKidPhoneColor(slide);
+
+  if (
+    phoneColor &&
+    state.progress.modes?.dayMode === "school_day" &&
+    !isPmTimeForRender(slide)
+  ) {
+    return `You may use the ${phoneColor} iPhone until time to leave.`;
+  }
+
+  return slide.rewardMessage;
+}
+
 function renderRewardOnlySlide(slide, { animate = false } = {}) {
   const transitionClass = animate ? " slide-card--transition" : "";
-  const rewardTitle = formatRewardTitle(slide.rewardMessage);
+  const rewardTitle = formatRewardTitle(getRewardMessage(slide));
 
   return `
     <article class="slide-card slide-card--checklist slide-card--completed slide-card--reward-only${transitionClass}" style="${themeStyle(slide)}">
