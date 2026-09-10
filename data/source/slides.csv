@@ -1,7 +1,7 @@
 slide_id,sort_order,slide_type,title,owner_label,schedule_group_id,pm_start_school,pm_start_non_school,background_start,background_end,accent_color,text_color,reward_message,celebration_title,active,notes
-parents,10,checklist,Parents Reset,Mommy and Pabbi,person_day,16:00,16:00,#f5c77c,#f26a4b,#4d8f8a,#1e2432,Fresh coffee and a five-minute quiet kitchen reset.,Parents checklist complete.,TRUE,Combined parent AM PM and anytime checklist.
-alexander,20,checklist,Alexander Run,Alexander,person_day,15:00,16:00,#8bc1ff,#4464e1,#ffe083,#102039,You may use the blue iPhone until dinner.,Alexander checklist complete.,TRUE,Combined Alexander AM PM and anytime checklist.
-lilja,30,checklist,Lilja Run,Lilja,person_day,14:00,16:00,#ffb8da,#ff7a59,#ffe38b,#2b1636,You may use the pink iPhone until dinner.,Lilja checklist complete.,TRUE,Combined Lilja AM PM and anytime checklist.
+parents,10,checklist,Parents' Checklist,Mommy and Pabbi,person_day,16:00,16:00,#f5c77c,#f26a4b,#4d8f8a,#1e2432,Fresh coffee and a five-minute quiet kitchen reset.,Parents checklist complete.,TRUE,Combined parent AM PM and anytime checklist.
+alexander,20,checklist,Alexander's Checklist,Alexander,person_day,15:00,16:00,#8bc1ff,#4464e1,#ffe083,#102039,You may use the blue iPhone until dinner.,Alexander checklist complete.,TRUE,Combined Alexander AM PM and anytime checklist.
+lilja,30,checklist,Lilja's Checklist,Lilja,person_day,14:00,16:00,#ffb8da,#ff7a59,#ffe38b,#2b1636,You may use the pink iPhone until dinner.,Lilja checklist complete.,TRUE,Combined Lilja AM PM and anytime checklist.
 healthy_breakfast_reminder,35,reminder,Healthy Breakfast Ideas,Household,healthy_breakfast,,,#f7e6b1,#f09e57,#6d8f6f,#2f2210,,,TRUE,Morning breakfast reminder slide.
 healthy_lunch_reminder,36,reminder,Healthy Lunch Ideas,Household,healthy_lunch,,,#cfe7b5,#73a857,#f6d778,#1f2c16,,,TRUE,Midday lunch reminder slide.
 healthy_snacks_reminder,38,reminder,Healthy Snack Ideas,Household,healthy_snacks,,,#ffd9a8,#f28a5b,#7eb0a1,#2f1d12,,,TRUE,Afternoon snack reminder slide.

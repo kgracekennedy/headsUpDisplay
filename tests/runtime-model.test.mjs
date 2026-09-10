@@ -6,9 +6,11 @@ import {
   getVisibleChecklistSections,
   hydrateProgress,
   isChecklistComplete,
+  isSlideSignedOff,
   isSlideMinimized,
   setDayMode,
   setSeasonMode,
+  signOffSlide,
   toggleSlideMinimized,
   toggleChecklistItem
 } from "../src/lib/runtime-model.mjs";
@@ -115,5 +117,50 @@ describe("runtime checklist behavior", () => {
 
     progress = toggleSlideMinimized(progress, "alexander");
     assert.equal(isSlideMinimized(progress, "alexander"), false);
+  });
+
+  it("requires parent sign off before a kid checklist is treated as signed off", async () => {
+    const data = await loadSourceData();
+    const pm = new Date("2026-09-23T16:30:00");
+    let progress = hydrateProgress(data, { version: 4, slides: {} }, pm);
+    const alexander = getActiveSlides(data, pm, progress.modes).find((slide) => slide.id === "alexander");
+    const requiredItems = getRequiredChecklistItems(alexander, pm, progress.modes);
+
+    for (const item of requiredItems) {
+      progress = toggleChecklistItem(data, progress, "alexander", item.id, pm);
+    }
+
+    assert.equal(isChecklistComplete(alexander, progress, pm), true);
+    assert.equal(isSlideSignedOff(alexander, progress, pm), false);
+
+    progress = signOffSlide(data, progress, "alexander", pm);
+    assert.equal(isSlideSignedOff(alexander, progress, pm), true);
+
+    progress = toggleChecklistItem(data, progress, "alexander", requiredItems[0].id, pm);
+    assert.equal(isSlideSignedOff(alexander, progress, pm), false);
+  });
+
+  it("clears a morning sign off when PM tasks become newly required", async () => {
+    const data = await loadSourceData();
+    const morning = new Date("2026-09-23T07:30:00");
+    const afternoon = new Date("2026-09-23T16:30:00");
+    let progress = hydrateProgress(data, { version: 4, slides: {} }, morning);
+    const morningAlexander = getActiveSlides(data, morning, progress.modes).find(
+      (slide) => slide.id === "alexander"
+    );
+
+    for (const item of getRequiredChecklistItems(morningAlexander, morning, progress.modes)) {
+      progress = toggleChecklistItem(data, progress, "alexander", item.id, morning);
+    }
+
+    progress = signOffSlide(data, progress, "alexander", morning);
+    assert.equal(isSlideSignedOff(morningAlexander, progress, morning), true);
+
+    progress = hydrateProgress(data, progress, afternoon);
+    const afternoonAlexander = getActiveSlides(data, afternoon, progress.modes).find(
+      (slide) => slide.id === "alexander"
+    );
+
+    assert.equal(isSlideSignedOff(afternoonAlexander, progress, afternoon), false);
   });
 });

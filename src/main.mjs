@@ -1,15 +1,12 @@
 import { getUpcomingStarts, getActiveSlides } from "./lib/schedule.mjs";
 import {
-  getModeLabel,
-  getRequiredChecklistItems,
   getVisibleChecklistSections,
   hydrateProgress,
   isChecklistComplete,
+  isSlideSignedOff,
   isSlideMinimized,
   normalizeProgressState,
-  setDayMode,
-  setSeasonMode,
-  toggleSlideMinimized,
+  signOffSlide,
   toggleChecklistItem
 } from "./lib/runtime-model.mjs";
 import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
@@ -20,7 +17,7 @@ import {
   reminderNeedsAutoScroll
 } from "./lib/reminder-scroll.mjs";
 import { getSlidePillClassNames } from "./lib/navigation-state.mjs";
-import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
+import { STORAGE_KEY, loadProgressState, saveProgressState } from "./lib/storage.mjs";
 import { requestWakeLock, supportsWakeLock } from "./lib/wake-lock.mjs";
 
 const BUILD_VERSION = "__BUILD_VERSION__";
@@ -41,7 +38,7 @@ const dom = {
 };
 const state = {
   data: null,
-  progress: { version: 2, minimizedSlideIds: [], slides: {} },
+  progress: { version: 4, minimizedSlideIds: [], modes: {}, signOffs: {}, slides: {} },
   activeSlides: [],
   currentSlideId: null,
   rotationTimeout: null,
@@ -472,6 +469,7 @@ function buildStructuralSignature() {
       .join(",");
     const completionState = isChecklistComplete(slide, state.progress, state.now) ? "complete" : "progress";
     const minimizedState = isSlideMinimized(state.progress, slide.id) ? "minimized" : "rotation";
+    const signOffState = isSlideSignedOff(slide, state.progress, state.now) ? "signed-off" : "tasks";
 
     return [
       slide.id,
@@ -480,6 +478,7 @@ function buildStructuralSignature() {
       checkedItemIds,
       orderedCheckedItemIds,
       completionState,
+      signOffState,
       minimizedState,
       state.progress.modes?.dayMode,
       state.progress.modes?.seasonMode
@@ -526,7 +525,10 @@ function buildChecklistMarkup(slide) {
     .map(
       (section) => `
         <section class="checklist-section">
-          <h3>${escapeHtml(section.title)}</h3>
+          <div class="checklist-section__header">
+            <h3>${escapeHtml(section.title)}</h3>
+            <span class="stat-chip">${section.checkedCount} / ${section.totalCount}</span>
+          </div>
           <ul class="checklist">
             ${buildChecklistItemsMarkup(slide, section.items)}
           </ul>
@@ -590,7 +592,7 @@ function renderCelebrationPanel(slide) {
         </div>
       `
     : "";
-    const completionLabel = slide.rewardMessage ? "Reward unlocked" : "Checklist complete";
+  const completionLabel = slide.rewardMessage ? "Reward unlocked" : "Checklist complete";
 
   return `
     <section class="completion-banner">
@@ -601,6 +603,24 @@ function renderCelebrationPanel(slide) {
       </div>
       ${rewardMarkup}
     </section>
+  `;
+}
+
+function renderRewardOnlySlide(slide, { animate = false } = {}) {
+  const transitionClass = animate ? " slide-card--transition" : "";
+  const rewardMarkup = slide.rewardMessage
+    ? `<p class="reward-text">${escapeHtml(slide.rewardMessage)}</p>`
+    : "";
+
+  return `
+    <article class="slide-card slide-card--checklist slide-card--completed slide-card--reward-only${transitionClass}" style="${themeStyle(slide)}">
+      ${renderCelebrationBackdrop()}
+      <div class="reward-only-layout">
+        <p class="completion-label">Reward unlocked</p>
+        <h2>${escapeHtml(slide.celebrationTitle)}</h2>
+        ${rewardMarkup}
+      </div>
+    </article>
   `;
 }
 
@@ -623,35 +643,6 @@ function isSectionComplete(slide, sectionId) {
     sectionItems.length > 0 &&
     sectionItems.every((item) => progressEntry.checkedItemIds.includes(item.id))
   );
-}
-
-function renderModeActions(slide) {
-  const modes = state.progress.modes ?? {};
-  const dayModeLabel = getModeLabel(modes.dayMode);
-  const seasonModeLabel = modes.seasonMode === "summer_camp" ? "Summer Camp" : "School Year";
-  const seasonButton =
-    slide.id === "parents"
-      ? `
-          <button
-            type="button"
-            class="secondary-button"
-            data-action="toggle-season-mode"
-          >
-            ${escapeHtml(seasonModeLabel)}
-          </button>
-        `
-      : "";
-
-  return `
-    <button
-      type="button"
-      class="secondary-button"
-      data-action="toggle-day-mode"
-    >
-      ${escapeHtml(dayModeLabel)}
-    </button>
-    ${seasonButton}
-  `;
 }
 
 function renderHelperPanel(slide) {
@@ -678,19 +669,40 @@ function renderHelperPanel(slide) {
 }
 
 function renderChecklistSlide(slide, { animate = false } = {}) {
-  const progressEntry = state.progress.slides[slide.id] ?? { checkedItemIds: [] };
-  const requiredItems = getRequiredChecklistItems(slide, state.now, state.progress.modes);
-  const requiredItemIds = new Set(requiredItems.map((item) => item.id));
-  const checkedCount = progressEntry.checkedItemIds.filter((itemId) => requiredItemIds.has(itemId)).length;
   const isComplete = isChecklistComplete(slide, state.progress, state.now);
+  const isKidSlide = slide.id === "alexander" || slide.id === "lilja";
+  const isSignedOff = isSlideSignedOff(slide, state.progress, state.now);
   const minimized = isSlideMinimized(state.progress, slide.id);
   const transitionClass = animate ? " slide-card--transition" : "";
-  const completionBanner = isComplete ? renderCelebrationPanel(slide) : "";
-  const celebrationBackdrop = isComplete ? renderCelebrationBackdrop() : "";
-  const rotationControlLabel = minimized ? "Show in rotation" : "Hide from rotation";
-  const rotationStatusMarkup = minimized
-    ? `<p class="slide-helper">This checklist is hidden from auto-rotation and stays available from the bottom row.</p>`
-    : `<p class="slide-helper">This checklist is part of the regular heads-up rotation.</p>`;
+  const completionBanner = isComplete && !isKidSlide ? renderCelebrationPanel(slide) : "";
+  const signOffBanner =
+    isComplete && isKidSlide && !isSignedOff
+      ? `
+          <section class="completion-banner completion-banner--signoff">
+            <div class="completion-copy">
+              <p class="completion-label">Checklist complete</p>
+              <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
+              <p class="completion-note">Parent sign off unlocks the reward screen.</p>
+            </div>
+            <button
+              type="button"
+              class="primary-button"
+              data-action="parent-signoff"
+              data-slide-id="${escapeHtml(slide.id)}"
+            >
+              Parent Sign Off
+            </button>
+          </section>
+        `
+      : "";
+  const celebrationBackdrop = isComplete && !isKidSlide ? renderCelebrationBackdrop() : "";
+  const hiddenStatusMarkup = minimized
+    ? `<p class="slide-helper">Hidden from auto-rotation. Update this in Settings.</p>`
+    : "";
+
+  if (isSignedOff) {
+    return renderRewardOnlySlide(slide, { animate });
+  }
 
   return `
     <article class="slide-card slide-card--checklist${transitionClass}${isComplete ? " slide-card--completed" : ""}" style="${themeStyle(slide)}">
@@ -698,28 +710,13 @@ function renderChecklistSlide(slide, { animate = false } = {}) {
       <div class="checklist-layout">
         <div class="checklist-summary">
           <div>
-            <p class="eyebrow">${escapeHtml(slide.ownerLabel || "Checklist")}</p>
+            ${slide.id === "parents" ? `<p class="eyebrow">${escapeHtml(slide.ownerLabel || "Checklist")}</p>` : ""}
             <h2>${escapeHtml(slide.title)}</h2>
           </div>
-          <div class="slide-stats">
-            <span class="stat-chip">${checkedCount} / ${requiredItems.length} checked</span>
-            <span class="stat-chip">${escapeHtml(slide.activeSchedule.groupLabel)}</span>
-          </div>
-          <div class="slide-actions">
-            ${renderModeActions(slide)}
-            <button
-              type="button"
-              class="secondary-button"
-              data-action="toggle-minimized"
-              data-slide-id="${escapeHtml(slide.id)}"
-              aria-pressed="${minimized ? "true" : "false"}"
-            >
-              ${rotationControlLabel}
-            </button>
-          </div>
-          ${rotationStatusMarkup}
-          ${renderHelperPanel(slide)}
+          ${hiddenStatusMarkup}
           ${completionBanner}
+          ${signOffBanner}
+          ${renderHelperPanel(slide)}
         </div>
         <div class="checklist-panel">
           ${buildChecklistMarkup(slide)}
@@ -1023,40 +1020,13 @@ function handleClick(event) {
     return;
   }
 
-  if (action === "toggle-minimized") {
-    const slideId = target.dataset.slideId;
-    const wasCurrentSlide = slideId === state.currentSlideId;
-
-    state.progress = toggleSlideMinimized(state.progress, slideId);
-    persistProgressIfChanged();
-
-    if (wasCurrentSlide && !isSlideMinimized(state.progress, slideId)) {
-      state.rotationStartedAt = Date.now();
-    }
-
-    renderStructure({ animateSlide: false });
-    scheduleRotation();
-    target.blur();
-    return;
-  }
-
-  if (action === "toggle-day-mode") {
-    const nextDayMode = state.progress.modes?.dayMode === "school_day" ? "non_school_day" : "school_day";
-
-    state.progress = setDayMode(state.data, state.progress, nextDayMode, state.now);
-    persistProgressIfChanged();
-    const syncResult = syncDerivedState();
-    renderStructure({ animateSlide: syncResult.currentSlideChanged });
-    scheduleRotation();
-    target.blur();
-    return;
-  }
-
-  if (action === "toggle-season-mode") {
-    const nextSeasonMode =
-      state.progress.modes?.seasonMode === "summer_camp" ? "school_year" : "summer_camp";
-
-    state.progress = setSeasonMode(state.data, state.progress, nextSeasonMode, state.now);
+  if (action === "parent-signoff") {
+    state.progress = signOffSlide(
+      state.data,
+      state.progress,
+      target.dataset.slideId,
+      state.now
+    );
     persistProgressIfChanged();
     const syncResult = syncDerivedState();
     renderStructure({ animateSlide: syncResult.currentSlideChanged });
@@ -1123,6 +1093,19 @@ function handleLiveTick() {
   }
 }
 
+function reloadProgressFromStorage() {
+  const savedProgress = loadProgressState();
+
+  if (savedProgress) {
+    state.progress = normalizeProgressState(savedProgress);
+    state.lastPersistedProgress = JSON.stringify(state.progress);
+  }
+
+  const syncResult = syncDerivedState();
+  renderStructure({ animateSlide: syncResult.currentSlideChanged });
+  scheduleRotation();
+}
+
 function installEventListeners() {
   appElement.addEventListener("click", handleClick);
   appElement.addEventListener("touchstart", handleTouchStart, { passive: true });
@@ -1141,9 +1124,7 @@ function installEventListeners() {
     }
 
     state.now = new Date();
-    const syncResult = syncDerivedState();
-    renderStructure({ animateSlide: syncResult.currentSlideChanged });
-    scheduleRotation();
+    reloadProgressFromStorage();
     startMeterLoop();
     syncReminderAutoScroll({ forceRestart: true });
 
@@ -1157,6 +1138,11 @@ function installEventListeners() {
   window.setInterval(handleLiveTick, 1000);
   window.addEventListener("resize", () => {
     syncReminderAutoScroll({ forceRestart: true });
+  });
+  window.addEventListener("storage", (event) => {
+    if (event.key === STORAGE_KEY) {
+      reloadProgressFromStorage();
+    }
   });
 }
 

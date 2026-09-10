@@ -67,7 +67,16 @@ async function copyTree(sourcePath, destinationPath) {
 }
 
 async function copyDirectoryContents(sourceDirectory, destinationDirectory) {
-  const entries = ["index.html", "review.html", "styles.css", "main.mjs", "review.mjs", "lib"];
+  const entries = [
+    "index.html",
+    "review.html",
+    "settings.html",
+    "styles.css",
+    "main.mjs",
+    "review.mjs",
+    "settings.mjs",
+    "lib"
+  ];
 
   for (const entry of entries) {
     await copyTree(path.join(sourceDirectory, entry), path.join(destinationDirectory, entry));

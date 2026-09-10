@@ -254,6 +254,8 @@ Run these from the `headsUpDisplay` folder on this Windows machine:
 
 The published site is deployed by the GitHub Actions Pages workflow when `main` is pushed.
 
+The main HUD stays at the site root. Use `settings.html` in a browser tab for day/season mode, per-person rotation, and parent sign-off controls. Use `review.html` to check different dates, times, modes, and slides.
+
 ## Troubleshooting
 
 - If your change does not appear, rebuild the site first.

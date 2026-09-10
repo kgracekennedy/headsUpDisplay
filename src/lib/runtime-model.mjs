@@ -1,4 +1,5 @@
 import {
+  getActiveItemsForSlide,
   getActiveScheduleForGroup,
   getEffectiveModes,
   getOperationalDateKey,
@@ -7,6 +8,9 @@ import {
   getActiveSlides,
   timeToMinutes
 } from "./schedule.mjs";
+
+export const PERSON_CHECKLIST_IDS = ["parents", "alexander", "lilja"];
+export const KID_CHECKLIST_IDS = ["alexander", "lilja"];
 
 function normalizeProgressEntry(entry) {
   return {
@@ -25,7 +29,7 @@ export function normalizeProgressState(progressState) {
   const savedModes = progressState?.modes ?? {};
 
   return {
-    version: typeof progressState?.version === "number" ? progressState.version : 3,
+    version: typeof progressState?.version === "number" ? progressState.version : 4,
     minimizedSlideIds: Array.isArray(progressState?.minimizedSlideIds)
       ? [...progressState.minimizedSlideIds]
       : [],
@@ -40,6 +44,9 @@ export function normalizeProgressState(progressState) {
           ? savedModes.seasonMode
           : "school_year"
     },
+    signOffs: typeof progressState?.signOffs === "object" && progressState?.signOffs
+      ? { ...progressState.signOffs }
+      : {},
     slides: typeof progressState?.slides === "object" && progressState?.slides
       ? { ...progressState.slides }
       : {}
@@ -91,12 +98,46 @@ export function hydrateProgress(data, persistedState, now) {
     };
   }
 
+  const nextSignOffs = {};
+
+  for (const slide of data.slides) {
+    if (!KID_CHECKLIST_IDS.includes(slide.id)) {
+      continue;
+    }
+
+    const savedSignOff = normalizedState.signOffs[slide.id];
+    const nextSlideProgress = nextSlides[slide.id];
+
+    if (!savedSignOff || savedSignOff.dayKey !== modes.dayKey || !nextSlideProgress) {
+      continue;
+    }
+
+    const activeItems = getActiveItemsForSlide(slide, now, modes);
+    const activeSlide = { ...slide, activeItems };
+    const requiredItems = getRequiredChecklistItems(activeSlide, now, modes);
+    const signedItemIds = new Set(savedSignOff.requiredItemIds ?? []);
+    const allRequiredStillSigned =
+      requiredItems.length > 0 && requiredItems.every((item) => signedItemIds.has(item.id));
+    const allRequiredStillChecked = requiredItems.every((item) =>
+      nextSlideProgress.checkedItemIds.includes(item.id)
+    );
+
+    if (allRequiredStillSigned && allRequiredStillChecked) {
+      nextSignOffs[slide.id] = {
+        dayKey: savedSignOff.dayKey,
+        requiredItemIds: [...savedSignOff.requiredItemIds],
+        signedOffAt: savedSignOff.signedOffAt
+      };
+    }
+  }
+
   return {
-    version: 3,
+    version: 4,
     minimizedSlideIds: normalizedState.minimizedSlideIds.filter((slideId) =>
       data.slides.some((slide) => slide.id === slideId && slide.type === "checklist")
     ),
     modes,
+    signOffs: nextSignOffs,
     slides: nextSlides
   };
 }
@@ -166,16 +207,21 @@ export function getVisibleChecklistSections(activeSlide, progressState, now = ne
 
   return sectionSpecs
     .map((section) => {
+      const sectionActiveItems = activeSlide.activeItems.filter(
+        (item) => (item.section ?? "am") === section.id
+      );
       const items = getOrderedChecklistItems(
         {
           ...activeSlide,
-          activeItems: activeSlide.activeItems.filter((item) => (item.section ?? "am") === section.id)
+          activeItems: sectionActiveItems
         },
         progressState
       ).filter((item) => !(section.hideChecked && checkedItemIds.has(item.id)));
 
       return {
         ...section,
+        checkedCount: sectionActiveItems.filter((item) => checkedItemIds.has(item.id)).length,
+        totalCount: sectionActiveItems.length,
         items
       };
     })
@@ -222,9 +268,12 @@ export function toggleChecklistItem(data, progressState, slideId, itemId, now) {
   }
 
   const nextState = {
-    version: 3,
+    version: 4,
     minimizedSlideIds: [...(progressState.minimizedSlideIds ?? [])],
     modes,
+    signOffs: {
+      ...(progressState.signOffs ?? {})
+    },
     slides: {
       ...progressState.slides
     }
@@ -253,6 +302,7 @@ export function toggleChecklistItem(data, progressState, slideId, itemId, now) {
     instanceKey: modes.dayKey,
     completedAt: isComplete ? now.toISOString() : null
   };
+  delete nextState.signOffs[slideId];
 
   return nextState;
 }
@@ -277,6 +327,9 @@ export function toggleSlideMinimized(progressState, slideId) {
     },
     modes: {
       ...(progressState.modes ?? {})
+    },
+    signOffs: {
+      ...(progressState.signOffs ?? {})
     },
     minimizedSlideIds: [...minimizedSlideIds]
   };
@@ -321,4 +374,66 @@ export function setSeasonMode(data, progressState, seasonMode, now) {
 
 export function getModeLabel(mode) {
   return mode === "non_school_day" ? "Non-school day" : "School day";
+}
+
+export function signOffSlide(data, progressState, slideId, now) {
+  if (!KID_CHECKLIST_IDS.includes(slideId)) {
+    return progressState;
+  }
+
+  const modes = getEffectiveModes(data, progressState, now);
+  const activeSlide = getActiveSlides(data, now, modes).find((slide) => slide.id === slideId);
+
+  if (!activeSlide || !isChecklistComplete(activeSlide, progressState, now, modes)) {
+    return progressState;
+  }
+
+  const requiredItemIds = getRequiredChecklistItems(activeSlide, now, modes)
+    .map((item) => item.id)
+    .sort();
+
+  return {
+    ...progressState,
+    version: 4,
+    modes,
+    signOffs: {
+      ...(progressState.signOffs ?? {}),
+      [slideId]: {
+        dayKey: modes.dayKey,
+        requiredItemIds,
+        signedOffAt: now.toISOString()
+      }
+    }
+  };
+}
+
+export function clearSlideSignOff(progressState, slideId) {
+  const signOffs = { ...(progressState.signOffs ?? {}) };
+  delete signOffs[slideId];
+
+  return {
+    ...progressState,
+    signOffs
+  };
+}
+
+export function isSlideSignedOff(activeSlide, progressState, now, modes = progressState?.modes) {
+  if (!KID_CHECKLIST_IDS.includes(activeSlide.id)) {
+    return false;
+  }
+
+  const signOff = progressState.signOffs?.[activeSlide.id];
+
+  if (!signOff || signOff.dayKey !== modes?.dayKey) {
+    return false;
+  }
+
+  const signedItemIds = new Set(signOff.requiredItemIds ?? []);
+  const requiredItems = getRequiredChecklistItems(activeSlide, now, modes);
+
+  return (
+    requiredItems.length > 0 &&
+    requiredItems.every((item) => signedItemIds.has(item.id)) &&
+    isChecklistComplete(activeSlide, progressState, now, modes)
+  );
 }

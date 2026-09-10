@@ -128,7 +128,7 @@
     },
     {
       "id": "person_day",
-      "label": "Person checklist day",
+      "label": "All day",
       "rules": [
         {
           "sortOrder": 10,
@@ -192,7 +192,7 @@
       "id": "parents",
       "sortOrder": 10,
       "type": "checklist",
-      "title": "Parents Reset",
+      "title": "Parents' Checklist",
       "ownerLabel": "Mommy and Pabbi",
       "scheduleGroupId": "person_day",
       "pmStartSchool": "16:00",
@@ -720,7 +720,7 @@
       "id": "alexander",
       "sortOrder": 20,
       "type": "checklist",
-      "title": "Alexander Run",
+      "title": "Alexander's Checklist",
       "ownerLabel": "Alexander",
       "scheduleGroupId": "person_day",
       "pmStartSchool": "15:00",
@@ -1261,7 +1261,7 @@
       "id": "lilja",
       "sortOrder": 30,
       "type": "checklist",
-      "title": "Lilja Run",
+      "title": "Lilja's Checklist",
       "ownerLabel": "Lilja",
       "scheduleGroupId": "person_day",
       "pmStartSchool": "14:00",

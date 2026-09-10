@@ -1,4 +1,4 @@
-const STORAGE_KEY = "heads-up-display-state";
+export const STORAGE_KEY = "heads-up-display-state";
 
 export function loadProgressState() {
   try {
