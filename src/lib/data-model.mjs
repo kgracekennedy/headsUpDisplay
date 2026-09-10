@@ -308,7 +308,8 @@ export function buildHouseholdData(tables, options = {}) {
       .filter((row) => asBoolean(row.active, true))
       .map((row) => ({
         date: asDateKey(row.date, "school_days_off.date"),
-        label: asOptionalText(row.label)
+        label: asOptionalText(row.label),
+        greeting: asOptionalText(row.greeting)
       }))
       .sort((left, right) => left.date.localeCompare(right.date))
   };

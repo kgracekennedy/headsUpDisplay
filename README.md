@@ -219,6 +219,17 @@ Common keys:
 | `anchor_date` | Only used with `every_other_from_anchor` |
 | `active` | `true` or `false` |
 
+### `school_days_off.csv`
+
+This file lists concrete school-closed dates that make the app default to Non-school Day. The current generated list covers 2026-2031, including moving holidays and school vacation weeks.
+
+| Column | Meaning |
+| --- | --- |
+| `date` | Closed date in `YYYY-MM-DD` format |
+| `label` | Holiday or break name |
+| `greeting` | Optional short message shown in the HUD status area |
+| `active` | `true` or `false` |
+
 ## Supported Day And Week Rules
 
 Useful `day_selector` values:

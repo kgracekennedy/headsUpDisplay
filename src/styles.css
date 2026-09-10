@@ -142,6 +142,7 @@ code {
 }
 
 .clock-panel,
+.holiday-note,
 .wake-note,
 .control-button,
 .primary-button,
@@ -158,6 +159,18 @@ code {
   font-weight: 700;
   white-space: nowrap;
   font-size: 0.92rem;
+}
+
+.holiday-note {
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  font-weight: 700;
+  color: #fff4ca;
+  font-size: 0.9rem;
+}
+
+.holiday-note[hidden] {
+  display: none;
 }
 
 .wake-note {

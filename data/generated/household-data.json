@@ -2724,6 +2724,837 @@
       ]
     }
   ],
-  "schoolDaysOff": [],
+  "schoolDaysOff": [
+    {
+      "date": "2026-02-16",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-02-17",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-02-18",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-02-19",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-02-20",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-04-03",
+      "label": "Good Friday",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2026-04-20",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-04-21",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-04-22",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-04-23",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-04-24",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-05-25",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2026-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2026-09-07",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2026-09-21",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2026-10-12",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2026-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2026-11-26",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2026-11-27",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2026-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2026-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2026-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2026-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2026-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2026-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2026-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2026-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2027-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    },
+    {
+      "date": "2027-02-15",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2027-02-16",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2027-02-17",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2027-02-18",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2027-02-19",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2027-03-26",
+      "label": "Good Friday",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2027-04-19",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2027-04-20",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2027-04-21",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2027-04-22",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2027-04-23",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2027-05-31",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2027-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2027-09-06",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2027-10-11",
+      "label": "Indigenous People's Day / Yom Kippur",
+      "greeting": "Indigenous People's Day - Have an easy fast"
+    },
+    {
+      "date": "2027-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2027-11-25",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2027-11-26",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2027-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2027-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2027-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2027-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2027-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2027-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2027-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2027-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2028-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    },
+    {
+      "date": "2028-02-21",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2028-02-22",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2028-02-23",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2028-02-24",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2028-02-25",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2028-04-14",
+      "label": "Good Friday",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2028-04-17",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2028-04-18",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2028-04-19",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2028-04-20",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2028-04-21",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2028-05-29",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2028-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2028-09-04",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2028-09-30",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2028-10-09",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2028-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2028-11-23",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2028-11-24",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2028-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2028-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2028-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2028-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2028-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2028-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2028-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2028-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    },
+    {
+      "date": "2029-02-19",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-02-20",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-02-21",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-02-22",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-02-23",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-03-30",
+      "label": "Good Friday",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2029-04-16",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-04-17",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-04-18",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-04-19",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-04-20",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-05-28",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2029-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2029-09-03",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2029-09-19",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2029-10-08",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2029-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2029-11-22",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2029-11-23",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2029-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2029-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2029-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    },
+    {
+      "date": "2030-02-18",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2030-02-19",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2030-02-20",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2030-02-21",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2030-02-22",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2030-04-15",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2030-04-16",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2030-04-17",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2030-04-18",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2030-04-19",
+      "label": "Good Friday / Patriots' Day week",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2030-05-27",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2030-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2030-09-02",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2030-10-07",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2030-10-14",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2030-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2030-11-28",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2030-11-29",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2030-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2030-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2030-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    },
+    {
+      "date": "2031-02-17",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-02-18",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-02-19",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-02-20",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-02-21",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-04-11",
+      "label": "Good Friday",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2031-04-21",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2031-04-22",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2031-04-23",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2031-04-24",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2031-04-25",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2031-05-26",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2031-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2031-09-01",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2031-09-27",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2031-10-13",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2031-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2031-11-27",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2031-11-28",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2031-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2031-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2031-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2032-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    }
+  ],
   "generatedAt": "20260910-152538110Z"
 }

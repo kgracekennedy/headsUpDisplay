@@ -37,6 +37,15 @@ describe("buildHouseholdData", () => {
     assert.equal(orchidsItem.dayMode, "non_school_day");
   });
 
+  it("keeps school day off labels and greetings", async () => {
+    const data = await loadSourceData();
+    const laborDay = data.schoolDaysOff.find((day) => day.date === "2026-09-07");
+
+    assert.ok(laborDay);
+    assert.equal(laborDay.label, "Labor Day");
+    assert.equal(laborDay.greeting, "Happy Labor Day");
+  });
+
   it("includes the meal, PT, and bedtime reminder slides", async () => {
     const data = await loadSourceData();
     const breakfastReminder = data.slides.find((slide) => slide.id === "healthy_breakfast_reminder");

@@ -179,8 +179,13 @@ export function getOperationalDateKey(date) {
   ].join("-");
 }
 
-export function getDefaultDayMode(data, now) {
+export function getSchoolDayOff(data, now) {
   const dayKey = getOperationalDateKey(now);
+
+  return (data.schoolDaysOff ?? []).find((day) => day.date === dayKey) ?? null;
+}
+
+export function getDefaultDayMode(data, now) {
   const operationalDate = new Date(now);
   operationalDate.setHours(operationalDate.getHours() - 2);
 
@@ -188,7 +193,7 @@ export function getDefaultDayMode(data, now) {
     return "non_school_day";
   }
 
-  if ((data.schoolDaysOff ?? []).some((day) => day.date === dayKey)) {
+  if (getSchoolDayOff(data, now)) {
     return "non_school_day";
   }
 

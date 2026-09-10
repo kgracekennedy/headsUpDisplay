@@ -1,4 +1,4 @@
-import { getUpcomingStarts, getActiveSlides } from "./lib/schedule.mjs";
+import { getSchoolDayOff, getUpcomingStarts, getActiveSlides } from "./lib/schedule.mjs";
 import {
   getVisibleChecklistSections,
   hydrateProgress,
@@ -28,6 +28,7 @@ const appElement = document.getElementById("app");
 const dom = {
   appTitle: null,
   clockPanel: null,
+  holidayNote: null,
   wakeNote: null,
   meterFill: null,
   activePosition: null,
@@ -142,6 +143,7 @@ function ensureShellRendered() {
       </div>
       <div class="status-stack">
         <div class="clock-panel" data-role="clock-panel"></div>
+        <div class="holiday-note" data-role="holiday-note" hidden></div>
         <div class="wake-note" data-role="wake-note"></div>
       </div>
     </div>
@@ -167,6 +169,7 @@ function ensureShellRendered() {
 
   dom.appTitle = appElement.querySelector("[data-role='app-title']");
   dom.clockPanel = appElement.querySelector("[data-role='clock-panel']");
+  dom.holidayNote = appElement.querySelector("[data-role='holiday-note']");
   dom.wakeNote = appElement.querySelector("[data-role='wake-note']");
   dom.meterFill = appElement.querySelector("[data-role='meter-fill']");
   dom.activePosition = appElement.querySelector("[data-role='active-position']");
@@ -181,7 +184,12 @@ function updateStatusPanel() {
     return;
   }
 
+  const schoolDayOff = getSchoolDayOff(state.data, state.now);
+  const holidayGreeting = schoolDayOff?.greeting || schoolDayOff?.label || "";
+
   dom.clockPanel.textContent = formatClock(state.now, state.data.config.timezone);
+  dom.holidayNote.textContent = holidayGreeting;
+  dom.holidayNote.hidden = holidayGreeting.length === 0;
   dom.wakeNote.textContent = state.wakeLockMessage;
 }
 
