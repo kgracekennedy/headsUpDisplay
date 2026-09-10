@@ -651,7 +651,10 @@ function renderRewardOnlySlide(slide, { animate = false } = {}) {
       ${renderCelebrationBackdrop()}
       <div class="reward-only-layout">
         <p class="completion-label">Reward unlocked</p>
-        <h2>${escapeHtml(rewardTitle)}</h2>
+        <div class="reward-title-row">
+          <h2>${escapeHtml(rewardTitle)}</h2>
+          <p class="reward-early-text">Done early?</p>
+        </div>
       </div>
     </article>
   `;
