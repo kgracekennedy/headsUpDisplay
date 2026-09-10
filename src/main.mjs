@@ -1,12 +1,15 @@
 import { getSchoolDayOff, getUpcomingStarts, getActiveSlides } from "./lib/schedule.mjs";
 import {
   getVisibleChecklistSections,
+  getRequiredSignOffSections,
   hydrateProgress,
+  isChecklistSectionChecked,
+  isChecklistSectionSignedOff,
   isChecklistComplete,
   isSlideSignedOff,
   isSlideMinimized,
   normalizeProgressState,
-  signOffSlide,
+  signOffChecklistSection,
   toggleChecklistItem
 } from "./lib/runtime-model.mjs";
 import { getRotationDelayMs, getRotationRatio } from "./lib/rotation.mjs";
@@ -39,7 +42,7 @@ const dom = {
 };
 const state = {
   data: null,
-  progress: { version: 4, minimizedSlideIds: [], modes: {}, signOffs: {}, slides: {} },
+  progress: { version: 5, minimizedSlideIds: [], modes: {}, signOffs: {}, sectionSignOffs: {}, slides: {} },
   activeSlides: [],
   currentSlideId: null,
   rotationTimeout: null,
@@ -138,7 +141,6 @@ function ensureShellRendered() {
   appElement.innerHTML = `
     <div class="chrome-panel">
       <div>
-        <p class="eyebrow">Heads Up Display</p>
         <h1 data-role="app-title"></h1>
       </div>
       <div class="status-stack">
@@ -478,6 +480,7 @@ function buildStructuralSignature() {
     const completionState = isChecklistComplete(slide, state.progress, state.now) ? "complete" : "progress";
     const minimizedState = isSlideMinimized(state.progress, slide.id) ? "minimized" : "rotation";
     const signOffState = isSlideSignedOff(slide, state.progress, state.now) ? "signed-off" : "tasks";
+    const sectionSignOffState = JSON.stringify(state.progress.sectionSignOffs?.[slide.id] ?? {});
 
     return [
       slide.id,
@@ -487,6 +490,7 @@ function buildStructuralSignature() {
       orderedCheckedItemIds,
       completionState,
       signOffState,
+      sectionSignOffState,
       minimizedState,
       state.progress.modes?.dayMode,
       state.progress.modes?.seasonMode
@@ -592,44 +596,88 @@ function renderCelebrationBackdrop() {
 }
 
 function renderCelebrationPanel(slide) {
-  const rewardMarkup = slide.rewardMessage
-    ? `
-        <div class="reward-block">
-          <p class="reward-label">Reward</p>
-          <p class="reward-text">${escapeHtml(slide.rewardMessage)}</p>
-        </div>
-      `
-    : "";
-  const completionLabel = slide.rewardMessage ? "Reward unlocked" : "Checklist complete";
+  const completionTitle = slide.rewardMessage || "Checklist finished";
 
   return `
     <section class="completion-banner">
       <div class="completion-copy">
-        <p class="completion-label">${completionLabel}</p>
-        <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
+        <p class="completion-label">All done</p>
+        <p class="completion-title">${escapeHtml(completionTitle)}</p>
         <p class="completion-note">Tap any checked item to reopen the list.</p>
       </div>
-      ${rewardMarkup}
     </section>
   `;
 }
 
+function formatRewardTitle(rewardMessage) {
+  const trimmed = String(rewardMessage || "Reward time").trim().replace(/\.$/, "");
+  const shortened = trimmed.replace(/^You may use the\s+/i, "");
+
+  return shortened.charAt(0).toUpperCase() + shortened.slice(1);
+}
+
 function renderRewardOnlySlide(slide, { animate = false } = {}) {
   const transitionClass = animate ? " slide-card--transition" : "";
-  const rewardMarkup = slide.rewardMessage
-    ? `<p class="reward-text">${escapeHtml(slide.rewardMessage)}</p>`
-    : "";
+  const rewardTitle = formatRewardTitle(slide.rewardMessage);
 
   return `
     <article class="slide-card slide-card--checklist slide-card--completed slide-card--reward-only${transitionClass}" style="${themeStyle(slide)}">
       ${renderCelebrationBackdrop()}
       <div class="reward-only-layout">
         <p class="completion-label">Reward unlocked</p>
-        <h2>${escapeHtml(slide.celebrationTitle)}</h2>
-        ${rewardMarkup}
+        <h2>${escapeHtml(rewardTitle)}</h2>
       </div>
     </article>
   `;
+}
+
+function formatSignOffSectionName(sectionId) {
+  return sectionId.toUpperCase();
+}
+
+function getReadySignOffSections(slide) {
+  if (slide.id !== "alexander" && slide.id !== "lilja") {
+    return [];
+  }
+
+  return getRequiredSignOffSections(slide, state.now, state.progress.modes).filter(
+    (sectionId) =>
+      isChecklistSectionChecked(slide, state.progress, sectionId) &&
+      !isChecklistSectionSignedOff(slide, state.progress, sectionId)
+  );
+}
+
+function renderSignOffBanners(slide) {
+  const readySections = getReadySignOffSections(slide);
+
+  if (readySections.length === 0) {
+    return "";
+  }
+
+  return readySections
+    .map((sectionId) => {
+      const sectionName = formatSignOffSectionName(sectionId);
+
+      return `
+        <section class="completion-banner completion-banner--signoff">
+          <div class="completion-copy">
+            <p class="completion-label">${sectionName} ready for sign-off</p>
+            <p class="completion-title">Parent check needed</p>
+            <p class="completion-note">Parent sign-off unlocks the reward.</p>
+          </div>
+          <button
+            type="button"
+            class="primary-button"
+            data-action="parent-section-signoff"
+            data-slide-id="${escapeHtml(slide.id)}"
+            data-section-id="${escapeHtml(sectionId)}"
+          >
+            Sign Off ${sectionName}
+          </button>
+        </section>
+      `;
+    })
+    .join("");
 }
 
 function isPmTimeForRender(slide) {
@@ -683,26 +731,7 @@ function renderChecklistSlide(slide, { animate = false } = {}) {
   const minimized = isSlideMinimized(state.progress, slide.id);
   const transitionClass = animate ? " slide-card--transition" : "";
   const completionBanner = isComplete && !isKidSlide ? renderCelebrationPanel(slide) : "";
-  const signOffBanner =
-    isComplete && isKidSlide && !isSignedOff
-      ? `
-          <section class="completion-banner completion-banner--signoff">
-            <div class="completion-copy">
-              <p class="completion-label">Checklist complete</p>
-              <p class="completion-title">${escapeHtml(slide.celebrationTitle)}</p>
-              <p class="completion-note">Parent sign off unlocks the reward screen.</p>
-            </div>
-            <button
-              type="button"
-              class="primary-button"
-              data-action="parent-signoff"
-              data-slide-id="${escapeHtml(slide.id)}"
-            >
-              Parent Sign Off
-            </button>
-          </section>
-        `
-      : "";
+  const signOffBanners = renderSignOffBanners(slide);
   const celebrationBackdrop = isComplete && !isKidSlide ? renderCelebrationBackdrop() : "";
   const hiddenStatusMarkup = minimized
     ? `<p class="slide-helper">Hidden from auto-rotation. Update this in Settings.</p>`
@@ -723,7 +752,7 @@ function renderChecklistSlide(slide, { animate = false } = {}) {
           </div>
           ${hiddenStatusMarkup}
           ${completionBanner}
-          ${signOffBanner}
+          ${signOffBanners}
           ${renderHelperPanel(slide)}
         </div>
         <div class="checklist-panel">
@@ -1028,11 +1057,12 @@ function handleClick(event) {
     return;
   }
 
-  if (action === "parent-signoff") {
-    state.progress = signOffSlide(
+  if (action === "parent-section-signoff") {
+    state.progress = signOffChecklistSection(
       state.data,
       state.progress,
       target.dataset.slideId,
+      target.dataset.sectionId,
       state.now
     );
     persistProgressIfChanged();

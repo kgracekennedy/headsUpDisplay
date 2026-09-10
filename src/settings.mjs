@@ -2,15 +2,19 @@ import { getActiveSlides } from "./lib/schedule.mjs";
 import {
   KID_CHECKLIST_IDS,
   PERSON_CHECKLIST_IDS,
-  clearSlideSignOff,
+  SIGN_OFF_SECTION_IDS,
+  clearChecklistSectionSignOff,
   getModeLabel,
+  getRequiredSignOffSections,
   hydrateProgress,
+  isChecklistSectionChecked,
+  isChecklistSectionSignedOff,
   isChecklistComplete,
   isSlideMinimized,
   isSlideSignedOff,
   setDayMode,
   setSeasonMode,
-  signOffSlide,
+  signOffChecklistSection,
   toggleSlideMinimized
 } from "./lib/runtime-model.mjs";
 import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
@@ -18,7 +22,7 @@ import { loadProgressState, saveProgressState } from "./lib/storage.mjs";
 const app = document.getElementById("settings-app");
 const state = {
   data: null,
-  progress: { version: 4, minimizedSlideIds: [], modes: {}, signOffs: {}, slides: {} },
+  progress: { version: 5, minimizedSlideIds: [], modes: {}, signOffs: {}, sectionSignOffs: {}, slides: {} },
   now: new Date(),
   activeSlides: []
 };
@@ -42,31 +46,69 @@ function findActiveSlide(slideId) {
   return state.activeSlides.find((slide) => slide.id === slideId) ?? null;
 }
 
+function formatSectionName(sectionId) {
+  return sectionId.toUpperCase();
+}
+
+function renderSectionSignOffControls(activeSlide) {
+  if (!activeSlide || !KID_CHECKLIST_IDS.includes(activeSlide.id)) {
+    return "";
+  }
+
+  const requiredSections = new Set(getRequiredSignOffSections(activeSlide, state.now, state.progress.modes));
+
+  return SIGN_OFF_SECTION_IDS
+    .map((sectionId) => {
+      const checked = isChecklistSectionChecked(activeSlide, state.progress, sectionId);
+      const signedOff = isChecklistSectionSignedOff(activeSlide, state.progress, sectionId);
+      const required = requiredSections.has(sectionId);
+      const label = formatSectionName(sectionId);
+
+      if (!required) {
+        return `
+          <button type="button" class="secondary-button" disabled>
+            ${label} Not Active
+          </button>
+        `;
+      }
+
+      return `
+        <button
+          type="button"
+          class="secondary-button"
+          data-action="${signedOff ? "clear-section-signoff" : "signoff-section"}"
+          data-slide-id="${escapeHtml(activeSlide.id)}"
+          data-section-id="${escapeHtml(sectionId)}"
+          ${!checked && !signedOff ? "disabled" : ""}
+        >
+          ${signedOff ? `Reopen ${label}` : `Sign Off ${label}`}
+        </button>
+      `;
+    })
+    .join("");
+}
+
 function renderPersonSettings(slide) {
   const activeSlide = findActiveSlide(slide.id);
   const minimized = isSlideMinimized(state.progress, slide.id);
   const isKid = KID_CHECKLIST_IDS.includes(slide.id);
   const complete = activeSlide ? isChecklistComplete(activeSlide, state.progress, state.now) : false;
   const signedOff = activeSlide ? isSlideSignedOff(activeSlide, state.progress, state.now) : false;
-  const signOffControl = isKid
-    ? `
-        <button
-          type="button"
-          class="secondary-button"
-          data-action="${signedOff ? "clear-signoff" : "signoff"}"
-          data-slide-id="${escapeHtml(slide.id)}"
-          ${!complete && !signedOff ? "disabled" : ""}
-        >
-          ${signedOff ? "Show Task View" : "Parent Sign Off"}
-        </button>
-      `
-    : "";
+  const taskStatus = !activeSlide
+    ? "Not active right now"
+    : signedOff
+      ? "Reward unlocked"
+      : complete && isKid
+        ? "Waiting for sign-off"
+        : complete
+          ? "All done"
+          : "Tasks in progress";
 
   return `
     <article class="settings-card">
       <div>
         <h2>${escapeHtml(slide.title)}</h2>
-        <p>${activeSlide ? (complete ? "Checklist complete" : "Tasks in progress") : "Not active right now"}</p>
+        <p>${taskStatus}</p>
       </div>
       <div class="settings-actions">
         <button
@@ -78,7 +120,7 @@ function renderPersonSettings(slide) {
         >
           ${minimized ? "Show In Rotation" : "Hide From Rotation"}
         </button>
-        ${signOffControl}
+        ${isKid ? renderSectionSignOffControls(activeSlide) : ""}
       </div>
     </article>
   `;
@@ -164,14 +206,24 @@ app.addEventListener("click", (event) => {
     return;
   }
 
-  if (target.dataset.action === "signoff") {
-    state.progress = signOffSlide(state.data, state.progress, target.dataset.slideId, state.now);
+  if (target.dataset.action === "signoff-section") {
+    state.progress = signOffChecklistSection(
+      state.data,
+      state.progress,
+      target.dataset.slideId,
+      target.dataset.sectionId,
+      state.now
+    );
     render();
     return;
   }
 
-  if (target.dataset.action === "clear-signoff") {
-    state.progress = clearSlideSignOff(state.progress, target.dataset.slideId);
+  if (target.dataset.action === "clear-section-signoff") {
+    state.progress = clearChecklistSectionSignOff(
+      state.progress,
+      target.dataset.slideId,
+      target.dataset.sectionId
+    );
     render();
   }
 });

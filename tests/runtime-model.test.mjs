@@ -2,14 +2,17 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { getActiveSlides } from "../src/lib/schedule.mjs";
 import {
+  clearChecklistSectionSignOff,
   getRequiredChecklistItems,
   getVisibleChecklistSections,
   hydrateProgress,
+  isChecklistSectionSignedOff,
   isChecklistComplete,
   isSlideSignedOff,
   isSlideMinimized,
   setDayMode,
   setSeasonMode,
+  signOffChecklistSection,
   signOffSlide,
   toggleSlideMinimized,
   toggleChecklistItem
@@ -138,6 +141,63 @@ describe("runtime checklist behavior", () => {
 
     progress = toggleChecklistItem(data, progress, "alexander", requiredItems[0].id, pm);
     assert.equal(isSlideSignedOff(alexander, progress, pm), false);
+  });
+
+  it("hides parent AM tasks after the AM section is checked", async () => {
+    const data = await loadSourceData();
+    const morning = new Date("2026-09-23T07:30:00");
+    let progress = hydrateProgress(data, { version: 5, slides: {} }, morning);
+    const parents = getActiveSlides(data, morning, progress.modes).find((slide) => slide.id === "parents");
+    const amItems = parents.activeItems.filter((item) => item.section === "am");
+
+    for (const item of amItems) {
+      progress = toggleChecklistItem(data, progress, "parents", item.id, morning);
+    }
+
+    const sections = getVisibleChecklistSections(parents, progress, morning);
+
+    assert.equal(sections.some((section) => section.id === "am"), false);
+  });
+
+  it("keeps kid AM tasks visible until AM parent sign off", async () => {
+    const data = await loadSourceData();
+    const morning = new Date("2026-09-23T07:30:00");
+    let progress = hydrateProgress(data, { version: 5, slides: {} }, morning);
+    const lilja = getActiveSlides(data, morning, progress.modes).find((slide) => slide.id === "lilja");
+    const amItems = lilja.activeItems.filter((item) => item.section === "am");
+
+    for (const item of amItems) {
+      progress = toggleChecklistItem(data, progress, "lilja", item.id, morning);
+    }
+
+    assert.equal(getVisibleChecklistSections(lilja, progress, morning).some((section) => section.id === "am"), true);
+    assert.equal(isChecklistSectionSignedOff(lilja, progress, "am"), false);
+
+    progress = signOffChecklistSection(data, progress, "lilja", "am", morning);
+
+    assert.equal(isChecklistSectionSignedOff(lilja, progress, "am"), true);
+    assert.equal(getVisibleChecklistSections(lilja, progress, morning).some((section) => section.id === "am"), false);
+  });
+
+  it("requires both kid AM and PM section sign offs for PM reward", async () => {
+    const data = await loadSourceData();
+    const pm = new Date("2026-09-23T16:30:00");
+    let progress = hydrateProgress(data, { version: 5, slides: {} }, pm);
+    const lilja = getActiveSlides(data, pm, progress.modes).find((slide) => slide.id === "lilja");
+    const requiredItems = getRequiredChecklistItems(lilja, pm, progress.modes);
+
+    for (const item of requiredItems) {
+      progress = toggleChecklistItem(data, progress, "lilja", item.id, pm);
+    }
+
+    progress = signOffChecklistSection(data, progress, "lilja", "am", pm);
+    assert.equal(isSlideSignedOff(lilja, progress, pm), false);
+
+    progress = signOffChecklistSection(data, progress, "lilja", "pm", pm);
+    assert.equal(isSlideSignedOff(lilja, progress, pm), true);
+
+    progress = clearChecklistSectionSignOff(progress, "lilja", "pm");
+    assert.equal(isSlideSignedOff(lilja, progress, pm), false);
   });
 
   it("clears a morning sign off when PM tasks become newly required", async () => {

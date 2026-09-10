@@ -11,6 +11,7 @@ import {
 
 export const PERSON_CHECKLIST_IDS = ["parents", "alexander", "lilja"];
 export const KID_CHECKLIST_IDS = ["alexander", "lilja"];
+export const SIGN_OFF_SECTION_IDS = ["am", "pm"];
 
 function normalizeProgressEntry(entry) {
   return {
@@ -25,11 +26,42 @@ function normalizeProgressEntry(entry) {
   };
 }
 
+function normalizeSectionSignOffs(sectionSignOffs) {
+  if (typeof sectionSignOffs !== "object" || !sectionSignOffs) {
+    return {};
+  }
+
+  const normalized = {};
+
+  for (const [slideId, sections] of Object.entries(sectionSignOffs)) {
+    if (typeof sections !== "object" || !sections) {
+      continue;
+    }
+
+    for (const [sectionId, signOff] of Object.entries(sections)) {
+      if (!SIGN_OFF_SECTION_IDS.includes(sectionId) || typeof signOff !== "object" || !signOff) {
+        continue;
+      }
+
+      normalized[slideId] = {
+        ...(normalized[slideId] ?? {}),
+        [sectionId]: {
+          dayKey: typeof signOff.dayKey === "string" ? signOff.dayKey : null,
+          itemIds: Array.isArray(signOff.itemIds) ? [...signOff.itemIds] : [],
+          signedOffAt: typeof signOff.signedOffAt === "string" ? signOff.signedOffAt : null
+        }
+      };
+    }
+  }
+
+  return normalized;
+}
+
 export function normalizeProgressState(progressState) {
   const savedModes = progressState?.modes ?? {};
 
   return {
-    version: typeof progressState?.version === "number" ? progressState.version : 4,
+    version: typeof progressState?.version === "number" ? progressState.version : 5,
     minimizedSlideIds: Array.isArray(progressState?.minimizedSlideIds)
       ? [...progressState.minimizedSlideIds]
       : [],
@@ -47,6 +79,7 @@ export function normalizeProgressState(progressState) {
     signOffs: typeof progressState?.signOffs === "object" && progressState?.signOffs
       ? { ...progressState.signOffs }
       : {},
+    sectionSignOffs: normalizeSectionSignOffs(progressState?.sectionSignOffs),
     slides: typeof progressState?.slides === "object" && progressState?.slides
       ? { ...progressState.slides }
       : {}
@@ -98,46 +131,59 @@ export function hydrateProgress(data, persistedState, now) {
     };
   }
 
-  const nextSignOffs = {};
+  const nextSectionSignOffs = {};
 
   for (const slide of data.slides) {
     if (!KID_CHECKLIST_IDS.includes(slide.id)) {
       continue;
     }
 
-    const savedSignOff = normalizedState.signOffs[slide.id];
+    const savedSlideSignOffs = normalizedState.sectionSignOffs[slide.id] ?? {};
     const nextSlideProgress = nextSlides[slide.id];
 
-    if (!savedSignOff || savedSignOff.dayKey !== modes.dayKey || !nextSlideProgress) {
+    if (!nextSlideProgress) {
       continue;
     }
 
     const activeItems = getActiveItemsForSlide(slide, now, modes);
     const activeSlide = { ...slide, activeItems };
-    const requiredItems = getRequiredChecklistItems(activeSlide, now, modes);
-    const signedItemIds = new Set(savedSignOff.requiredItemIds ?? []);
-    const allRequiredStillSigned =
-      requiredItems.length > 0 && requiredItems.every((item) => signedItemIds.has(item.id));
-    const allRequiredStillChecked = requiredItems.every((item) =>
-      nextSlideProgress.checkedItemIds.includes(item.id)
-    );
 
-    if (allRequiredStillSigned && allRequiredStillChecked) {
-      nextSignOffs[slide.id] = {
-        dayKey: savedSignOff.dayKey,
-        requiredItemIds: [...savedSignOff.requiredItemIds],
-        signedOffAt: savedSignOff.signedOffAt
-      };
+    for (const sectionId of SIGN_OFF_SECTION_IDS) {
+      const savedSignOff = savedSlideSignOffs[sectionId];
+
+      if (!savedSignOff || savedSignOff.dayKey !== modes.dayKey) {
+        continue;
+      }
+
+      const sectionItems = getChecklistSectionItems(activeSlide, sectionId);
+      const signedItemIds = new Set(savedSignOff.itemIds ?? []);
+      const allSectionItemsStillSigned =
+        sectionItems.length > 0 && sectionItems.every((item) => signedItemIds.has(item.id));
+      const allSectionItemsStillChecked = sectionItems.every((item) =>
+        nextSlideProgress.checkedItemIds.includes(item.id)
+      );
+
+      if (allSectionItemsStillSigned && allSectionItemsStillChecked) {
+        nextSectionSignOffs[slide.id] = {
+          ...(nextSectionSignOffs[slide.id] ?? {}),
+          [sectionId]: {
+            dayKey: savedSignOff.dayKey,
+            itemIds: sectionItems.map((item) => item.id).sort(),
+            signedOffAt: savedSignOff.signedOffAt
+          }
+        };
+      }
     }
   }
 
   return {
-    version: 4,
+    version: 5,
     minimizedSlideIds: normalizedState.minimizedSlideIds.filter((slideId) =>
       data.slides.some((slide) => slide.id === slideId && slide.type === "checklist")
     ),
     modes,
-    signOffs: nextSignOffs,
+    signOffs: {},
+    sectionSignOffs: nextSectionSignOffs,
     slides: nextSlides
   };
 }
@@ -186,6 +232,56 @@ export function isChecklistComplete(activeSlide, progressState, now = null, mode
   return requiredItems.every((item) => progressEntry.checkedItemIds.includes(item.id));
 }
 
+export function getChecklistSectionItems(activeSlide, sectionId) {
+  if (activeSlide.type !== "checklist") {
+    return [];
+  }
+
+  return activeSlide.activeItems.filter((item) => (item.section ?? "am") === sectionId);
+}
+
+export function isChecklistSectionChecked(activeSlide, progressState, sectionId) {
+  const progressEntry = normalizeProgressEntry(progressState.slides[activeSlide.id]);
+  const sectionItems = getChecklistSectionItems(activeSlide, sectionId);
+
+  return (
+    sectionItems.length > 0 &&
+    sectionItems.every((item) => progressEntry.checkedItemIds.includes(item.id))
+  );
+}
+
+export function getRequiredSignOffSections(activeSlide, now, modes = { dayMode: "school_day" }) {
+  const requiredItems = getRequiredChecklistItems(activeSlide, now, modes);
+  const requiredSectionIds = new Set(
+    requiredItems
+      .map((item) => item.section ?? "am")
+      .filter((sectionId) => SIGN_OFF_SECTION_IDS.includes(sectionId))
+  );
+
+  return SIGN_OFF_SECTION_IDS.filter((sectionId) => requiredSectionIds.has(sectionId));
+}
+
+export function isChecklistSectionSignedOff(activeSlide, progressState, sectionId, modes = progressState?.modes) {
+  if (!KID_CHECKLIST_IDS.includes(activeSlide.id)) {
+    return false;
+  }
+
+  const signOff = progressState.sectionSignOffs?.[activeSlide.id]?.[sectionId];
+
+  if (!signOff || signOff.dayKey !== modes?.dayKey) {
+    return false;
+  }
+
+  const signedItemIds = new Set(signOff.itemIds ?? []);
+  const sectionItems = getChecklistSectionItems(activeSlide, sectionId);
+
+  return (
+    sectionItems.length > 0 &&
+    sectionItems.every((item) => signedItemIds.has(item.id)) &&
+    isChecklistSectionChecked(activeSlide, progressState, sectionId)
+  );
+}
+
 export function getVisibleChecklistSections(activeSlide, progressState, now = new Date(), modes = progressState?.modes) {
   if (activeSlide.type !== "checklist") {
     return [];
@@ -210,19 +306,34 @@ export function getVisibleChecklistSections(activeSlide, progressState, now = ne
       const sectionActiveItems = activeSlide.activeItems.filter(
         (item) => (item.section ?? "am") === section.id
       );
+      const checkedCount = sectionActiveItems.filter((item) => checkedItemIds.has(item.id)).length;
+      const sectionChecked =
+        sectionActiveItems.length > 0 && checkedCount === sectionActiveItems.length;
+      const signedOff = isChecklistSectionSignedOff(activeSlide, progressState, section.id, modes);
+      const hideCompletedParentAm =
+        activeSlide.id === "parents" && section.id === "am" && sectionChecked;
+      const hideSignedOffKidSection =
+        KID_CHECKLIST_IDS.includes(activeSlide.id) &&
+        SIGN_OFF_SECTION_IDS.includes(section.id) &&
+        signedOff;
+      const hideCheckedItems =
+        section.hideChecked &&
+        !(KID_CHECKLIST_IDS.includes(activeSlide.id) && sectionChecked && !signedOff);
       const items = getOrderedChecklistItems(
         {
           ...activeSlide,
           activeItems: sectionActiveItems
         },
         progressState
-      ).filter((item) => !(section.hideChecked && checkedItemIds.has(item.id)));
+      ).filter((item) => !(hideCheckedItems && checkedItemIds.has(item.id)));
 
       return {
         ...section,
-        checkedCount: sectionActiveItems.filter((item) => checkedItemIds.has(item.id)).length,
+        checkedCount,
         totalCount: sectionActiveItems.length,
-        items
+        isChecked: sectionChecked,
+        isSignedOff: signedOff,
+        items: hideCompletedParentAm || hideSignedOffKidSection ? [] : items
       };
     })
     .filter((section) => section.items.length > 0);
@@ -268,11 +379,14 @@ export function toggleChecklistItem(data, progressState, slideId, itemId, now) {
   }
 
   const nextState = {
-    version: 4,
+    version: 5,
     minimizedSlideIds: [...(progressState.minimizedSlideIds ?? [])],
     modes,
     signOffs: {
       ...(progressState.signOffs ?? {})
+    },
+    sectionSignOffs: {
+      ...(progressState.sectionSignOffs ?? {})
     },
     slides: {
       ...progressState.slides
@@ -304,6 +418,22 @@ export function toggleChecklistItem(data, progressState, slideId, itemId, now) {
   };
   delete nextState.signOffs[slideId];
 
+  if (KID_CHECKLIST_IDS.includes(slideId)) {
+    const toggledItem = activeSlide.activeItems.find((item) => item.id === itemId);
+    const sectionId = toggledItem?.section ?? "am";
+
+    if (SIGN_OFF_SECTION_IDS.includes(sectionId)) {
+      nextState.sectionSignOffs[slideId] = {
+        ...(nextState.sectionSignOffs[slideId] ?? {})
+      };
+      delete nextState.sectionSignOffs[slideId][sectionId];
+
+      if (Object.keys(nextState.sectionSignOffs[slideId]).length === 0) {
+        delete nextState.sectionSignOffs[slideId];
+      }
+    }
+  }
+
   return nextState;
 }
 
@@ -330,6 +460,9 @@ export function toggleSlideMinimized(progressState, slideId) {
     },
     signOffs: {
       ...(progressState.signOffs ?? {})
+    },
+    sectionSignOffs: {
+      ...(progressState.sectionSignOffs ?? {})
     },
     minimizedSlideIds: [...minimizedSlideIds]
   };
@@ -388,32 +521,67 @@ export function signOffSlide(data, progressState, slideId, now) {
     return progressState;
   }
 
-  const requiredItemIds = getRequiredChecklistItems(activeSlide, now, modes)
-    .map((item) => item.id)
-    .sort();
+  return getRequiredSignOffSections(activeSlide, now, modes).reduce(
+    (nextState, sectionId) => signOffChecklistSection(data, nextState, slideId, sectionId, now),
+    progressState
+  );
+}
+
+export function clearSlideSignOff(progressState, slideId) {
+  const signOffs = { ...(progressState.signOffs ?? {}) };
+  const sectionSignOffs = { ...(progressState.sectionSignOffs ?? {}) };
+  delete signOffs[slideId];
+  delete sectionSignOffs[slideId];
 
   return {
     ...progressState,
-    version: 4,
+    signOffs,
+    sectionSignOffs
+  };
+}
+
+export function signOffChecklistSection(data, progressState, slideId, sectionId, now) {
+  if (!KID_CHECKLIST_IDS.includes(slideId) || !SIGN_OFF_SECTION_IDS.includes(sectionId)) {
+    return progressState;
+  }
+
+  const modes = getEffectiveModes(data, progressState, now);
+  const activeSlide = getActiveSlides(data, now, modes).find((slide) => slide.id === slideId);
+
+  if (!activeSlide || !isChecklistSectionChecked(activeSlide, progressState, sectionId)) {
+    return progressState;
+  }
+
+  return {
+    ...progressState,
+    version: 5,
     modes,
-    signOffs: {
-      ...(progressState.signOffs ?? {}),
+    sectionSignOffs: {
+      ...(progressState.sectionSignOffs ?? {}),
       [slideId]: {
-        dayKey: modes.dayKey,
-        requiredItemIds,
-        signedOffAt: now.toISOString()
+        ...(progressState.sectionSignOffs?.[slideId] ?? {}),
+        [sectionId]: {
+          dayKey: modes.dayKey,
+          itemIds: getChecklistSectionItems(activeSlide, sectionId).map((item) => item.id).sort(),
+          signedOffAt: now.toISOString()
+        }
       }
     }
   };
 }
 
-export function clearSlideSignOff(progressState, slideId) {
-  const signOffs = { ...(progressState.signOffs ?? {}) };
-  delete signOffs[slideId];
+export function clearChecklistSectionSignOff(progressState, slideId, sectionId) {
+  const sectionSignOffs = { ...(progressState.sectionSignOffs ?? {}) };
+  sectionSignOffs[slideId] = { ...(sectionSignOffs[slideId] ?? {}) };
+  delete sectionSignOffs[slideId][sectionId];
+
+  if (Object.keys(sectionSignOffs[slideId]).length === 0) {
+    delete sectionSignOffs[slideId];
+  }
 
   return {
     ...progressState,
-    signOffs
+    sectionSignOffs
   };
 }
 
@@ -422,18 +590,13 @@ export function isSlideSignedOff(activeSlide, progressState, now, modes = progre
     return false;
   }
 
-  const signOff = progressState.signOffs?.[activeSlide.id];
-
-  if (!signOff || signOff.dayKey !== modes?.dayKey) {
-    return false;
-  }
-
-  const signedItemIds = new Set(signOff.requiredItemIds ?? []);
-  const requiredItems = getRequiredChecklistItems(activeSlide, now, modes);
+  const requiredSignOffSections = getRequiredSignOffSections(activeSlide, now, modes);
 
   return (
-    requiredItems.length > 0 &&
-    requiredItems.every((item) => signedItemIds.has(item.id)) &&
-    isChecklistComplete(activeSlide, progressState, now, modes)
+    requiredSignOffSections.length > 0 &&
+    isChecklistComplete(activeSlide, progressState, now, modes) &&
+    requiredSignOffSections.every((sectionId) =>
+      isChecklistSectionSignedOff(activeSlide, progressState, sectionId, modes)
+    )
   );
 }
