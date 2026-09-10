@@ -765,7 +765,6 @@ function renderChecklistSlide(slide, { animate = false } = {}) {
 
 function renderReminderSlide(slide, { animate = false } = {}) {
   const transitionClass = animate ? " slide-card--transition" : "";
-  const itemCountLabel = `${slide.activeItems.length} reminder${slide.activeItems.length === 1 ? "" : "s"}`;
 
   return `
     <article class="slide-card slide-card--reminder${transitionClass}" style="${themeStyle(slide)}">
@@ -774,10 +773,6 @@ function renderReminderSlide(slide, { animate = false } = {}) {
           <div>
             <p class="eyebrow">${escapeHtml(slide.ownerLabel || "Reminder")}</p>
             <h2>${escapeHtml(slide.title)}</h2>
-          </div>
-          <div class="slide-stats">
-            <span class="stat-chip">${escapeHtml(itemCountLabel)}</span>
-            <span class="stat-chip">${escapeHtml(slide.activeSchedule.groupLabel)}</span>
           </div>
         </div>
         <div class="reminder-panel" data-role="reminder-panel">
