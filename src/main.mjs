@@ -642,6 +642,27 @@ function getRewardMessage(slide) {
   return slide.rewardMessage;
 }
 
+function getEarlyHelperItems(slide) {
+  return (slide.activeHelpers ?? []).filter((item) => !item.id.includes("_activity_"));
+}
+
+function renderRewardEarlyPanel(slide) {
+  const helpers = getEarlyHelperItems(slide);
+
+  if (helpers.length === 0) {
+    return "";
+  }
+
+  return `
+    <div class="reward-early-panel">
+      <p class="reward-early-title">Done early?</p>
+      <ul>
+        ${helpers.map((item) => `<li>${escapeHtml(item.text)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
 function renderRewardOnlySlide(slide, { animate = false } = {}) {
   const transitionClass = animate ? " slide-card--transition" : "";
   const rewardTitle = formatRewardTitle(getRewardMessage(slide));
@@ -650,11 +671,11 @@ function renderRewardOnlySlide(slide, { animate = false } = {}) {
     <article class="slide-card slide-card--checklist slide-card--completed slide-card--reward-only${transitionClass}" style="${themeStyle(slide)}">
       ${renderCelebrationBackdrop()}
       <div class="reward-only-layout">
-        <p class="completion-label">Reward unlocked</p>
-        <div class="reward-title-row">
+        <div class="reward-title-column">
+          <p class="completion-label">Reward unlocked</p>
           <h2>${escapeHtml(rewardTitle)}</h2>
-          <p class="reward-early-text">Done early?</p>
         </div>
+        ${renderRewardEarlyPanel(slide)}
       </div>
     </article>
   `;
@@ -732,9 +753,9 @@ function isSectionComplete(slide, sectionId) {
 
 function renderHelperPanel(slide) {
   const pmStarted = isPmTimeForRender(slide);
-  const helpers = (slide.activeHelpers ?? []).filter((item) =>
-    pmStarted ? item.id.includes("_activity_") : !item.id.includes("_activity_")
-  );
+  const helpers = pmStarted
+    ? (slide.activeHelpers ?? []).filter((item) => item.id.includes("_activity_"))
+    : getEarlyHelperItems(slide);
 
   if (
     helpers.length === 0 ||
