@@ -5,10 +5,9 @@ lilja,30,checklist,Lilja's Checklist,Lilja,person_day,14:00,16:00,#ffb8da,#ff7a5
 healthy_breakfast_reminder,35,reminder,Healthy Breakfast Ideas,Household,healthy_breakfast,,,#f7e6b1,#f09e57,#6d8f6f,#2f2210,,,TRUE,Morning breakfast reminder slide.
 healthy_lunch_reminder,36,reminder,Healthy Lunch Ideas,Household,healthy_lunch,,,#cfe7b5,#73a857,#f6d778,#1f2c16,,,TRUE,Midday lunch reminder slide.
 healthy_snacks_reminder,38,reminder,Healthy Snack Ideas,Household,healthy_snacks,,,#ffd9a8,#f28a5b,#7eb0a1,#2f1d12,,,TRUE,Afternoon snack reminder slide.
-weekday_launch_reminder,40,reminder,School Launch,Household,school_launch_reminder,,,#9be8c5,#2f8b7d,#fef6c8,#102320,,,TRUE,Reminder slide for weekday departure rhythm.
 mommy_pt_reminder,45,reminder,Mommy PT: Do a Few When You Have Time,Mommy,mommy_pt_anytime,,,#d7edd9,#6fa37a,#f8d07a,#163124,,,TRUE,All-day reminder slide for Mommy PT exercises.
 kids_bedtime_reminder,75,reminder,Kids Bedtime Routine,Household,kids_bedtime,,,#9db5ff,#5667c9,#ffe7a1,#101735,,,TRUE,Evening reminder slide for the bedtime routine.
-weekend_screen_reminder,80,reminder,Weekend Screen Unlock,Household,weekend_screen,,,#ffe799,#ff9d62,#176c7f,#2c1705,,,TRUE,Reminder slide for weekend screen expectations.
+weekend_screen_reminder,80,reminder,Screen Rules,Household,weekend_screen,,,#ffe799,#ff9d62,#176c7f,#2c1705,,,TRUE,Reminder slide for screen expectations.
 cleaner_sunday_reminder,85,reminder,Cleaner Big Tidy,Household,cleaner_sunday,,,#d5e5ff,#5875bc,#ffd789,#101735,,,TRUE,All-day Sunday cleaner-week tidy reminder.
 cleaner_prep_reminder,90,reminder,Cleaner Maintenance Tonight,Household,cleaner_monday,,,#d1d6ff,#6c7cff,#ffd789,#121a34,,,TRUE,Alternating Monday maintenance reminder.
 sunday_reset_reminder,100,reminder,Sunday Night Reset,Household,sunday_reset,,,#8fd9de,#236474,#ffd7a8,#0f1b20,,,TRUE,Reminder slide for Sunday preparation.

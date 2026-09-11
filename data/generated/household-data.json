@@ -7,47 +7,17 @@
   },
   "scheduleGroups": [
     {
-      "id": "cleaner_sunday",
-      "label": "Cleaner big tidy",
+      "id": "person_day",
+      "label": "All day",
       "rules": [
         {
           "sortOrder": 10,
-          "daySelector": "Sun",
+          "daySelector": "All",
           "startTime": "05:00",
           "endTime": "02:00",
-          "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-20",
-          "notes": "Sunday before alternating Tuesday cleaners."
-        }
-      ]
-    },
-    {
-      "id": "cleaner_tuesday",
-      "label": "Cleaner last minute",
-      "rules": [
-        {
-          "sortOrder": 10,
-          "daySelector": "Tue",
-          "startTime": "05:00",
-          "endTime": "12:00",
-          "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-22",
-          "notes": "Alternating Tuesday cleaners."
-        }
-      ]
-    },
-    {
-      "id": "cleaner_monday",
-      "label": "Cleaner maintenance",
-      "rules": [
-        {
-          "sortOrder": 10,
-          "daySelector": "Mon",
-          "startTime": "16:00",
-          "endTime": "23:00",
-          "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-21",
-          "notes": "Monday before alternating Tuesday cleaners."
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Checklist day resets at 2 AM."
         }
       ]
     },
@@ -97,21 +67,6 @@
       ]
     },
     {
-      "id": "kids_bedtime",
-      "label": "Kids bedtime",
-      "rules": [
-        {
-          "sortOrder": 10,
-          "daySelector": "All",
-          "startTime": "20:00",
-          "endTime": "21:15",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        }
-      ]
-    },
-    {
       "id": "mommy_pt_anytime",
       "label": "Mommy PT anytime",
       "rules": [
@@ -127,44 +82,14 @@
       ]
     },
     {
-      "id": "person_day",
-      "label": "All day",
+      "id": "kids_bedtime",
+      "label": "Kids bedtime",
       "rules": [
         {
           "sortOrder": 10,
           "daySelector": "All",
-          "startTime": "05:00",
-          "endTime": "02:00",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Checklist day resets at 2 AM."
-        }
-      ]
-    },
-    {
-      "id": "school_launch_reminder",
-      "label": "School launch",
-      "rules": [
-        {
-          "sortOrder": 10,
-          "daySelector": "Weekdays",
-          "startTime": "05:30",
-          "endTime": "09:00",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        }
-      ]
-    },
-    {
-      "id": "sunday_reset",
-      "label": "Sunday reset",
-      "rules": [
-        {
-          "sortOrder": 10,
-          "daySelector": "Sun",
-          "startTime": "18:00",
-          "endTime": "22:00",
+          "startTime": "20:00",
+          "endTime": "21:15",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -180,6 +105,66 @@
           "daySelector": "Sat,Sun",
           "startTime": "08:00",
           "endTime": "16:00",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "cleaner_sunday",
+      "label": "Cleaner big tidy",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "Sun",
+          "startTime": "05:00",
+          "endTime": "02:00",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-09-20",
+          "notes": "Sunday before alternating Tuesday cleaners."
+        }
+      ]
+    },
+    {
+      "id": "cleaner_monday",
+      "label": "Cleaner maintenance",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "Mon",
+          "startTime": "16:00",
+          "endTime": "23:00",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-09-21",
+          "notes": "Monday before alternating Tuesday cleaners."
+        }
+      ]
+    },
+    {
+      "id": "cleaner_tuesday",
+      "label": "Cleaner last minute",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "Tue",
+          "startTime": "05:00",
+          "endTime": "12:00",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-09-22",
+          "notes": "Alternating Tuesday cleaners."
+        }
+      ]
+    },
+    {
+      "id": "sunday_reset",
+      "label": "Sunday reset",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "Sun",
+          "startTime": "18:00",
+          "endTime": "22:00",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -213,6 +198,253 @@
           "type": "check_item",
           "text": "Make kids' breakfast",
           "section": "am",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_counter",
+          "sortOrder": 270,
+          "type": "check_item",
+          "text": "Wipe down the counter",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_clear_table",
+          "sortOrder": 280,
+          "type": "check_item",
+          "text": "Clear the table",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_bins",
+          "sortOrder": 300,
+          "type": "check_item",
+          "text": "Prep kids' camp bins",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "summer_camp",
+          "daySelector": "Sun,Mon,Tue,Wed,Thu,Fri",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Summer camp seasonal task."
+        },
+        {
+          "id": "parents_pm_towel",
+          "sortOrder": 310,
+          "type": "check_item",
+          "text": "Put the hand towel in the laundry",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_reload",
+          "sortOrder": 320,
+          "type": "check_item",
+          "text": "Empty and reload the dishwasher",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_coffee",
+          "sortOrder": 330,
+          "type": "check_item",
+          "text": "Prepare coffee",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_cleaner_supplies",
+          "sortOrder": 350,
+          "type": "check_item",
+          "text": "Pull out trash bags and granite cleaner",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Mon",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-09-21",
+          "notes": "Cleaner Monday maintenance task."
+        },
+        {
+          "id": "parents_pm_trash",
+          "sortOrder": 360,
+          "type": "check_item",
+          "text": "Take out trash and recycling",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Wed",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_anytime_finish_laundry",
+          "sortOrder": 400,
+          "type": "check_item",
+          "text": "Finish laundry",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Fri",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Friday top all-day task."
+        },
+        {
+          "id": "parents_anytime_saela_teeth",
+          "sortOrder": 410,
+          "type": "check_item",
+          "text": "Brush Saela's teeth",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Daily dog task."
+        },
+        {
+          "id": "parents_anytime_saela_training",
+          "sortOrder": 420,
+          "type": "check_item",
+          "text": "Training session with Saela",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Daily dog task."
+        },
+        {
+          "id": "parents_anytime_saela_brush",
+          "sortOrder": 430,
+          "type": "check_item",
+          "text": "Brush Saela",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Daily dog task."
+        },
+        {
+          "id": "parents_anytime_mommy_workout",
+          "sortOrder": 440,
+          "type": "check_item",
+          "text": "Mommy workout",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Fri,Sun",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_anytime_mommy_speedwalk",
+          "sortOrder": 450,
+          "type": "check_item",
+          "text": "Mommy speed walk",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Thu,Sat",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_anytime_mommy_french",
+          "sortOrder": 460,
+          "type": "check_item",
+          "text": "Mommy French practice",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_compost",
+          "sortOrder": 260,
+          "type": "check_item",
+          "text": "Take out compost and recycling",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_handwash",
+          "sortOrder": 250,
+          "type": "check_item",
+          "text": "Hand-wash dishes",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_laundry",
+          "sortOrder": 240,
+          "type": "check_item",
+          "text": "Run laundry",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "parents_pm_dishwasher_run",
+          "sortOrder": 230,
+          "type": "check_item",
+          "text": "Load and start the dishwasher",
+          "section": "pm",
           "dayMode": "all",
           "seasonMode": "all",
           "daySelector": "All",
@@ -312,6 +544,19 @@
           "notes": ""
         },
         {
+          "id": "parents_anytime_mommy_icelandic",
+          "sortOrder": 470,
+          "type": "check_item",
+          "text": "Mommy Icelandic practice",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "parents_am_prep_workout_clothes",
           "sortOrder": 90,
           "type": "check_item",
@@ -319,23 +564,10 @@
           "section": "am",
           "dayMode": "non_school_day",
           "seasonMode": "school_year",
-          "daySelector": "Sat",
+          "daySelector": "Sun",
           "weekPattern": "all",
           "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_am_restock_paper",
-          "sortOrder": 100,
-          "type": "check_item",
-          "text": "Restock kleenex and toilet paper",
-          "section": "am",
-          "dayMode": "non_school_day",
-          "seasonMode": "all",
-          "daySelector": "Sat",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Saturday only."
+          "notes": "Sunday only."
         },
         {
           "id": "parents_am_refill_med_boxes",
@@ -391,16 +623,16 @@
         },
         {
           "id": "parents_am_cleaner_bathroom",
-          "sortOrder": 150,
+          "sortOrder": 345,
           "type": "check_item",
           "text": "Put bathroom items away",
-          "section": "am",
+          "section": "pm",
           "dayMode": "all",
           "seasonMode": "all",
-          "daySelector": "Tue",
+          "daySelector": "Mon",
           "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-22",
-          "notes": "Cleaner Tuesday task."
+          "anchorDate": "2026-09-21",
+          "notes": "Cleaner Monday task."
         },
         {
           "id": "parents_pm_dinner",
@@ -429,277 +661,17 @@
           "notes": ""
         },
         {
-          "id": "parents_pm_dishwasher_run",
-          "sortOrder": 230,
+          "id": "parents_am_restock_paper",
+          "sortOrder": 100,
           "type": "check_item",
-          "text": "Load and start the dishwasher",
-          "section": "pm",
-          "dayMode": "all",
+          "text": "Restock Kleenex and toilet paper",
+          "section": "am",
+          "dayMode": "non_school_day",
           "seasonMode": "all",
-          "daySelector": "All",
+          "daySelector": "Sat",
           "weekPattern": "all",
           "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_laundry",
-          "sortOrder": 240,
-          "type": "check_item",
-          "text": "Run laundry",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_handwash",
-          "sortOrder": 250,
-          "type": "check_item",
-          "text": "Hand-wash dishes",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_compost",
-          "sortOrder": 260,
-          "type": "check_item",
-          "text": "Take out compost and recycling",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_counter",
-          "sortOrder": 270,
-          "type": "check_item",
-          "text": "Wipe down counter",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_clear_table",
-          "sortOrder": 280,
-          "type": "check_item",
-          "text": "Clear table",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_school_prep",
-          "sortOrder": 290,
-          "type": "check_item",
-          "text": "Pack backpacks with snacks and library books",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Sun,Mon,Tue,Wed,Thu",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_bins",
-          "sortOrder": 300,
-          "type": "check_item",
-          "text": "Prep kids' camp bins",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "summer_camp",
-          "daySelector": "Sun,Mon,Tue,Wed,Thu,Fri",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Summer camp seasonal task."
-        },
-        {
-          "id": "parents_pm_towel",
-          "sortOrder": 310,
-          "type": "check_item",
-          "text": "Put hand towel in laundry",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_reload",
-          "sortOrder": 320,
-          "type": "check_item",
-          "text": "Empty and reload the dishwasher",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_coffee",
-          "sortOrder": 330,
-          "type": "check_item",
-          "text": "Prep coffee",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_pm_saela_training",
-          "sortOrder": 340,
-          "type": "check_item",
-          "text": "Training session with Saela",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "all",
-          "daySelector": "Mon,Tue,Wed,Thu,Fri",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Weekday evenings only."
-        },
-        {
-          "id": "parents_pm_cleaner_supplies",
-          "sortOrder": 350,
-          "type": "check_item",
-          "text": "Pull out trash bags and granite cleaner",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "Mon",
-          "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-21",
-          "notes": "Cleaner Monday maintenance task."
-        },
-        {
-          "id": "parents_pm_trash",
-          "sortOrder": 360,
-          "type": "check_item",
-          "text": "Take out trash and recycling",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "Wed",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_anytime_saela_teeth",
-          "sortOrder": 410,
-          "type": "check_item",
-          "text": "Brush Saela's teeth",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Daily dog task."
-        },
-        {
-          "id": "parents_anytime_saela_training",
-          "sortOrder": 420,
-          "type": "check_item",
-          "text": "Training session with Saela",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Daily dog task."
-        },
-        {
-          "id": "parents_anytime_saela_brush",
-          "sortOrder": 430,
-          "type": "check_item",
-          "text": "Brush Saela",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Daily dog task."
-        },
-        {
-          "id": "parents_anytime_mommy_workout",
-          "sortOrder": 440,
-          "type": "check_item",
-          "text": "Mommy workout",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "Fri,Sun",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_anytime_mommy_speedwalk",
-          "sortOrder": 450,
-          "type": "check_item",
-          "text": "Mommy speed walk",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "Thu,Sat",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_anytime_mommy_french",
-          "sortOrder": 460,
-          "type": "check_item",
-          "text": "Mommy French practice",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "parents_anytime_mommy_icelandic",
-          "sortOrder": 470,
-          "type": "check_item",
-          "text": "Mommy Icelandic practice",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
+          "notes": "Saturday only."
         },
         {
           "id": "parents_anytime_mommy_singing",
@@ -749,8 +721,307 @@
           "notes": ""
         },
         {
-          "id": "alexander_am_teeth",
+          "id": "alexander_pm_pack_backpack",
+          "sortOrder": 250,
+          "type": "check_item",
+          "text": "Load backpack, including water, snack, take-home folder, and library book (if needed).",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Sun,Mon,Tue,Wed,Thu",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_read_parent",
+          "sortOrder": 270,
+          "type": "check_item",
+          "text": "Read to a parent for fifteen minutes",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_homework",
+          "sortOrder": 280,
+          "type": "check_item",
+          "text": "Homework",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_laundry",
+          "sortOrder": 290,
+          "type": "check_item",
+          "text": "Put your bathing suit and towel in the downstairs laundry",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "summer_camp",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Summer camp seasonal task."
+        },
+        {
+          "id": "alexander_pm_bath",
+          "sortOrder": 310,
+          "type": "check_item",
+          "text": "Take a bath in the Lego bathroom",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_bed",
+          "sortOrder": 320,
+          "type": "check_item",
+          "text": "Make your bed if needed",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_room",
+          "sortOrder": 330,
+          "type": "check_item",
+          "text": "Tidy room",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Mon",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-09-21",
+          "notes": "Cleaner Monday prep task."
+        },
+        {
+          "id": "alexander_pm_hang_backpack",
+          "sortOrder": 240,
+          "type": "check_item",
+          "text": "Hang up your backpack",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_stofa",
+          "sortOrder": 340,
+          "type": "check_item",
+          "text": "Tidy stofa",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Mon",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-09-21",
+          "notes": "Cleaner Monday prep task."
+        },
+        {
+          "id": "alexander_helper_early_cuddle",
+          "sortOrder": 420,
+          "type": "text_line",
+          "text": "Read and cuddle Mommy",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_helper_early_audio",
+          "sortOrder": 430,
+          "type": "text_line",
+          "text": "Listen to audiobook",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_helper_early_homework",
+          "sortOrder": 440,
+          "type": "text_line",
+          "text": "Do homework in advance including reading",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_helper_early_saela_brush",
+          "sortOrder": 450,
+          "type": "text_line",
+          "text": "Brush Saela",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_helper_early_saela_training",
+          "sortOrder": 460,
+          "type": "text_line",
+          "text": "Five-treat training session with Saela",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_helper_early_saela_play",
+          "sortOrder": 470,
+          "type": "text_line",
+          "text": "Play with Saela",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_helper_activity_1",
+          "sortOrder": 480,
+          "type": "text_line",
+          "text": "EDP outside play",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_helper_early_phone",
+          "sortOrder": 410,
+          "type": "text_line",
+          "text": "Play blue iPhone",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_papers",
+          "sortOrder": 230,
+          "type": "check_item",
+          "text": "Give papers to a parent or put them at your table place",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_dishes",
+          "sortOrder": 220,
+          "type": "check_item",
+          "text": "Put dishes by the sink (water bottle, snacks, etc.)",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "all",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_pm_shoes_coat",
+          "sortOrder": 210,
+          "type": "check_item",
+          "text": "Put your shoes away and hang up your coat",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_am_breakfast",
           "sortOrder": 20,
+          "type": "check_item",
+          "text": "Eat breakfast with three food groups",
+          "section": "am",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_am_drink",
+          "sortOrder": 30,
+          "type": "check_item",
+          "text": "Drink water, juice, or milk",
+          "section": "am",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_am_medication",
+          "sortOrder": 40,
+          "type": "check_item",
+          "text": "Take medication",
+          "section": "am",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_am_teeth",
+          "sortOrder": 50,
           "type": "check_item",
           "text": "Brush teeth",
           "section": "am",
@@ -763,48 +1034,9 @@
         },
         {
           "id": "alexander_am_hair",
-          "sortOrder": 30,
-          "type": "check_item",
-          "text": "Brush hair",
-          "section": "am",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_am_breakfast",
-          "sortOrder": 40,
-          "type": "check_item",
-          "text": "Eat breakfast with 3 food groups",
-          "section": "am",
-          "dayMode": "all",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_am_drink",
-          "sortOrder": 50,
-          "type": "check_item",
-          "text": "Drink water juice or milk",
-          "section": "am",
-          "dayMode": "all",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_am_medication",
           "sortOrder": 60,
           "type": "check_item",
-          "text": "Take medication",
+          "text": "Brush hair",
           "section": "am",
           "dayMode": "all",
           "seasonMode": "all",
@@ -817,20 +1049,7 @@
           "id": "alexander_am_backpack",
           "sortOrder": 70,
           "type": "check_item",
-          "text": "Load backpack",
-          "section": "am",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_am_school_things",
-          "sortOrder": 80,
-          "type": "check_item",
-          "text": "Put school things by garage door including water and snack",
+          "text": "Check your backpack and place it by the garage door",
           "section": "am",
           "dayMode": "school_day",
           "seasonMode": "school_year",
@@ -944,19 +1163,6 @@
           "notes": ""
         },
         {
-          "id": "alexander_am_drops",
-          "sortOrder": 170,
-          "type": "check_item",
-          "text": "Drops",
-          "section": "am",
-          "dayMode": "non_school_day",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
           "id": "alexander_am_reading",
           "sortOrder": 180,
           "type": "check_item",
@@ -983,25 +1189,12 @@
           "notes": ""
         },
         {
-          "id": "alexander_pm_shoes_coat",
-          "sortOrder": 210,
+          "id": "alexander_am_drops",
+          "sortOrder": 200,
           "type": "check_item",
-          "text": "Put shoes away and hang up coat",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_dishes",
-          "sortOrder": 220,
-          "type": "check_item",
-          "text": "Put dishes by sink (water bottle, snacks, etc)",
-          "section": "pm",
-          "dayMode": "all",
+          "text": "Drops",
+          "section": "am",
+          "dayMode": "non_school_day",
           "seasonMode": "all",
           "daySelector": "All",
           "weekPattern": "all",
@@ -1009,153 +1202,10 @@
           "notes": ""
         },
         {
-          "id": "alexander_pm_papers",
-          "sortOrder": 230,
-          "type": "check_item",
-          "text": "Give papers to parent or put at your table place",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_hang_backpack",
-          "sortOrder": 240,
-          "type": "check_item",
-          "text": "Hang up backpack",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_pack_backpack",
-          "sortOrder": 250,
-          "type": "check_item",
-          "text": "Pack backpack including snack and library book",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Sun,Mon,Tue,Wed,Thu",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_activity",
-          "sortOrder": 260,
-          "type": "check_item",
-          "text": "Do an activity",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_read_parent",
-          "sortOrder": 270,
-          "type": "check_item",
-          "text": "Read to a parent for 15 minutes",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_homework",
-          "sortOrder": 280,
-          "type": "check_item",
-          "text": "Homework",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_laundry",
-          "sortOrder": 290,
-          "type": "check_item",
-          "text": "Put bathing suit and towel in downstairs laundry",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "summer_camp",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Summer camp seasonal task."
-        },
-        {
-          "id": "alexander_pm_bath",
-          "sortOrder": 310,
-          "type": "check_item",
-          "text": "Take bath in Lego bathroom",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_bed",
-          "sortOrder": 320,
-          "type": "check_item",
-          "text": "Make bed if needed",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_pm_room",
-          "sortOrder": 330,
-          "type": "check_item",
-          "text": "Tidy room",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "Tue",
-          "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-22",
-          "notes": "Cleaner Tuesday task."
-        },
-        {
-          "id": "alexander_pm_stofa",
-          "sortOrder": 340,
-          "type": "check_item",
-          "text": "Tidy stofa",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "Tue",
-          "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-22",
-          "notes": "Cleaner Tuesday task."
-        },
-        {
-          "id": "alexander_helper_early_phone",
-          "sortOrder": 410,
+          "id": "alexander_helper_activity_2",
+          "sortOrder": 490,
           "type": "text_line",
-          "text": "Play blue iPhone",
+          "text": "Garden maintenance",
           "section": "helper",
           "dayMode": "school_day",
           "seasonMode": "school_year",
@@ -1165,88 +1215,10 @@
           "notes": ""
         },
         {
-          "id": "alexander_helper_early_cuddle",
-          "sortOrder": 420,
+          "id": "alexander_helper_activity_3",
+          "sortOrder": 500,
           "type": "text_line",
-          "text": "Read and cuddle Mommy",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_helper_early_audio",
-          "sortOrder": 430,
-          "type": "text_line",
-          "text": "Listen to audiobook",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_helper_early_homework",
-          "sortOrder": 440,
-          "type": "text_line",
-          "text": "Do homework in advance including reading",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_helper_early_saela_brush",
-          "sortOrder": 450,
-          "type": "text_line",
-          "text": "Brush Saela",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_helper_early_saela_training",
-          "sortOrder": 460,
-          "type": "text_line",
-          "text": "5-treat training session with Saela",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_helper_early_saela_play",
-          "sortOrder": 470,
-          "type": "text_line",
-          "text": "Play with Saela",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "alexander_helper_activity_1",
-          "sortOrder": 480,
-          "type": "text_line",
-          "text": "Activity can be EDP outside play garden maintenance or soccer practice",
+          "text": "Soccer practice",
           "section": "helper",
           "dayMode": "school_day",
           "seasonMode": "school_year",
@@ -1290,10 +1262,296 @@
           "notes": ""
         },
         {
+          "id": "lilja_pm_activity",
+          "sortOrder": 260,
+          "type": "check_item",
+          "text": "Do an activity",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_pm_chromebook_watch",
+          "sortOrder": 270,
+          "type": "check_item",
+          "text": "Charge Chromebook and watch",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_pm_homework_parent",
+          "sortOrder": 280,
+          "type": "check_item",
+          "text": "Review homework with parent",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_pm_laundry",
+          "sortOrder": 290,
+          "type": "check_item",
+          "text": "Put your bathing suit and towel in the downstairs laundry",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "summer_camp",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Summer camp seasonal task."
+        },
+        {
+          "id": "lilja_pm_shower",
+          "sortOrder": 310,
+          "type": "check_item",
+          "text": "Take a shower in the parents' bathroom",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_pm_room",
+          "sortOrder": 320,
+          "type": "check_item",
+          "text": "Tidy room",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Mon",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-09-21",
+          "notes": "Cleaner Monday prep task."
+        },
+        {
+          "id": "lilja_pm_stofa",
+          "sortOrder": 330,
+          "type": "check_item",
+          "text": "Tidy stofa",
+          "section": "pm",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "Mon",
+          "weekPattern": "every_other_from_anchor",
+          "anchorDate": "2026-09-21",
+          "notes": "Cleaner Monday prep task."
+        },
+        {
+          "id": "lilja_helper_early_phone",
+          "sortOrder": 410,
+          "type": "text_line",
+          "text": "Play pink iPhone",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_pm_pack_backpack",
+          "sortOrder": 250,
+          "type": "check_item",
+          "text": "Load backpack, including water, snack, take-home folder, and library book (if needed).",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Sun,Mon,Tue,Wed,Thu",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_early_cuddle",
+          "sortOrder": 420,
+          "type": "text_line",
+          "text": "Read and cuddle Mommy",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_early_homework",
+          "sortOrder": 440,
+          "type": "text_line",
+          "text": "Do homework in advance including reading",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_early_saela_brush",
+          "sortOrder": 450,
+          "type": "text_line",
+          "text": "Brush Saela",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_early_saela_training",
+          "sortOrder": 460,
+          "type": "text_line",
+          "text": "Five-treat training session with Saela",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_early_saela_play",
+          "sortOrder": 470,
+          "type": "text_line",
+          "text": "Play with Saela",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_activity_1",
+          "sortOrder": 480,
+          "type": "text_line",
+          "text": "EDP outside play",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_activity_2",
+          "sortOrder": 490,
+          "type": "text_line",
+          "text": "Garden maintenance",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_activity_3",
+          "sortOrder": 500,
+          "type": "text_line",
+          "text": "Soccer practice",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_activity_4",
+          "sortOrder": 510,
+          "type": "text_line",
+          "text": "Soccer toy",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_helper_early_audio",
+          "sortOrder": 430,
+          "type": "text_line",
+          "text": "Listen to audiobook",
+          "section": "helper",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_pm_hang_backpack",
+          "sortOrder": 240,
+          "type": "check_item",
+          "text": "Hang up your backpack",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_pm_papers",
+          "sortOrder": 230,
+          "type": "check_item",
+          "text": "Give papers to a parent or put them at your table place",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_pm_dishes",
+          "sortOrder": 220,
+          "type": "check_item",
+          "text": "Put dishes by the sink (water bottle, snacks, etc.)",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "all",
+          "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "lilja_am_breakfast",
           "sortOrder": 20,
           "type": "check_item",
-          "text": "Eat breakfast with 3 food groups",
+          "text": "Eat breakfast with three food groups",
           "section": "am",
           "dayMode": "all",
           "seasonMode": "school_year",
@@ -1306,7 +1564,7 @@
           "id": "lilja_am_drink",
           "sortOrder": 30,
           "type": "check_item",
-          "text": "Drink water juice or milk",
+          "text": "Drink water, juice, or milk",
           "section": "am",
           "dayMode": "all",
           "seasonMode": "school_year",
@@ -1332,7 +1590,7 @@
           "id": "lilja_am_teeth",
           "sortOrder": 50,
           "type": "check_item",
-          "text": "Brush teeth",
+          "text": "Brush teeth and put hair in elastics",
           "section": "am",
           "dayMode": "all",
           "seasonMode": "all",
@@ -1345,7 +1603,7 @@
           "id": "lilja_am_hair",
           "sortOrder": 60,
           "type": "check_item",
-          "text": "Brush hair and put in elastics",
+          "text": "Brush hair",
           "section": "am",
           "dayMode": "all",
           "seasonMode": "all",
@@ -1358,20 +1616,7 @@
           "id": "lilja_am_backpack",
           "sortOrder": 70,
           "type": "check_item",
-          "text": "Load backpack",
-          "section": "am",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_am_school_things",
-          "sortOrder": 80,
-          "type": "check_item",
-          "text": "Put school things by front door including water and snack",
+          "text": "Check your backpack and place it by the front door",
           "section": "am",
           "dayMode": "school_day",
           "seasonMode": "school_year",
@@ -1384,11 +1629,11 @@
           "id": "lilja_am_chromebook",
           "sortOrder": 90,
           "type": "check_item",
-          "text": "Put Chromebook by front door",
+          "text": "Place Chromebook by the front door",
           "section": "am",
           "dayMode": "school_day",
           "seasonMode": "school_year",
-          "daySelector": "Weekdays",
+          "daySelector": "Mon,Tue,Fri",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -1397,7 +1642,7 @@
           "id": "lilja_am_flute",
           "sortOrder": 100,
           "type": "check_item",
-          "text": "Put flute by front door",
+          "text": "Place Chromebook and flute by the front door",
           "section": "am",
           "dayMode": "school_day",
           "seasonMode": "school_year",
@@ -1498,19 +1743,6 @@
           "notes": ""
         },
         {
-          "id": "lilja_am_drops",
-          "sortOrder": 180,
-          "type": "check_item",
-          "text": "Drops",
-          "section": "am",
-          "dayMode": "non_school_day",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
           "id": "lilja_am_reading",
           "sortOrder": 190,
           "type": "check_item",
@@ -1537,10 +1769,23 @@
           "notes": ""
         },
         {
+          "id": "lilja_am_drops",
+          "sortOrder": 210,
+          "type": "check_item",
+          "text": "Drops",
+          "section": "am",
+          "dayMode": "non_school_day",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "lilja_pm_shoes_coat",
           "sortOrder": 210,
           "type": "check_item",
-          "text": "Put shoes away and hang up coat",
+          "text": "Put your shoes away and hang up your coat",
           "section": "pm",
           "dayMode": "school_day",
           "seasonMode": "school_year",
@@ -1550,153 +1795,10 @@
           "notes": ""
         },
         {
-          "id": "lilja_pm_dishes",
-          "sortOrder": 220,
-          "type": "check_item",
-          "text": "Put dishes by sink (water bottle, snacks, etc)",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_pm_papers",
-          "sortOrder": 230,
-          "type": "check_item",
-          "text": "Give papers to parent or put at your table place",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_pm_hang_backpack",
-          "sortOrder": 240,
-          "type": "check_item",
-          "text": "Hang up backpack",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_pm_pack_backpack",
-          "sortOrder": 250,
-          "type": "check_item",
-          "text": "Pack backpack including snack and library book",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Sun,Mon,Tue,Wed,Thu",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_pm_activity",
-          "sortOrder": 260,
-          "type": "check_item",
-          "text": "Do an activity",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_pm_chromebook_watch",
-          "sortOrder": 270,
-          "type": "check_item",
-          "text": "Charge Chromebook and watch",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_pm_homework_parent",
-          "sortOrder": 280,
-          "type": "check_item",
-          "text": "Review homework with parent",
-          "section": "pm",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_pm_laundry",
-          "sortOrder": 290,
-          "type": "check_item",
-          "text": "Put bathing suit and towel in downstairs laundry",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "summer_camp",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": "Summer camp seasonal task."
-        },
-        {
-          "id": "lilja_pm_shower",
-          "sortOrder": 310,
-          "type": "check_item",
-          "text": "Take shower in parents' bathroom",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_pm_room",
-          "sortOrder": 320,
-          "type": "check_item",
-          "text": "Tidy room",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "Tue",
-          "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-22",
-          "notes": "Cleaner Tuesday task."
-        },
-        {
-          "id": "lilja_pm_stofa",
-          "sortOrder": 330,
-          "type": "check_item",
-          "text": "Tidy stofa",
-          "section": "pm",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "Tue",
-          "weekPattern": "every_other_from_anchor",
-          "anchorDate": "2026-09-22",
-          "notes": "Cleaner Tuesday task."
-        },
-        {
-          "id": "lilja_helper_early_phone",
-          "sortOrder": 410,
+          "id": "lilja_helper_activity_5",
+          "sortOrder": 520,
           "type": "text_line",
-          "text": "Play pink iPhone",
+          "text": "Flute lesson",
           "section": "helper",
           "dayMode": "school_day",
           "seasonMode": "school_year",
@@ -1706,88 +1808,10 @@
           "notes": ""
         },
         {
-          "id": "lilja_helper_early_cuddle",
-          "sortOrder": 420,
+          "id": "lilja_helper_activity_6",
+          "sortOrder": 530,
           "type": "text_line",
-          "text": "Read and cuddle Mommy",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_helper_early_audio",
-          "sortOrder": 430,
-          "type": "text_line",
-          "text": "Listen to audiobook",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_helper_early_homework",
-          "sortOrder": 440,
-          "type": "text_line",
-          "text": "Do homework in advance including reading",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_helper_early_saela_brush",
-          "sortOrder": 450,
-          "type": "text_line",
-          "text": "Brush Saela",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_helper_early_saela_training",
-          "sortOrder": 460,
-          "type": "text_line",
-          "text": "5-treat training session with Saela",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_helper_early_saela_play",
-          "sortOrder": 470,
-          "type": "text_line",
-          "text": "Play with Saela",
-          "section": "helper",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "lilja_helper_activity_1",
-          "sortOrder": 480,
-          "type": "text_line",
-          "text": "Activity can be EDP outside play garden maintenance soccer practice soccer toy flute lesson or performing flute",
+          "text": "Perform flute",
           "section": "helper",
           "dayMode": "school_day",
           "seasonMode": "school_year",
@@ -1860,7 +1884,7 @@
           "id": "healthy_breakfast_line_4",
           "sortOrder": 40,
           "type": "text_line",
-          "text": "Avocado and whole-grain toast",
+          "text": "Avocado and whole-grain toast.",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -1933,7 +1957,7 @@
           "id": "healthy_lunch_line_3",
           "sortOrder": 30,
           "type": "text_line",
-          "text": "Hummus plate with carrots cucumbers and pita.",
+          "text": "Hummus plate with carrots, cucumbers, and pita.",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -2057,92 +2081,6 @@
       ]
     },
     {
-      "id": "weekday_launch_reminder",
-      "sortOrder": 40,
-      "type": "reminder",
-      "title": "School Launch",
-      "ownerLabel": "Household",
-      "scheduleGroupId": "school_launch_reminder",
-      "pmStartSchool": "",
-      "pmStartNonSchool": "",
-      "colors": {
-        "backgroundStart": "#9be8c5",
-        "backgroundEnd": "#2f8b7d",
-        "accent": "#fef6c8",
-        "text": "#102320"
-      },
-      "rewardMessage": "",
-      "celebrationTitle": "School Launch complete",
-      "notes": "Reminder slide for weekday departure rhythm.",
-      "items": [
-        {
-          "id": "weekday_launch_line_1",
-          "sortOrder": 10,
-          "type": "text_line",
-          "text": "Backpacks should be packed before shoes.",
-          "section": "anytime",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "weekday_launch_line_2",
-          "sortOrder": 20,
-          "type": "text_line",
-          "text": "Water bottles and snacks should be ready before breakfast wraps up.",
-          "section": "anytime",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "weekday_launch_line_3",
-          "sortOrder": 30,
-          "type": "text_line",
-          "text": "Papers and special school items go by the right door.",
-          "section": "anytime",
-          "dayMode": "school_day",
-          "seasonMode": "school_year",
-          "daySelector": "Weekdays",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "weekday_launch_camp_1",
-          "sortOrder": 40,
-          "type": "text_line",
-          "text": "Camp bins should be prepped before shoes.",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "summer_camp",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "weekday_launch_camp_2",
-          "sortOrder": 50,
-          "type": "text_line",
-          "text": "Sunscreen and bug spray happen before shoes.",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "summer_camp",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        }
-      ]
-    },
-    {
       "id": "mommy_pt_reminder",
       "sortOrder": 45,
       "type": "reminder",
@@ -2175,153 +2113,10 @@
           "notes": ""
         },
         {
-          "id": "mommy_pt_line_11",
-          "sortOrder": 20,
+          "id": "mommy_pt_line_9",
+          "sortOrder": 150,
           "type": "text_line",
-          "text": "Dead lifts",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_1",
-          "sortOrder": 30,
-          "type": "text_line",
-          "text": "Downward dog",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_2",
-          "sortOrder": 40,
-          "type": "text_line",
-          "text": "Hamstring stretch",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_3",
-          "sortOrder": 50,
-          "type": "text_line",
-          "text": "Deep squat",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_4",
-          "sortOrder": 60,
-          "type": "text_line",
-          "text": "90/90",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_5",
-          "sortOrder": 70,
-          "type": "text_line",
-          "text": "Calf stretch, straight leg",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_bent_calf",
-          "sortOrder": 80,
-          "type": "text_line",
-          "text": "Calf stretch, bent knee",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_core_leg_lifts",
-          "sortOrder": 90,
-          "type": "text_line",
-          "text": "Core leg lifts",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_get_off_floor",
-          "sortOrder": 100,
-          "type": "text_line",
-          "text": "Get off floor",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_back_rubs",
-          "sortOrder": 110,
-          "type": "text_line",
-          "text": "Back rubs",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_7",
-          "sortOrder": 120,
-          "type": "text_line",
-          "text": "Wall angles",
-          "section": "anytime",
-          "dayMode": "all",
-          "seasonMode": "all",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
-        },
-        {
-          "id": "mommy_pt_line_12",
-          "sortOrder": 130,
-          "type": "text_line",
-          "text": "Balance with big toe press against band",
+          "text": "Toe splaying (five seconds, fifteen reps)",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -2344,10 +2139,49 @@
           "notes": ""
         },
         {
-          "id": "mommy_pt_line_9",
-          "sortOrder": 150,
+          "id": "mommy_pt_line_12",
+          "sortOrder": 130,
           "type": "text_line",
-          "text": "Toe splaying (5 seconds, 15 reps)",
+          "text": "Balance with big toe press against band",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_7",
+          "sortOrder": 120,
+          "type": "text_line",
+          "text": "Wall angles",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_back_rubs",
+          "sortOrder": 110,
+          "type": "text_line",
+          "text": "Back rubs",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_get_off_floor",
+          "sortOrder": 100,
+          "type": "text_line",
+          "text": "Get off the floor",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -2361,6 +2195,110 @@
           "sortOrder": 160,
           "type": "text_line",
           "text": "Banded external arm rotation",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_core_leg_lifts",
+          "sortOrder": 90,
+          "type": "text_line",
+          "text": "Core leg lifts",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_5",
+          "sortOrder": 70,
+          "type": "text_line",
+          "text": "Calf stretch, straight leg",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_4",
+          "sortOrder": 60,
+          "type": "text_line",
+          "text": "90/90",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_3",
+          "sortOrder": 50,
+          "type": "text_line",
+          "text": "Deep squat",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_2",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "Hamstring stretch",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_1",
+          "sortOrder": 30,
+          "type": "text_line",
+          "text": "Downward dog",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_line_11",
+          "sortOrder": 20,
+          "type": "text_line",
+          "text": "Deadlifts",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "mommy_pt_bent_calf",
+          "sortOrder": 80,
+          "type": "text_line",
+          "text": "Calf stretch, bent knee",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -2407,7 +2345,7 @@
           "id": "kids_bedtime_line_1",
           "sortOrder": 10,
           "type": "text_line",
-          "text": "8:00 PM go upstairs to brush teeth.",
+          "text": "8:00 p.m.: Go upstairs to brush teeth.",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -2446,7 +2384,7 @@
           "id": "kids_bedtime_line_4",
           "sortOrder": 40,
           "type": "text_line",
-          "text": "9:00 PM lights out.",
+          "text": "9:00 p.m.: Lights out.",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -2459,7 +2397,7 @@
           "id": "kids_bedtime_line_5",
           "sortOrder": 50,
           "type": "text_line",
-          "text": "Listen to Sonos for 15 minutes.",
+          "text": "Listen to Sonos for fifteen minutes.",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -2474,7 +2412,7 @@
       "id": "weekend_screen_reminder",
       "sortOrder": 80,
       "type": "reminder",
-      "title": "Weekend Screen Unlock",
+      "title": "Screen Rules",
       "ownerLabel": "Household",
       "scheduleGroupId": "weekend_screen",
       "pmStartSchool": "",
@@ -2486,8 +2424,8 @@
         "text": "#2c1705"
       },
       "rewardMessage": "",
-      "celebrationTitle": "Weekend Screen Unlock complete",
-      "notes": "Reminder slide for weekend screen expectations.",
+      "celebrationTitle": "Screen Rules complete",
+      "notes": "Reminder slide for screen expectations.",
       "items": [
         {
           "id": "weekend_screen_line_1",
@@ -2532,7 +2470,7 @@
           "id": "weekend_screen_line_4",
           "sortOrder": 40,
           "type": "text_line",
-          "text": "The blue and pink phones stay downstairs.",
+          "text": "The blue and pink phones stay downstairs at all times.",
           "section": "anytime",
           "dayMode": "non_school_day",
           "seasonMode": "school_year",
@@ -2579,7 +2517,7 @@
           "id": "cleaner_sunday_line_2",
           "sortOrder": 20,
           "type": "text_line",
-          "text": "Reset floors counters bathrooms and bedroom clutter before Monday.",
+          "text": "Reset floors, counters, bathrooms, and bedroom clutter before Monday.",
           "section": "anytime",
           "dayMode": "all",
           "seasonMode": "all",
@@ -2731,107 +2669,417 @@
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2026-02-17",
+      "date": "2029-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2029-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    },
+    {
+      "date": "2030-02-18",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2026-02-18",
+      "date": "2030-02-19",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2026-02-19",
+      "date": "2029-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-02-20",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2026-02-20",
+      "date": "2030-02-22",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2026-04-03",
-      "label": "Good Friday",
+      "date": "2030-04-15",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2030-04-16",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2030-04-17",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2030-04-18",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2030-04-19",
+      "label": "Good Friday / Patriots' Day week",
       "greeting": "Good Friday"
     },
     {
-      "date": "2026-04-20",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2026-04-21",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2026-04-22",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2026-04-23",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2026-04-24",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2026-05-25",
+      "date": "2030-05-27",
       "label": "Memorial Day",
       "greeting": "Remembering Memorial Day"
     },
     {
-      "date": "2026-06-19",
-      "label": "Juneteenth",
-      "greeting": "Happy Juneteenth"
+      "date": "2030-02-21",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2026-09-07",
-      "label": "Labor Day",
-      "greeting": "Happy Labor Day"
+      "date": "2029-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
     },
     {
-      "date": "2026-09-21",
-      "label": "Yom Kippur",
-      "greeting": "Have an easy fast"
-    },
-    {
-      "date": "2026-10-12",
-      "label": "Indigenous People's Day",
-      "greeting": "Indigenous People's Day"
-    },
-    {
-      "date": "2026-11-11",
-      "label": "Veterans Day",
-      "greeting": "Honoring Veterans Day"
-    },
-    {
-      "date": "2026-11-26",
-      "label": "Thanksgiving",
-      "greeting": "Happy Thanksgiving"
-    },
-    {
-      "date": "2026-11-27",
-      "label": "Day after Thanksgiving",
-      "greeting": "Happy Thanksgiving weekend"
-    },
-    {
-      "date": "2026-12-24",
-      "label": "Christmas Eve",
-      "greeting": "Merry Christmas Eve"
-    },
-    {
-      "date": "2026-12-25",
+      "date": "2029-12-25",
       "label": "Christmas",
       "greeting": "Merry Christmas"
     },
     {
-      "date": "2026-12-26",
+      "date": "2029-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2029-02-21",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-02-22",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-02-23",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-03-30",
+      "label": "Good Friday",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2029-04-16",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-04-17",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-04-18",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-04-19",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-04-20",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-05-28",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2029-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2029-09-03",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2029-09-19",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2029-10-08",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2029-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2029-11-22",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2029-11-23",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2030-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2030-09-02",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2030-10-07",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2030-10-14",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2031-04-24",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2031-04-25",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2031-05-26",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2031-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2031-09-01",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2031-09-27",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2031-10-13",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2031-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2031-11-27",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2031-11-28",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2031-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2031-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2031-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-04-23",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-02-20",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-04-22",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2031-04-11",
+      "label": "Good Friday",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2030-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2030-11-28",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2030-11-29",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2030-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2030-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2030-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-27",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-28",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-29",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-30",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2030-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
+      "date": "2031-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    },
+    {
+      "date": "2031-02-17",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-02-18",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-02-19",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-02-20",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-02-21",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2031-04-21",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2029-02-19",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2029-01-01",
+      "label": "New Year's Day",
+      "greeting": "Happy New Year"
+    },
+    {
+      "date": "2028-12-31",
       "label": "Winter break",
       "greeting": "Enjoy winter break"
     },
@@ -2921,9 +3169,119 @@
       "greeting": "Enjoy Patriots' Day week"
     },
     {
+      "date": "2026-12-26",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
+    },
+    {
       "date": "2027-05-31",
       "label": "Memorial Day",
       "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2026-12-25",
+      "label": "Christmas",
+      "greeting": "Merry Christmas"
+    },
+    {
+      "date": "2026-11-27",
+      "label": "Day after Thanksgiving",
+      "greeting": "Happy Thanksgiving weekend"
+    },
+    {
+      "date": "2026-02-17",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-02-18",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-02-19",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-02-20",
+      "label": "Presidents' Day week",
+      "greeting": "Enjoy Presidents' Day week"
+    },
+    {
+      "date": "2026-04-03",
+      "label": "Good Friday",
+      "greeting": "Good Friday"
+    },
+    {
+      "date": "2026-04-20",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-04-21",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-04-22",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-04-23",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-04-24",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
+    },
+    {
+      "date": "2026-05-25",
+      "label": "Memorial Day",
+      "greeting": "Remembering Memorial Day"
+    },
+    {
+      "date": "2026-06-19",
+      "label": "Juneteenth",
+      "greeting": "Happy Juneteenth"
+    },
+    {
+      "date": "2026-09-07",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
+    },
+    {
+      "date": "2026-09-21",
+      "label": "Yom Kippur",
+      "greeting": "Have an easy fast"
+    },
+    {
+      "date": "2026-10-12",
+      "label": "Indigenous People's Day",
+      "greeting": "Indigenous People's Day"
+    },
+    {
+      "date": "2026-11-11",
+      "label": "Veterans Day",
+      "greeting": "Honoring Veterans Day"
+    },
+    {
+      "date": "2026-11-26",
+      "label": "Thanksgiving",
+      "greeting": "Happy Thanksgiving"
+    },
+    {
+      "date": "2026-12-24",
+      "label": "Christmas Eve",
+      "greeting": "Merry Christmas Eve"
+    },
+    {
+      "date": "2031-12-31",
+      "label": "Winter break",
+      "greeting": "Enjoy winter break"
     },
     {
       "date": "2027-06-19",
@@ -2931,119 +3289,9 @@
       "greeting": "Happy Juneteenth"
     },
     {
-      "date": "2027-09-06",
-      "label": "Labor Day",
-      "greeting": "Happy Labor Day"
-    },
-    {
       "date": "2027-10-11",
       "label": "Indigenous People's Day / Yom Kippur",
       "greeting": "Indigenous People's Day - Have an easy fast"
-    },
-    {
-      "date": "2027-11-11",
-      "label": "Veterans Day",
-      "greeting": "Honoring Veterans Day"
-    },
-    {
-      "date": "2027-11-25",
-      "label": "Thanksgiving",
-      "greeting": "Happy Thanksgiving"
-    },
-    {
-      "date": "2027-11-26",
-      "label": "Day after Thanksgiving",
-      "greeting": "Happy Thanksgiving weekend"
-    },
-    {
-      "date": "2027-12-24",
-      "label": "Christmas Eve",
-      "greeting": "Merry Christmas Eve"
-    },
-    {
-      "date": "2027-12-25",
-      "label": "Christmas",
-      "greeting": "Merry Christmas"
-    },
-    {
-      "date": "2027-12-26",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2027-12-27",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2027-12-28",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2027-12-29",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2027-12-30",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2027-12-31",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2028-01-01",
-      "label": "New Year's Day",
-      "greeting": "Happy New Year"
-    },
-    {
-      "date": "2028-02-21",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2028-02-22",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2028-02-23",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2028-02-24",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2028-02-25",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2028-04-14",
-      "label": "Good Friday",
-      "greeting": "Good Friday"
-    },
-    {
-      "date": "2028-04-17",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2028-04-18",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2028-04-19",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
     },
     {
       "date": "2028-04-20",
@@ -3131,424 +3379,114 @@
       "greeting": "Enjoy winter break"
     },
     {
-      "date": "2028-12-31",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
+      "date": "2028-04-19",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
     },
     {
-      "date": "2029-01-01",
-      "label": "New Year's Day",
-      "greeting": "Happy New Year"
+      "date": "2027-09-06",
+      "label": "Labor Day",
+      "greeting": "Happy Labor Day"
     },
     {
-      "date": "2029-02-19",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
+      "date": "2028-04-18",
+      "label": "Patriots' Day week",
+      "greeting": "Enjoy Patriots' Day week"
     },
     {
-      "date": "2029-02-20",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2029-02-21",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2029-02-22",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2029-02-23",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2029-03-30",
+      "date": "2028-04-14",
       "label": "Good Friday",
       "greeting": "Good Friday"
     },
     {
-      "date": "2029-04-16",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2029-04-17",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2029-04-18",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2029-04-19",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2029-04-20",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2029-05-28",
-      "label": "Memorial Day",
-      "greeting": "Remembering Memorial Day"
-    },
-    {
-      "date": "2029-06-19",
-      "label": "Juneteenth",
-      "greeting": "Happy Juneteenth"
-    },
-    {
-      "date": "2029-09-03",
-      "label": "Labor Day",
-      "greeting": "Happy Labor Day"
-    },
-    {
-      "date": "2029-09-19",
-      "label": "Yom Kippur",
-      "greeting": "Have an easy fast"
-    },
-    {
-      "date": "2029-10-08",
-      "label": "Indigenous People's Day",
-      "greeting": "Indigenous People's Day"
-    },
-    {
-      "date": "2029-11-11",
+      "date": "2027-11-11",
       "label": "Veterans Day",
       "greeting": "Honoring Veterans Day"
     },
     {
-      "date": "2029-11-22",
+      "date": "2027-11-25",
       "label": "Thanksgiving",
       "greeting": "Happy Thanksgiving"
     },
     {
-      "date": "2029-11-23",
+      "date": "2027-11-26",
       "label": "Day after Thanksgiving",
       "greeting": "Happy Thanksgiving weekend"
     },
     {
-      "date": "2029-12-24",
+      "date": "2027-12-24",
       "label": "Christmas Eve",
       "greeting": "Merry Christmas Eve"
     },
     {
-      "date": "2029-12-25",
+      "date": "2027-12-25",
       "label": "Christmas",
       "greeting": "Merry Christmas"
     },
     {
-      "date": "2029-12-26",
+      "date": "2027-12-26",
       "label": "Winter break",
       "greeting": "Enjoy winter break"
     },
     {
-      "date": "2029-12-27",
+      "date": "2027-12-27",
       "label": "Winter break",
       "greeting": "Enjoy winter break"
     },
     {
-      "date": "2029-12-28",
+      "date": "2027-12-28",
       "label": "Winter break",
       "greeting": "Enjoy winter break"
     },
     {
-      "date": "2029-12-29",
+      "date": "2027-12-29",
       "label": "Winter break",
       "greeting": "Enjoy winter break"
     },
     {
-      "date": "2029-12-30",
+      "date": "2027-12-30",
       "label": "Winter break",
       "greeting": "Enjoy winter break"
     },
     {
-      "date": "2029-12-31",
+      "date": "2027-12-31",
       "label": "Winter break",
       "greeting": "Enjoy winter break"
     },
     {
-      "date": "2030-01-01",
+      "date": "2028-01-01",
       "label": "New Year's Day",
       "greeting": "Happy New Year"
     },
     {
-      "date": "2030-02-18",
+      "date": "2028-02-21",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2030-02-19",
+      "date": "2028-02-22",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2030-02-20",
+      "date": "2028-02-23",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2030-02-21",
+      "date": "2028-02-24",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2030-02-22",
+      "date": "2028-02-25",
       "label": "Presidents' Day week",
       "greeting": "Enjoy Presidents' Day week"
     },
     {
-      "date": "2030-04-15",
+      "date": "2028-04-17",
       "label": "Patriots' Day week",
       "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2030-04-16",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2030-04-17",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2030-04-18",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2030-04-19",
-      "label": "Good Friday / Patriots' Day week",
-      "greeting": "Good Friday"
-    },
-    {
-      "date": "2030-05-27",
-      "label": "Memorial Day",
-      "greeting": "Remembering Memorial Day"
-    },
-    {
-      "date": "2030-06-19",
-      "label": "Juneteenth",
-      "greeting": "Happy Juneteenth"
-    },
-    {
-      "date": "2030-09-02",
-      "label": "Labor Day",
-      "greeting": "Happy Labor Day"
-    },
-    {
-      "date": "2030-10-07",
-      "label": "Yom Kippur",
-      "greeting": "Have an easy fast"
-    },
-    {
-      "date": "2030-10-14",
-      "label": "Indigenous People's Day",
-      "greeting": "Indigenous People's Day"
-    },
-    {
-      "date": "2030-11-11",
-      "label": "Veterans Day",
-      "greeting": "Honoring Veterans Day"
-    },
-    {
-      "date": "2030-11-28",
-      "label": "Thanksgiving",
-      "greeting": "Happy Thanksgiving"
-    },
-    {
-      "date": "2030-11-29",
-      "label": "Day after Thanksgiving",
-      "greeting": "Happy Thanksgiving weekend"
-    },
-    {
-      "date": "2030-12-24",
-      "label": "Christmas Eve",
-      "greeting": "Merry Christmas Eve"
-    },
-    {
-      "date": "2030-12-25",
-      "label": "Christmas",
-      "greeting": "Merry Christmas"
-    },
-    {
-      "date": "2030-12-26",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2030-12-27",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2030-12-28",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2030-12-29",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2030-12-30",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2030-12-31",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2031-01-01",
-      "label": "New Year's Day",
-      "greeting": "Happy New Year"
-    },
-    {
-      "date": "2031-02-17",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2031-02-18",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2031-02-19",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2031-02-20",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2031-02-21",
-      "label": "Presidents' Day week",
-      "greeting": "Enjoy Presidents' Day week"
-    },
-    {
-      "date": "2031-04-11",
-      "label": "Good Friday",
-      "greeting": "Good Friday"
-    },
-    {
-      "date": "2031-04-21",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2031-04-22",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2031-04-23",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2031-04-24",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2031-04-25",
-      "label": "Patriots' Day week",
-      "greeting": "Enjoy Patriots' Day week"
-    },
-    {
-      "date": "2031-05-26",
-      "label": "Memorial Day",
-      "greeting": "Remembering Memorial Day"
-    },
-    {
-      "date": "2031-06-19",
-      "label": "Juneteenth",
-      "greeting": "Happy Juneteenth"
-    },
-    {
-      "date": "2031-09-01",
-      "label": "Labor Day",
-      "greeting": "Happy Labor Day"
-    },
-    {
-      "date": "2031-09-27",
-      "label": "Yom Kippur",
-      "greeting": "Have an easy fast"
-    },
-    {
-      "date": "2031-10-13",
-      "label": "Indigenous People's Day",
-      "greeting": "Indigenous People's Day"
-    },
-    {
-      "date": "2031-11-11",
-      "label": "Veterans Day",
-      "greeting": "Honoring Veterans Day"
-    },
-    {
-      "date": "2031-11-27",
-      "label": "Thanksgiving",
-      "greeting": "Happy Thanksgiving"
-    },
-    {
-      "date": "2031-11-28",
-      "label": "Day after Thanksgiving",
-      "greeting": "Happy Thanksgiving weekend"
-    },
-    {
-      "date": "2031-12-24",
-      "label": "Christmas Eve",
-      "greeting": "Merry Christmas Eve"
-    },
-    {
-      "date": "2031-12-25",
-      "label": "Christmas",
-      "greeting": "Merry Christmas"
-    },
-    {
-      "date": "2031-12-26",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2031-12-27",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2031-12-28",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2031-12-29",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2031-12-30",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
-    },
-    {
-      "date": "2031-12-31",
-      "label": "Winter break",
-      "greeting": "Enjoy winter break"
     },
     {
       "date": "2032-01-01",
@@ -3556,5 +3494,6 @@
       "greeting": "Happy New Year"
     }
   ],
-  "generatedAt": "20260910-152538110Z"
+  "generatedAt": "20260911-130233942Z"
 }
+
