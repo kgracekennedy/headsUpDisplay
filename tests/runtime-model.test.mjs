@@ -27,6 +27,7 @@ describe("runtime checklist behavior", () => {
     const activeSlides = getActiveSlides(data, morning, progress.modes);
     const slideIds = activeSlides.map((slide) => slide.id);
     const alexander = activeSlides.find((slide) => slide.id === "alexander");
+    const lilja = activeSlides.find((slide) => slide.id === "lilja");
 
     assert.deepEqual(slideIds.slice(0, 4), ["parents", "alexander", "lilja", "healthy_breakfast_reminder"]);
     assert.equal(progress.modes.dayMode, "school_day");
@@ -34,6 +35,8 @@ describe("runtime checklist behavior", () => {
     assert.ok(alexander);
     assert.ok(alexander.activeItems.some((item) => item.id === "alexander_am_backpack"));
     assert.ok(!alexander.activeItems.some((item) => item.id === "alexander_am_khan"));
+    assert.ok(lilja);
+    assert.ok(!lilja.activeItems.some((item) => item.id === "lilja_am_flute_performance"));
   });
 
   it("uses non-school mode for weekend Khan Academy tasks", async () => {
@@ -41,10 +44,13 @@ describe("runtime checklist behavior", () => {
     const saturday = new Date("2026-09-26T09:00:00");
     const progress = hydrateProgress(data, { version: 3, slides: {} }, saturday);
     const alexander = getActiveSlides(data, saturday, progress.modes).find((slide) => slide.id === "alexander");
+    const lilja = getActiveSlides(data, saturday, progress.modes).find((slide) => slide.id === "lilja");
 
     assert.equal(progress.modes.dayMode, "non_school_day");
     assert.ok(alexander.activeItems.some((item) => item.id === "alexander_am_khan"));
     assert.ok(!alexander.activeItems.some((item) => item.id === "alexander_am_backpack"));
+    assert.ok(lilja.activeItems.some((item) => item.id === "lilja_am_flute_performance"));
+    assert.ok(!lilja.activeItems.some((item) => item.id === "lilja_am_backpack"));
   });
 
   it("carries incomplete AM tasks into PM as leftovers and hides completed AM tasks", async () => {

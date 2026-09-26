@@ -703,7 +703,7 @@
         "accent": "#ffe083",
         "text": "#102039"
       },
-      "rewardMessage": "You may use the blue iPhone until dinner.",
+      "rewardMessage": "You may use the blue iPhone until dinner. When you get 100% on the test and content, Khan Academy comes off your list!",
       "celebrationTitle": "Ready for reward",
       "notes": "Combined Alexander AM PM and anytime checklist.",
       "items": [
@@ -1101,7 +1101,7 @@
           "id": "alexander_am_khan",
           "sortOrder": 120,
           "type": "check_item",
-          "text": "Complete one Khan Academy math lesson through the next quiz",
+          "text": "Attempt Grade 1 test and take quizzes for what you missed.",
           "section": "am",
           "dayMode": "non_school_day",
           "seasonMode": "school_year",
@@ -1244,7 +1244,7 @@
         "accent": "#ffe38b",
         "text": "#2b1636"
       },
-      "rewardMessage": "You may use the pink iPhone until dinner.",
+      "rewardMessage": "You may use the pink iPhone until dinner. When you complete Grade 3 and Getting Ready for Grade 4 Khan Academy comes off your list!",
       "celebrationTitle": "Ready for reward",
       "notes": "Combined Lilja AM PM and anytime checklist.",
       "items": [
@@ -1737,6 +1737,19 @@
           "section": "am",
           "dayMode": "non_school_day",
           "seasonMode": "all",
+          "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "lilja_am_flute_performance",
+          "sortOrder": 180,
+          "type": "check_item",
+          "text": "Perform what you learned this week on the flute for a parent.",
+          "section": "am",
+          "dayMode": "non_school_day",
+          "seasonMode": "school_year",
           "daySelector": "All",
           "weekPattern": "all",
           "anchorDate": "",

@@ -74,6 +74,15 @@ describe("buildHouseholdData", () => {
     assert.equal(bedtimeReminder.items.length, 5);
   });
 
+  it("includes kid reward messages with Khan Academy completion notes", async () => {
+    const data = await loadSourceData();
+    const alexander = data.slides.find((slide) => slide.id === "alexander");
+    const lilja = data.slides.find((slide) => slide.id === "lilja");
+
+    assert.match(alexander.rewardMessage, /100% on the test and content/);
+    assert.match(lilja.rewardMessage, /complete Grade 3 and Getting Ready for Grade 4/);
+  });
+
   it("normalizes spreadsheet-style schedule times to two-digit hours", () => {
     const data = buildHouseholdData({
       appConfigRows: [

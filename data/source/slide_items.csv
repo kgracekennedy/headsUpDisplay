@@ -50,7 +50,7 @@ alexander,alexander_am_school_things,80,check_item,Put school things by garage d
 alexander,alexander_am_soiled_bedding,90,check_item,Put bedding in laundry machine if soiled,am,school_day,school_year,"Mon,Wed,Thu,Fri",all,,TRUE,Hidden on Tuesdays because cleaner-day sheets task replaces it.
 alexander,alexander_am_cleaner_sheets,100,check_item,Bring down sheets,am,all,school_year,Tue,every_other_from_anchor,2026-09-22,TRUE,Cleaner Tuesday task.
 alexander,alexander_am_sunscreen,110,check_item,Put on sunscreen and bug spray,am,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
-alexander,alexander_am_khan,120,check_item,Complete one Khan Academy math lesson through the next quiz,am,non_school_day,school_year,All,all,,TRUE,
+alexander,alexander_am_khan,120,check_item,Attempt Grade 1 test and take quizzes for what you missed.,am,non_school_day,school_year,All,all,,TRUE,
 alexander,alexander_am_fold_laundry,130,check_item,Fold laundry,am,non_school_day,all,All,all,,TRUE,
 alexander,alexander_am_room,140,check_item,Tidy and organize room,am,non_school_day,all,All,all,,TRUE,
 alexander,alexander_am_stofa,150,check_item,Tidy and organize stofa,am,non_school_day,all,All,all,,TRUE,
@@ -99,6 +99,7 @@ lilja,lilja_am_fold_laundry,140,check_item,Fold laundry,am,non_school_day,all,Al
 lilja,lilja_am_room,150,check_item,Tidy and organize room,am,non_school_day,all,All,all,,TRUE,
 lilja,lilja_am_stofa,160,check_item,Tidy and organize stofa,am,non_school_day,all,All,all,,TRUE,
 lilja,lilja_am_stairs,170,check_item,Clear stairs,am,non_school_day,all,All,all,,TRUE,
+lilja,lilja_am_flute_performance,180,check_item,Perform what you learned this week on the flute for a parent.,am,non_school_day,school_year,All,all,,TRUE,
 lilja,lilja_am_reading,190,check_item,Read to Pabbi in Icelandic,am,non_school_day,all,All,all,,TRUE,
 lilja,lilja_am_lunch,200,check_item,Lunch,am,non_school_day,all,All,all,,TRUE,
 lilja,lilja_am_drops,210,check_item,Drops,am,non_school_day,all,All,all,,TRUE,
