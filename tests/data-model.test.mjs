@@ -9,8 +9,8 @@ describe("buildHouseholdData", () => {
 
     assert.equal(data.config.appTitle, "Family Heads Up Display");
     assert.equal(data.config.defaultSlideDurationSec, 15);
-    assert.equal(data.slides.length, 12);
-    assert.equal(data.scheduleGroups.length, 11);
+    assert.equal(data.slides.length, 14);
+    assert.equal(data.scheduleGroups.length, 13);
     assert.equal(data.slides.some((slide) => slide.id === "weekday_launch_reminder"), false);
     assert.equal(data.scheduleGroups.some((group) => group.id === "school_launch_reminder"), false);
     assert.equal(

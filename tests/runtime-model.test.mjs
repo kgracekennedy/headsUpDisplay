@@ -29,7 +29,7 @@ describe("runtime checklist behavior", () => {
     const alexander = activeSlides.find((slide) => slide.id === "alexander");
     const lilja = activeSlides.find((slide) => slide.id === "lilja");
 
-    assert.deepEqual(slideIds.slice(0, 4), ["parents", "alexander", "lilja", "healthy_breakfast_reminder"]);
+    assert.deepEqual(slideIds.slice(0, 4), ["parents", "alexander", "lilja", "morning_reminders"]);
     assert.equal(progress.modes.dayMode, "school_day");
     assert.equal(progress.modes.seasonMode, "school_year");
     assert.ok(alexander);
