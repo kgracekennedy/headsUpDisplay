@@ -22,6 +22,36 @@
       ]
     },
     {
+      "id": "morning_reminders",
+      "label": "Morning reminders",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "Weekdays",
+          "startTime": "05:00",
+          "endTime": "09:00",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Morning day-specific reminders."
+        }
+      ]
+    },
+    {
+      "id": "tomorrow_activities",
+      "label": "Tomorrow's activities",
+      "rules": [
+        {
+          "sortOrder": 10,
+          "daySelector": "Sun,Mon,Tue,Wed,Sat",
+          "startTime": "14:00",
+          "endTime": "02:00",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": "Afternoon and evening reminders for upcoming activities."
+        }
+      ]
+    },
+    {
       "id": "healthy_breakfast",
       "label": "Healthy breakfast",
       "rules": [
@@ -721,6 +751,19 @@
           "notes": ""
         },
         {
+          "id": "alexander_pm_monday_library_book",
+          "sortOrder": 245,
+          "type": "check_item",
+          "text": "Find and pack your library book",
+          "section": "pm",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Mon",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "alexander_pm_pack_backpack",
           "sortOrder": 250,
           "type": "check_item",
@@ -1054,6 +1097,19 @@
           "dayMode": "school_day",
           "seasonMode": "school_year",
           "daySelector": "Weekdays",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "alexander_am_pack_library_book",
+          "sortOrder": 75,
+          "type": "check_item",
+          "text": "Pack libary book",
+          "section": "am",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Tue",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -1652,6 +1708,19 @@
           "notes": ""
         },
         {
+          "id": "lilja_am_soccer_clothes",
+          "sortOrder": 105,
+          "type": "check_item",
+          "text": "Wear or pack athletic clothes for soccer practice",
+          "section": "am",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Tue,Wed,Thu",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
           "id": "lilja_am_cleaner_sheets",
           "sortOrder": 110,
           "type": "check_item",
@@ -1829,6 +1898,183 @@
           "dayMode": "school_day",
           "seasonMode": "school_year",
           "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "morning_reminders",
+      "sortOrder": 32,
+      "type": "reminder",
+      "title": "Morning Reminders",
+      "ownerLabel": "Household",
+      "scheduleGroupId": "morning_reminders",
+      "pmStartSchool": "",
+      "pmStartNonSchool": "",
+      "colors": {
+        "backgroundStart": "#a7d8ff",
+        "backgroundEnd": "#3b82f6",
+        "accent": "#ffe083",
+        "text": "#102039"
+      },
+      "rewardMessage": "",
+      "celebrationTitle": "Morning Reminders complete",
+      "notes": "Morning day-specific reminder slide.",
+      "items": [
+        {
+          "id": "morning_reminders_mon_alexander_talento",
+          "sortOrder": 10,
+          "type": "text_line",
+          "text": "Alexander, we'll pick you up a little early from EDP for your Talento practice.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Mon",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_mon_lilja_flute_home",
+          "sortOrder": 20,
+          "type": "text_line",
+          "text": "Lilja, bring flute home for lesson.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Mon",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_tue_alexander_library",
+          "sortOrder": 30,
+          "type": "text_line",
+          "text": "Alexander - Return library book.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Tue",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_tue_lilja_chromebook",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "Lilja - Bring Chromebook home so you can do XtraMath at EDP.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Tue",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_tue_lilja_soccer",
+          "sortOrder": 50,
+          "type": "text_line",
+          "text": "Lilja - Wear or bring athletic clothes because we go straight to travel soccer practice.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Tue",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_wed_alexander_talento",
+          "sortOrder": 60,
+          "type": "text_line",
+          "text": "Alexander, we'll pick you up a little early from EDP for your Talento practice.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Wed",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_wed_lilja_chorus",
+          "sortOrder": 70,
+          "type": "text_line",
+          "text": "Lilja - Check in with your teacher before going to chorus.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Wed",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_wed_lilja_flute_school",
+          "sortOrder": 80,
+          "type": "text_line",
+          "text": "Lilja - Bring flute to school.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Wed",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_wed_lilja_talento",
+          "sortOrder": 90,
+          "type": "text_line",
+          "text": "Lilja - Wear or bring athletic clothes for Talento.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Wed",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_thu_lilja_band",
+          "sortOrder": 100,
+          "type": "text_line",
+          "text": "Lilja - Bring flute to school for all-band practice.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Thu",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_thu_lilja_chromebook",
+          "sortOrder": 110,
+          "type": "text_line",
+          "text": "Lilja - Bring Chromebook home so you can do XtraMath at EDP.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Thu",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "morning_reminders_fri_lilja_flute_chromebook",
+          "sortOrder": 120,
+          "type": "text_line",
+          "text": "Lilja bring flute and Chromebook home.",
+          "section": "anytime",
+          "dayMode": "school_day",
+          "seasonMode": "school_year",
+          "daySelector": "Fri",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""
@@ -2087,6 +2333,144 @@
           "dayMode": "all",
           "seasonMode": "all",
           "daySelector": "All",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "tomorrow_activities",
+      "sortOrder": 40,
+      "type": "reminder",
+      "title": "Tomorrow's Activities",
+      "ownerLabel": "Household",
+      "scheduleGroupId": "tomorrow_activities",
+      "pmStartSchool": "",
+      "pmStartNonSchool": "",
+      "colors": {
+        "backgroundStart": "#bdecc8",
+        "backgroundEnd": "#2f9e73",
+        "accent": "#ffe083",
+        "text": "#10241d"
+      },
+      "rewardMessage": "",
+      "celebrationTitle": "Tomorrow's Activities complete",
+      "notes": "Afternoon and evening activity reminder slide.",
+      "items": [
+        {
+          "id": "tomorrow_activities_sun_alexander_talento",
+          "sortOrder": 10,
+          "type": "text_line",
+          "text": "Alexander has Talento.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Sun",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "tomorrow_activities_sun_lilja_flute",
+          "sortOrder": 20,
+          "type": "text_line",
+          "text": "Lilja has a flute lesson.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Sun",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "tomorrow_activities_mon_alexander_library",
+          "sortOrder": 30,
+          "type": "text_line",
+          "text": "Alexander has library.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Mon",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "tomorrow_activities_mon_lilja_soccer",
+          "sortOrder": 40,
+          "type": "text_line",
+          "text": "Lilja has travel soccer practice.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Mon",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "tomorrow_activities_tue_alexander_soccer",
+          "sortOrder": 50,
+          "type": "text_line",
+          "text": "Alexander has soccer practice.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Tue",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "tomorrow_activities_tue_lilja_chorus_flute_talento",
+          "sortOrder": 60,
+          "type": "text_line",
+          "text": "Lilja has chorus, flute, and Talento.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Tue",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "tomorrow_activities_wed_alexander_pe",
+          "sortOrder": 70,
+          "type": "text_line",
+          "text": "Alexander has PE.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Wed",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "tomorrow_activities_wed_lilja_band_bolts",
+          "sortOrder": 80,
+          "type": "text_line",
+          "text": "Lilja has band practice and Bolts clinic.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Wed",
+          "weekPattern": "all",
+          "anchorDate": "",
+          "notes": ""
+        },
+        {
+          "id": "tomorrow_activities_sat_church_saela",
+          "sortOrder": 90,
+          "type": "text_line",
+          "text": "We have church and a training session with Sæla.",
+          "section": "anytime",
+          "dayMode": "all",
+          "seasonMode": "school_year",
+          "daySelector": "Sat",
           "weekPattern": "all",
           "anchorDate": "",
           "notes": ""

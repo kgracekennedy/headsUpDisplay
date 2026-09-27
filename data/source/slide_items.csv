@@ -46,6 +46,7 @@ alexander,alexander_am_medication,40,check_item,Take medication,am,all,all,All,a
 alexander,alexander_am_teeth,50,check_item,Brush teeth,am,all,all,All,all,,TRUE,
 alexander,alexander_am_hair,60,check_item,Brush hair,am,all,all,All,all,,TRUE,
 alexander,alexander_am_backpack,70,check_item,Check your backpack and place it by the garage door,am,school_day,school_year,Weekdays,all,,TRUE,
+alexander,alexander_am_pack_library_book,75,check_item,Pack libary book,am,school_day,school_year,Tue,all,,TRUE,
 alexander,alexander_am_school_things,80,check_item,Put school things by garage door including water and snack,am,school_day,school_year,Weekdays,all,,FALSE,Replaced by backpack check task.
 alexander,alexander_am_soiled_bedding,90,check_item,Put bedding in laundry machine if soiled,am,school_day,school_year,"Mon,Wed,Thu,Fri",all,,TRUE,Hidden on Tuesdays because cleaner-day sheets task replaces it.
 alexander,alexander_am_cleaner_sheets,100,check_item,Bring down sheets,am,all,school_year,Tue,every_other_from_anchor,2026-09-22,TRUE,Cleaner Tuesday task.
@@ -62,6 +63,7 @@ alexander,alexander_pm_shoes_coat,210,check_item,Put your shoes away and hang up
 alexander,alexander_pm_dishes,220,check_item,"Put dishes by the sink (water bottle, snacks, etc.)",pm,school_day,all,Weekdays,all,,TRUE,
 alexander,alexander_pm_papers,230,check_item,Give papers to a parent or put them at your table place,pm,school_day,school_year,Weekdays,all,,TRUE,
 alexander,alexander_pm_hang_backpack,240,check_item,Hang up your backpack,pm,school_day,school_year,Weekdays,all,,TRUE,
+alexander,alexander_pm_monday_library_book,245,check_item,Find and pack your library book,pm,school_day,school_year,Mon,all,,TRUE,
 alexander,alexander_pm_pack_backpack,250,check_item,"Load backpack, including water, snack, take-home folder, and library book (if needed).",pm,school_day,school_year,"Sun,Mon,Tue,Wed,Thu",all,,TRUE,
 alexander,alexander_pm_activity,260,check_item,Do an activity,pm,school_day,school_year,Weekdays,all,,FALSE,Activity ideas are helper text.
 alexander,alexander_pm_read_parent,270,check_item,Read to a parent for fifteen minutes,pm,school_day,school_year,Weekdays,all,,TRUE,
@@ -92,6 +94,7 @@ lilja,lilja_am_backpack,70,check_item,Check your backpack and place it by the fr
 lilja,lilja_am_school_things,80,check_item,Put school things by front door including water and snack,am,school_day,school_year,Weekdays,all,,FALSE,Replaced by backpack check and Chromebook tasks.
 lilja,lilja_am_chromebook,90,check_item,Place Chromebook by the front door,am,school_day,school_year,"Mon,Tue,Fri",all,,TRUE,
 lilja,lilja_am_flute,100,check_item,Place Chromebook and flute by the front door,am,school_day,school_year,"Wed,Thu",all,,TRUE,
+lilja,lilja_am_soccer_clothes,105,check_item,Wear or pack athletic clothes for soccer practice,am,school_day,school_year,"Tue,Wed,Thu",all,,TRUE,
 lilja,lilja_am_cleaner_sheets,110,check_item,Bring down sheets,am,all,school_year,Tue,every_other_from_anchor,2026-09-22,TRUE,Cleaner Tuesday task.
 lilja,lilja_am_sunscreen,120,check_item,Put on sunscreen and bug spray,am,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
 lilja,lilja_am_khan,130,check_item,Complete one Khan Academy math lesson through the next quiz,am,non_school_day,school_year,All,all,,TRUE,
@@ -130,6 +133,27 @@ lilja,lilja_helper_activity_4,510,text_line,Soccer toy,helper,school_day,school_
 lilja,lilja_helper_activity_5,520,text_line,Flute lesson,helper,school_day,school_year,All,all,,TRUE,
 lilja,lilja_helper_activity_6,530,text_line,Perform flute,helper,school_day,school_year,All,all,,TRUE,
 healthy_breakfast_reminder,healthy_breakfast_line_1,10,text_line,Yogurt with fruit and nuts.,anytime,all,all,All,all,,TRUE,
+morning_reminders,morning_reminders_mon_alexander_talento,10,text_line,"Alexander, we'll pick you up a little early from EDP for your Talento practice.",anytime,school_day,school_year,Mon,all,,TRUE,
+morning_reminders,morning_reminders_mon_lilja_flute_home,20,text_line,"Lilja, bring flute home for lesson.",anytime,school_day,school_year,Mon,all,,TRUE,
+morning_reminders,morning_reminders_tue_alexander_library,30,text_line,Alexander - Return library book.,anytime,school_day,school_year,Tue,all,,TRUE,
+morning_reminders,morning_reminders_tue_lilja_chromebook,40,text_line,Lilja - Bring Chromebook home so you can do XtraMath at EDP.,anytime,school_day,school_year,Tue,all,,TRUE,
+morning_reminders,morning_reminders_tue_lilja_soccer,50,text_line,Lilja - Wear or bring athletic clothes because we go straight to travel soccer practice.,anytime,school_day,school_year,Tue,all,,TRUE,
+morning_reminders,morning_reminders_wed_alexander_talento,60,text_line,"Alexander, we'll pick you up a little early from EDP for your Talento practice.",anytime,school_day,school_year,Wed,all,,TRUE,
+morning_reminders,morning_reminders_wed_lilja_chorus,70,text_line,Lilja - Check in with your teacher before going to chorus.,anytime,school_day,school_year,Wed,all,,TRUE,
+morning_reminders,morning_reminders_wed_lilja_flute_school,80,text_line,Lilja - Bring flute to school.,anytime,school_day,school_year,Wed,all,,TRUE,
+morning_reminders,morning_reminders_wed_lilja_talento,90,text_line,Lilja - Wear or bring athletic clothes for Talento.,anytime,school_day,school_year,Wed,all,,TRUE,
+morning_reminders,morning_reminders_thu_lilja_band,100,text_line,Lilja - Bring flute to school for all-band practice.,anytime,school_day,school_year,Thu,all,,TRUE,
+morning_reminders,morning_reminders_thu_lilja_chromebook,110,text_line,Lilja - Bring Chromebook home so you can do XtraMath at EDP.,anytime,school_day,school_year,Thu,all,,TRUE,
+morning_reminders,morning_reminders_fri_lilja_flute_chromebook,120,text_line,Lilja bring flute and Chromebook home.,anytime,school_day,school_year,Fri,all,,TRUE,
+tomorrow_activities,tomorrow_activities_sun_alexander_talento,10,text_line,Alexander has Talento.,anytime,all,school_year,Sun,all,,TRUE,
+tomorrow_activities,tomorrow_activities_sun_lilja_flute,20,text_line,Lilja has a flute lesson.,anytime,all,school_year,Sun,all,,TRUE,
+tomorrow_activities,tomorrow_activities_mon_alexander_library,30,text_line,Alexander has library.,anytime,all,school_year,Mon,all,,TRUE,
+tomorrow_activities,tomorrow_activities_mon_lilja_soccer,40,text_line,Lilja has travel soccer practice.,anytime,all,school_year,Mon,all,,TRUE,
+tomorrow_activities,tomorrow_activities_tue_alexander_soccer,50,text_line,Alexander has soccer practice.,anytime,all,school_year,Tue,all,,TRUE,
+tomorrow_activities,tomorrow_activities_tue_lilja_chorus_flute_talento,60,text_line,"Lilja has chorus, flute, and Talento.",anytime,all,school_year,Tue,all,,TRUE,
+tomorrow_activities,tomorrow_activities_wed_alexander_pe,70,text_line,Alexander has PE.,anytime,all,school_year,Wed,all,,TRUE,
+tomorrow_activities,tomorrow_activities_wed_lilja_band_bolts,80,text_line,Lilja has band practice and Bolts clinic.,anytime,all,school_year,Wed,all,,TRUE,
+tomorrow_activities,tomorrow_activities_sat_church_saela,90,text_line,We have church and a training session with Sæla.,anytime,all,school_year,Sat,all,,TRUE,
 healthy_breakfast_reminder,healthy_breakfast_line_2,20,text_line,Oatmeal with berries and cinnamon.,anytime,all,all,All,all,,TRUE,
 healthy_breakfast_reminder,healthy_breakfast_line_3,30,text_line,Eggs and whole-grain toast.,anytime,all,all,All,all,,TRUE,
 healthy_breakfast_reminder,healthy_breakfast_line_4,40,text_line,Avocado and whole-grain toast.,anytime,all,all,All,all,,TRUE,

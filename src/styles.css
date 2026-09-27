@@ -523,8 +523,8 @@ code {
 }
 
 .completion-title {
-  font-size: clamp(1.3rem, 1.9vw, 1.9rem);
-  line-height: 1.1;
+  font-size: clamp(1.05rem, 1.55vw, 1.55rem);
+  line-height: 1.14;
   font-weight: 700;
   max-width: none;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
@@ -552,8 +552,8 @@ code {
 }
 
 .reward-text {
-  font-size: 1.04rem;
-  line-height: 1.22;
+  font-size: 0.9rem;
+  line-height: 1.24;
   font-weight: 600;
 }
 
@@ -596,8 +596,8 @@ code {
 }
 
 .reward-only-layout h2 {
-  font-size: clamp(2.1rem, 5vw, 4.4rem);
-  line-height: 0.98;
+  font-size: clamp(1.55rem, 3.65vw, 3.25rem);
+  line-height: 1.04;
 }
 
 .reward-early-panel {

@@ -1,5 +1,7 @@
 schedule_group_id,label,sort_order,day_selector,start_time,end_time,week_pattern,anchor_date,active,notes
 person_day,All day,10,All,5:00,2:00,all,,TRUE,Checklist day resets at 2 AM.
+morning_reminders,Morning reminders,10,Weekdays,5:00,9:00,all,,TRUE,Morning day-specific reminders.
+tomorrow_activities,Tomorrow's activities,10,"Sun,Mon,Tue,Wed,Sat",14:00,2:00,all,,TRUE,Afternoon and evening reminders for upcoming activities.
 healthy_breakfast,Healthy breakfast,10,All,5:00,11:00,all,,TRUE,
 healthy_lunch,Healthy lunch,10,All,11:00,14:00,all,,TRUE,
 healthy_snacks,Healthy snacks,10,All,14:00,19:00,all,,TRUE,
