@@ -733,7 +733,7 @@
         "accent": "#ffe083",
         "text": "#102039"
       },
-      "rewardMessage": "You may use the blue iPhone until dinner. When you get 100% on the test and content, Khan Academy comes off your list!",
+      "rewardMessage": "You may use the blue iPhone until dinner.",
       "celebrationTitle": "Ready for reward",
       "notes": "Combined Alexander AM PM and anytime checklist.",
       "items": [
@@ -1152,19 +1152,6 @@
           "weekPattern": "all",
           "anchorDate": "",
           "notes": "Summer camp seasonal task."
-        },
-        {
-          "id": "alexander_am_khan",
-          "sortOrder": 120,
-          "type": "check_item",
-          "text": "Attempt Grade 1 test and take quizzes for what you missed.",
-          "section": "am",
-          "dayMode": "non_school_day",
-          "seasonMode": "school_year",
-          "daySelector": "All",
-          "weekPattern": "all",
-          "anchorDate": "",
-          "notes": ""
         },
         {
           "id": "alexander_am_fold_laundry",
