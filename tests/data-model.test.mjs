@@ -74,12 +74,12 @@ describe("buildHouseholdData", () => {
     assert.equal(bedtimeReminder.items.length, 5);
   });
 
-  it("includes kid reward messages with Khan Academy completion notes", async () => {
+  it("includes kid reward messages", async () => {
     const data = await loadSourceData();
     const alexander = data.slides.find((slide) => slide.id === "alexander");
     const lilja = data.slides.find((slide) => slide.id === "lilja");
 
-    assert.match(alexander.rewardMessage, /100% on the test and content/);
+    assert.equal(alexander.rewardMessage, "You may use the blue iPhone until dinner.");
     assert.match(lilja.rewardMessage, /complete Grade 3 and Getting Ready for Grade 4/);
   });
 

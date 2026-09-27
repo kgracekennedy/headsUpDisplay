@@ -39,7 +39,7 @@ describe("runtime checklist behavior", () => {
     assert.ok(!lilja.activeItems.some((item) => item.id === "lilja_am_flute_performance"));
   });
 
-  it("uses non-school mode for weekend Khan Academy tasks", async () => {
+  it("uses non-school mode for weekend tasks", async () => {
     const data = await loadSourceData();
     const saturday = new Date("2026-09-26T09:00:00");
     const progress = hydrateProgress(data, { version: 3, slides: {} }, saturday);
@@ -47,7 +47,7 @@ describe("runtime checklist behavior", () => {
     const lilja = getActiveSlides(data, saturday, progress.modes).find((slide) => slide.id === "lilja");
 
     assert.equal(progress.modes.dayMode, "non_school_day");
-    assert.ok(alexander.activeItems.some((item) => item.id === "alexander_am_khan"));
+    assert.ok(!alexander.activeItems.some((item) => item.id === "alexander_am_khan"));
     assert.ok(!alexander.activeItems.some((item) => item.id === "alexander_am_backpack"));
     assert.ok(lilja.activeItems.some((item) => item.id === "lilja_am_flute_performance"));
     assert.ok(!lilja.activeItems.some((item) => item.id === "lilja_am_backpack"));
