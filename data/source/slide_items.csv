@@ -40,22 +40,23 @@ parents,parents_anytime_mommy_french,460,check_item,Mommy French practice,anytim
 parents,parents_anytime_mommy_icelandic,470,check_item,Mommy Icelandic practice,anytime,all,all,All,all,,TRUE,
 parents,parents_anytime_mommy_singing,480,check_item,Mommy singing practice,anytime,all,all,All,all,,TRUE,
 alexander,alexander_am_dressed,10,check_item,Get dressed,am,all,all,All,all,,TRUE,
-alexander,alexander_am_breakfast,20,check_item,Eat breakfast with three food groups,am,all,school_year,All,all,,TRUE,
-alexander,alexander_am_drink,30,check_item,"Drink water, juice, or milk",am,all,school_year,All,all,,TRUE,
-alexander,alexander_am_medication,40,check_item,Take medication,am,all,all,All,all,,TRUE,
-alexander,alexander_am_teeth,50,check_item,Brush teeth,am,all,all,All,all,,TRUE,
-alexander,alexander_am_hair,60,check_item,Brush hair,am,all,all,All,all,,TRUE,
-alexander,alexander_am_backpack,70,check_item,Check your backpack and place it by the garage door,am,school_day,school_year,Weekdays,all,,TRUE,
-alexander,alexander_am_pack_library_book,75,check_item,Pack libary book,am,school_day,school_year,Tue,all,,TRUE,
+alexander,alexander_am_hair,20,check_item,Brush hair,am,all,all,All,all,,TRUE,
+alexander,alexander_am_teeth,30,check_item,Brush teeth,am,all,all,All,all,,TRUE,
+alexander,alexander_am_soiled_bedding,40,check_item,Put bedding in laundry machine if soiled,am,school_day,school_year,"Mon,Wed,Thu,Fri",all,,TRUE,Hidden on Tuesdays because cleaner-day sheets task replaces it.
+alexander,alexander_am_cleaner_sheets,50,check_item,Bring down sheets,am,all,school_year,Tue,every_other_from_anchor,2026-09-22,TRUE,Cleaner Tuesday task.
+alexander,alexander_am_breakfast,60,check_item,Eat breakfast with three food groups,am,all,school_year,All,all,,TRUE,
+alexander,alexander_am_medication,70,check_item,Take medication,am,all,all,All,all,,TRUE,
+alexander,alexander_am_water_bottle,80,check_item,Fill and pack water bottle,am,school_day,school_year,Weekdays,all,,TRUE,
+alexander,alexander_am_backpack,90,check_item,Place backpack by the garage door,am,school_day,school_year,Weekdays,all,,TRUE,
+alexander,alexander_am_backpack_check,100,check_item,"Does your backpack have your water bottle, snack, a sweater, homework, and library book, if needed?",am,school_day,school_year,Weekdays,all,,TRUE,
+alexander,alexander_am_pack_library_book,110,check_item,Pack library book,am,school_day,school_year,Tue,all,,TRUE,
 alexander,alexander_am_school_things,80,check_item,Put school things by garage door including water and snack,am,school_day,school_year,Weekdays,all,,FALSE,Replaced by backpack check task.
-alexander,alexander_am_soiled_bedding,90,check_item,Put bedding in laundry machine if soiled,am,school_day,school_year,"Mon,Wed,Thu,Fri",all,,TRUE,Hidden on Tuesdays because cleaner-day sheets task replaces it.
-alexander,alexander_am_cleaner_sheets,100,check_item,Bring down sheets,am,all,school_year,Tue,every_other_from_anchor,2026-09-22,TRUE,Cleaner Tuesday task.
-alexander,alexander_am_sunscreen,110,check_item,Put on sunscreen and bug spray,am,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
-alexander,alexander_am_khan,120,check_item,Complete Khan Academy exercises through next quiz or unit test.,am,non_school_day,school_year,All,all,,FALSE,
-alexander,alexander_am_fold_laundry,130,check_item,Fold laundry,am,non_school_day,all,All,all,,TRUE,
-alexander,alexander_am_room,140,check_item,Tidy and organize room,am,non_school_day,all,All,all,,TRUE,
-alexander,alexander_am_stofa,150,check_item,Tidy and organize stofa,am,non_school_day,all,All,all,,TRUE,
-alexander,alexander_am_stairs,160,check_item,Clear stairs,am,non_school_day,all,All,all,,TRUE,
+alexander,alexander_am_sunscreen,120,check_item,Put on sunscreen and bug spray,am,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
+alexander,alexander_am_khan,130,check_item,Complete Khan Academy exercises through next quiz or unit test.,am,non_school_day,school_year,All,all,,FALSE,
+alexander,alexander_am_fold_laundry,140,check_item,Fold laundry,am,non_school_day,all,All,all,,TRUE,
+alexander,alexander_am_room,150,check_item,Tidy and organize room,am,non_school_day,all,All,all,,TRUE,
+alexander,alexander_am_stofa,160,check_item,Tidy and organize stofa,am,non_school_day,all,All,all,,TRUE,
+alexander,alexander_am_stairs,170,check_item,Clear stairs,am,non_school_day,all,All,all,,TRUE,
 alexander,alexander_am_reading,180,check_item,Read to Pabbi in Icelandic,am,non_school_day,all,All,all,,TRUE,
 alexander,alexander_am_lunch,190,check_item,Lunch,am,non_school_day,all,All,all,,TRUE,
 alexander,alexander_am_drops,200,check_item,Drops,am,non_school_day,all,All,all,,TRUE,
@@ -63,17 +64,19 @@ alexander,alexander_pm_shoes_coat,210,check_item,Put your shoes away and hang up
 alexander,alexander_pm_dishes,220,check_item,"Put dishes by the sink (water bottle, snacks, etc.)",pm,school_day,all,Weekdays,all,,TRUE,
 alexander,alexander_pm_papers,230,check_item,Give papers to a parent or put them at your table place,pm,school_day,school_year,Weekdays,all,,TRUE,
 alexander,alexander_pm_hang_backpack,240,check_item,Hang up your backpack,pm,school_day,school_year,Weekdays,all,,TRUE,
-alexander,alexander_pm_monday_library_book,245,check_item,Find and pack your library book,pm,school_day,school_year,Mon,all,,TRUE,
-alexander,alexander_pm_pack_backpack,250,check_item,"Load backpack, including water, snack, take-home folder, and library book (if needed).",pm,school_day,school_year,"Sun,Mon,Tue,Wed,Thu",all,,TRUE,
-alexander,alexander_pm_activity,260,check_item,Do an activity,pm,school_day,school_year,Weekdays,all,,FALSE,Activity ideas are helper text.
-alexander,alexander_pm_read_parent,270,check_item,Read to a parent for fifteen minutes,pm,school_day,school_year,Weekdays,all,,TRUE,
-alexander,alexander_pm_homework,280,check_item,Homework,pm,school_day,school_year,Weekdays,all,,TRUE,
-alexander,alexander_pm_laundry,290,check_item,Put your bathing suit and towel in the downstairs laundry,pm,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
-alexander,alexander_pm_water,300,check_item,Put water bottle by sink,pm,all,summer_camp,All,all,,FALSE,Replaced by all-year dishes item.
-alexander,alexander_pm_bath,310,check_item,Take a bath in the Lego bathroom,pm,all,all,All,all,,TRUE,
-alexander,alexander_pm_bed,320,check_item,Make your bed if needed,pm,all,all,All,all,,TRUE,
-alexander,alexander_pm_room,330,check_item,Tidy room,pm,all,all,Mon,every_other_from_anchor,2026-09-21,TRUE,Cleaner Monday prep task.
-alexander,alexander_pm_stofa,340,check_item,Tidy stofa,pm,all,all,Mon,every_other_from_anchor,2026-09-21,TRUE,Cleaner Monday prep task.
+alexander,alexander_pm_read_parent,250,check_item,Read to a parent for fifteen minutes,pm,school_day,school_year,Weekdays,all,,TRUE,
+alexander,alexander_pm_homework,260,check_item,Do homework and review with a parent,pm,school_day,school_year,Weekdays,all,,TRUE,
+alexander,alexander_pm_monday_library_book,270,check_item,Find and pack your library book,pm,school_day,school_year,Mon,all,,TRUE,
+alexander,alexander_pm_pack_backpack,280,check_item,"Load backpack, including snack, take-home folder, homework, and library book (if needed)",pm,school_day,school_year,"Mon,Tue,Wed,Thu",all,,TRUE,
+alexander,alexander_pm_sunday_pack_backpack,285,check_item,"Load backpack, including snack, take-home folder, homework, and library book (if needed)",pm,non_school_day,school_year,Sun,all,,TRUE,Sunday school-night prep task.
+alexander,alexander_pm_activity,290,check_item,Do an activity,pm,school_day,school_year,Weekdays,all,,FALSE,Activity ideas are helper text.
+alexander,alexander_pm_lay_out_clothes,300,check_item,Lay out clothes for tomorrow,pm,all,all,All,all,,TRUE,
+alexander,alexander_pm_laundry,310,check_item,Put your bathing suit and towel in the downstairs laundry,pm,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
+alexander,alexander_pm_water,320,check_item,Put water bottle by sink,pm,all,summer_camp,All,all,,FALSE,Replaced by all-year dishes item.
+alexander,alexander_pm_bath,330,check_item,Take a bath in the Lego bathroom,pm,all,all,All,all,,TRUE,
+alexander,alexander_pm_bed,340,check_item,Make your bed if needed,pm,all,all,All,all,,TRUE,
+alexander,alexander_pm_room,350,check_item,Tidy room,pm,all,all,Mon,every_other_from_anchor,2026-09-21,TRUE,Cleaner Monday prep task.
+alexander,alexander_pm_stofa,360,check_item,Tidy stofa,pm,all,all,Mon,every_other_from_anchor,2026-09-21,TRUE,Cleaner Monday prep task.
 alexander,alexander_helper_early_phone,410,text_line,Play blue iPhone,helper,school_day,school_year,All,all,,TRUE,
 alexander,alexander_helper_early_cuddle,420,text_line,Read and cuddle Mommy,helper,school_day,school_year,All,all,,TRUE,
 alexander,alexander_helper_early_audio,430,text_line,Listen to audiobook,helper,school_day,school_year,All,all,,TRUE,
@@ -85,40 +88,45 @@ alexander,alexander_helper_activity_1,480,text_line,EDP outside play,helper,scho
 alexander,alexander_helper_activity_2,490,text_line,Garden maintenance,helper,school_day,school_year,All,all,,TRUE,
 alexander,alexander_helper_activity_3,500,text_line,Soccer practice,helper,school_day,school_year,All,all,,TRUE,
 lilja,lilja_am_dressed,10,check_item,Get dressed,am,all,all,All,all,,TRUE,
-lilja,lilja_am_breakfast,20,check_item,Eat breakfast with three food groups,am,all,school_year,All,all,,TRUE,Lilja should do downstairs first.
-lilja,lilja_am_drink,30,check_item,"Drink water, juice, or milk",am,all,school_year,All,all,,TRUE,
-lilja,lilja_am_medication,40,check_item,Take medication,am,all,all,All,all,,TRUE,
-lilja,lilja_am_teeth,50,check_item,Brush teeth and put hair in elastics,am,all,all,All,all,,TRUE,
-lilja,lilja_am_hair,60,check_item,Brush hair,am,all,all,All,all,,TRUE,
-lilja,lilja_am_backpack,70,check_item,Check your backpack and place it by the front door,am,school_day,school_year,Weekdays,all,,TRUE,
+lilja,lilja_am_hair,20,check_item,Brush hair,am,all,all,All,all,,TRUE,
+lilja,lilja_am_cleaner_sheets,30,check_item,Bring down sheets,am,all,school_year,Tue,every_other_from_anchor,2026-09-22,TRUE,Cleaner Tuesday task.
+lilja,lilja_am_breakfast,40,check_item,Eat breakfast with three food groups,am,all,school_year,All,all,,TRUE,Lilja should do downstairs first.
+lilja,lilja_am_medication,50,check_item,Take medication,am,all,all,All,all,,TRUE,
+lilja,lilja_am_teeth,60,check_item,Brush teeth and put in elastics,am,all,all,All,all,,TRUE,
+lilja,lilja_am_water_bottle,70,check_item,Fill and pack water bottle,am,school_day,school_year,Weekdays,all,,TRUE,
+lilja,lilja_am_backpack,80,check_item,Place backpack by the front door,am,school_day,school_year,Weekdays,all,,TRUE,
+lilja,lilja_am_backpack_check,90,check_item,"Does your backpack have your water bottle, snack, a sweater, homework?",am,school_day,school_year,Weekdays,all,,TRUE,
+lilja,lilja_am_double_check,100,check_item,"DOUBLE CHECK: Do you need soccer clothes, flute, music book, Chromebook, or library book?  If so make sure they are in your backpack!",am,school_day,school_year,Weekdays,all,,TRUE,
 lilja,lilja_am_school_things,80,check_item,Put school things by front door including water and snack,am,school_day,school_year,Weekdays,all,,FALSE,Replaced by backpack check and Chromebook tasks.
-lilja,lilja_am_chromebook,90,check_item,Place Chromebook by the front door,am,school_day,school_year,"Mon,Tue,Fri",all,,TRUE,
-lilja,lilja_am_flute,100,check_item,Place Chromebook and flute by the front door,am,school_day,school_year,"Wed,Thu",all,,TRUE,
-lilja,lilja_am_soccer_clothes,105,check_item,Wear or pack athletic clothes for soccer practice,am,school_day,school_year,"Tue,Wed,Thu",all,,TRUE,
-lilja,lilja_am_cleaner_sheets,110,check_item,Bring down sheets,am,all,school_year,Tue,every_other_from_anchor,2026-09-22,TRUE,Cleaner Tuesday task.
-lilja,lilja_am_sunscreen,120,check_item,Put on sunscreen and bug spray,am,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
-lilja,lilja_am_khan,130,check_item,Complete one Khan Academy math lesson through the next quiz,am,non_school_day,school_year,All,all,,TRUE,
-lilja,lilja_am_fold_laundry,140,check_item,Fold laundry,am,non_school_day,all,All,all,,TRUE,
-lilja,lilja_am_room,150,check_item,Tidy and organize room,am,non_school_day,all,All,all,,TRUE,
-lilja,lilja_am_stofa,160,check_item,Tidy and organize stofa,am,non_school_day,all,All,all,,TRUE,
-lilja,lilja_am_stairs,170,check_item,Clear stairs,am,non_school_day,all,All,all,,TRUE,
-lilja,lilja_am_flute_performance,180,check_item,Perform what you learned this week on the flute for a parent.,am,non_school_day,school_year,All,all,,TRUE,
-lilja,lilja_am_reading,190,check_item,Read to Pabbi in Icelandic,am,non_school_day,all,All,all,,TRUE,
-lilja,lilja_am_lunch,200,check_item,Lunch,am,non_school_day,all,All,all,,TRUE,
-lilja,lilja_am_drops,210,check_item,Drops,am,non_school_day,all,All,all,,TRUE,
+lilja,lilja_am_chromebook,110,check_item,Place Chromebook by the front door,am,school_day,school_year,"Mon,Tue,Fri",all,,TRUE,
+lilja,lilja_am_flute,120,check_item,Place Chromebook and flute by the front door,am,school_day,school_year,"Wed,Thu",all,,TRUE,
+lilja,lilja_am_soccer_clothes,130,check_item,Wear or pack athletic clothes for soccer practice,am,school_day,school_year,"Tue,Wed,Thu",all,,TRUE,
+lilja,lilja_am_sunscreen,135,check_item,Put on sunscreen and bug spray,am,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
+lilja,lilja_am_khan,140,check_item,Complete one Khan Academy math lesson through the next quiz,am,non_school_day,school_year,All,all,,TRUE,
+lilja,lilja_am_fold_laundry,150,check_item,Fold laundry,am,non_school_day,all,All,all,,TRUE,
+lilja,lilja_am_room,160,check_item,Tidy and organize room,am,non_school_day,all,All,all,,TRUE,
+lilja,lilja_am_stofa,170,check_item,Tidy and organize stofa,am,non_school_day,all,All,all,,TRUE,
+lilja,lilja_am_stairs,180,check_item,Clear stairs,am,non_school_day,all,All,all,,TRUE,
+lilja,lilja_am_flute_performance,190,check_item,Perform what you learned this week on the flute for a parent.,am,non_school_day,school_year,All,all,,TRUE,
+lilja,lilja_am_reading,200,check_item,Read to Pabbi in Icelandic,am,non_school_day,all,All,all,,TRUE,
+lilja,lilja_am_lunch,210,check_item,Lunch,am,non_school_day,all,All,all,,TRUE,
+lilja,lilja_am_drops,220,check_item,Drops,am,non_school_day,all,All,all,,TRUE,
 lilja,lilja_pm_shoes_coat,210,check_item,Put your shoes away and hang up your coat,pm,school_day,school_year,Weekdays,all,,TRUE,
 lilja,lilja_pm_dishes,220,check_item,"Put dishes by the sink (water bottle, snacks, etc.)",pm,school_day,all,Weekdays,all,,TRUE,
 lilja,lilja_pm_papers,230,check_item,Give papers to a parent or put them at your table place,pm,school_day,school_year,Weekdays,all,,TRUE,
 lilja,lilja_pm_hang_backpack,240,check_item,Hang up your backpack,pm,school_day,school_year,Weekdays,all,,TRUE,
-lilja,lilja_pm_pack_backpack,250,check_item,"Load backpack, including water, snack, take-home folder, and library book (if needed).",pm,school_day,school_year,"Sun,Mon,Tue,Wed,Thu",all,,TRUE,
-lilja,lilja_pm_activity,260,check_item,Do an activity,pm,school_day,school_year,Weekdays,all,,TRUE,
-lilja,lilja_pm_chromebook_watch,270,check_item,Charge Chromebook and watch,pm,school_day,school_year,Weekdays,all,,TRUE,
-lilja,lilja_pm_homework_parent,280,check_item,Review homework with parent,pm,school_day,school_year,Weekdays,all,,TRUE,
-lilja,lilja_pm_laundry,290,check_item,Put your bathing suit and towel in the downstairs laundry,pm,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
-lilja,lilja_pm_water,300,check_item,Put water bottle by sink,pm,all,summer_camp,All,all,,FALSE,Replaced by all-year dishes item.
-lilja,lilja_pm_shower,310,check_item,Take a shower in the parents' bathroom,pm,all,all,All,all,,TRUE,
-lilja,lilja_pm_room,320,check_item,Tidy room,pm,all,all,Mon,every_other_from_anchor,2026-09-21,TRUE,Cleaner Monday prep task.
-lilja,lilja_pm_stofa,330,check_item,Tidy stofa,pm,all,all,Mon,every_other_from_anchor,2026-09-21,TRUE,Cleaner Monday prep task.
+lilja,lilja_pm_activity,250,check_item,Do an activity,pm,school_day,school_year,Weekdays,all,,TRUE,
+lilja,lilja_pm_chromebook_watch,260,check_item,Charge Chromebook and watch,pm,school_day,school_year,Weekdays,all,,TRUE,
+lilja,lilja_pm_homework_parent,270,check_item,Review homework with parent,pm,school_day,school_year,Weekdays,all,,TRUE,
+lilja,lilja_pm_xtramath,280,check_item,"XtraMath, one sign out",pm,school_day,school_year,Weekdays,all,,TRUE,
+lilja,lilja_pm_pack_backpack,290,check_item,"Load backpack, including snack, take-home folder, homework, and library book (if needed)",pm,school_day,school_year,"Mon,Tue,Wed,Thu",all,,TRUE,
+lilja,lilja_pm_sunday_pack_backpack,295,check_item,"Load backpack, including snack, take-home folder, homework, and library book (if needed)",pm,non_school_day,school_year,Sun,all,,TRUE,Sunday school-night prep task.
+lilja,lilja_pm_lay_out_clothes,300,check_item,Lay out clothes for tomorrow,pm,all,all,All,all,,TRUE,
+lilja,lilja_pm_laundry,310,check_item,Put your bathing suit and towel in the downstairs laundry,pm,all,summer_camp,All,all,,TRUE,Summer camp seasonal task.
+lilja,lilja_pm_water,320,check_item,Put water bottle by sink,pm,all,summer_camp,All,all,,FALSE,Replaced by all-year dishes item.
+lilja,lilja_pm_shower,330,check_item,Take a shower in the parents' bathroom,pm,all,all,All,all,,TRUE,
+lilja,lilja_pm_room,340,check_item,Tidy room,pm,all,all,Mon,every_other_from_anchor,2026-09-21,TRUE,Cleaner Monday prep task.
+lilja,lilja_pm_stofa,350,check_item,Tidy stofa,pm,all,all,Mon,every_other_from_anchor,2026-09-21,TRUE,Cleaner Monday prep task.
 lilja,lilja_helper_early_phone,410,text_line,Play pink iPhone,helper,school_day,school_year,All,all,,TRUE,
 lilja,lilja_helper_early_cuddle,420,text_line,Read and cuddle Mommy,helper,school_day,school_year,All,all,,TRUE,
 lilja,lilja_helper_early_audio,430,text_line,Listen to audiobook,helper,school_day,school_year,All,all,,TRUE,
